@@ -1,1 +1,131 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Staatliches&display=swap');
+@import 'tailwindcss';
+
+/* ----------------------------- */
+/* --- TAILWIND THEME CONFIG --- */
+/* ----------------------------- */
+@theme {
+  /* ---------------------------- */
+  /* ---- CUSTOM BREAKPOINTS ---- */
+  /* ---------------------------- */
+  --breakpoint-xxs: 270px;
+  --breakpoint-xs: 350px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1440px;
+  --breakpoint-xl: 1920px;
+
+  /* ---------------------- */
+  /* ---- CUSTOM FONTS ---- */
+  /* ---------------------- */
+  --font-poppins: 'Poppins', sans-serif;
+  --font-staatliches: 'Staatliches', sans-serif;
+
+  /* ------------------------ */
+  /* ---- CUSTOM SHADOWS ---- */
+  /* ------------------------ */
+  /* --drop-shadow-hero: 0 4px 10px rgba(0, 0, 0, 0.5); */
+
+  /* ---------------------- */
+  /* ---- CUSTOM COLOR ---- */
+  /* ---------------------- */
+  --color-main: #4a2e7d;
+  --color-secondary: #4a2e7d80;
+  --color-text: #474343;
+  --color-bg-light: #ffffff;
+  --color-bg-gray: #b4b2b2;
+  --color-gray-table: #525252;
+  --color-warning: #f59e0b;
+  --color-success: #00c247;
+  --color-error: #dc2626;
+  --color-info: #3b82f6;
+  --color-black: #0c0c0c;
+  --color-white: #fff;
+
+  --color-main-50: #efeeff;
+  --color-main-100: #e3e0ff;
+  --color-main-200: #cfc8fd;
+  --color-main-300: #b2a6fb;
+  --color-main-400: #9e83f6;
+  --color-main-500: #8e65ef;
+  --color-main-600: #8248e3;
+  --color-main-700: #723ac8;
+  --color-main-800: #5c31a2;
+  --color-main-900: #4a2e7d; /* same as --color-main */
+  --color-main-950: #2e1c4a;
+
+  --color-text-50: #f8f7f7;
+  --color-text-100: #efefef;
+  --color-text-200: #dddada;
+  --color-text-300: #bfbaba;
+  --color-text-400: #9b9595;
+  --color-text-500: #7f7878;
+  --color-text-600: #686161;
+  --color-text-700: #554f4f;
+  --color-text-800: #474343; /* same as --color-text */
+  --color-text-900: #3f3c3b;
+  --color-text-950: #2a2727;
+
+  --color-warning-50: #fff8eb;
+  --color-warning-100: #feeac7;
+  --color-warning-200: #fdd28a;
+  --color-warning-300: #fcbb4d;
+  --color-warning-400: #fbab24;
+  --color-warning-500: #f59e0b; /* same as --color-warning */
+  --color-warning-600: #d98b06;
+  --color-warning-700: #b47409;
+  --color-warning-800: #92610e;
+  --color-warning-900: #78510f;
+  --color-warning-950: #452c03;
+
+  --color-success-50: #eefff3;
+  --color-success-100: #d7ffe5;
+  --color-success-200: #b2ffcd;
+  --color-success-300: #76ffa7;
+  --color-success-400: #33f579;
+  --color-success-500: #09de56;
+  --color-success-600: #00c247; /* same as --color-success */
+  --color-success-700: #049139;
+  --color-success-800: #0a7131;
+  --color-success-900: #0a5d2b;
+  --color-success-950: #003415;
+
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626; /* same as --color-error */
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+  --color-error-950: #450a0a;
+
+  --color-info-50: #eff5ff;
+  --color-info-100: #dbe8fe;
+  --color-info-200: #bfd7fe;
+  --color-info-300: #93bbfd;
+  --color-info-400: #609afa;
+  --color-info-500: #3b82f6; /* same as --color-info */
+  --color-info-600: #2570eb;
+  --color-info-700: #1d64d8;
+  --color-info-800: #1e55af;
+  --color-info-900: #1e478a;
+  --color-info-950: #172e54;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Staatliches', sans-serif;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--color-text);
+}
