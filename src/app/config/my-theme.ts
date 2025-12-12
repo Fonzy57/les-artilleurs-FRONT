@@ -96,7 +96,7 @@ export const MyPreset = definePreset(Aura, {
         900: '#7f1d1d',
         950: '#450a0a',
       },
-      information: {
+      info: {
         50: '#eff5ff',
         100: '#dbe8fe',
         200: '#bfd7fe',
@@ -112,6 +112,9 @@ export const MyPreset = definePreset(Aura, {
     },
   },
   components: {
+    /* ------------------------------------------------------------------------ */
+    /* TODO FAIRE LA PERSONNALISATION DU BOUTON POUR TESTER LE THEMING PRIME NG */
+    /* ------------------------------------------------------------------------ */
     button: {},
     /* select: {
       colorScheme: {
