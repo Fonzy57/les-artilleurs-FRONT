@@ -1,0 +1,36 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+@if (isRouterLink) {
+  <a
+    [routerLink]="routerLink"
+    [attr.aria-disabled]="disabled"
+    [attr.tabindex]="disabled ? -1 : 0"
+    (click)="handleClick($event)"
+    [class]="buttonStyle"
+  >
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+  </a>
+} @else if (isHrefLink) {
+  <a
+    [href]="href"
+    [target]="target"
+    [attr.rel]="rel"
+    [attr.aria-disabled]="disabled"
+    [attr.tabindex]="disabled ? -1 : 0"
+    (click)="handleClick($event)"
+    [class]="buttonStyle"
+  >
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+  </a>
+} @else {
+  <button
+    type="button"
+    [disabled]="disabled"
+    (click)="handleClick($event)"
+    [class]="buttonStyle"
+  >
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+  </button>
+}
