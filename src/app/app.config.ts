@@ -9,7 +9,7 @@ import { routes } from './app.routes';
 
 // PRIME NG
 import { providePrimeNG } from 'primeng/config';
-import { MyPreset } from './config/my-theme';
+import { MyPreset } from './core/config/my-theme';
 
 export const appConfig: ApplicationConfig = {
   providers: [
