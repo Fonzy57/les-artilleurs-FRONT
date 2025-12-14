@@ -1,14 +1,13 @@
+// ANGULAR
 import { Component } from "@angular/core";
-import { ButtonComponent } from "../../../shared/ui/button/button";
+
+// SECTIONS
+import { Hero } from "@layouts/main-layout/ui/sections/hero/hero";
 
 @Component({
   standalone: true,
   selector: "app-home",
-  imports: [ButtonComponent],
+  imports: [Hero],
   templateUrl: "./home.html",
 })
-export class Home {
-  test() {
-    console.log("Je clique sur le bouton");
-  }
-}
+export class Home {}
