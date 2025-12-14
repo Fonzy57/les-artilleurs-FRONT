@@ -1,0 +1,19 @@
+<div
+  class="bg-main flex h-[70px] w-full items-center justify-center text-white"
+>
+  <div class="mx-auto flex w-[1520px] items-center justify-between">
+    <div class="flex items-center gap-x-2" [routerLink]="'/'">
+      <img src="/logos/logo-nav.svg" alt="Logo du K9 Club" srcset="" />
+      <p class="font-staatliches text-2xl">Les Artilleurs</p>
+    </div>
+    <nav>
+      <ul class="flex items-center gap-x-24">
+        @for (navLink of navLinks; track $index) {
+          <li id="nav-link" class="font-poppins relative cursor-pointer py-1">
+            {{ navLink.label }}
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</div>
