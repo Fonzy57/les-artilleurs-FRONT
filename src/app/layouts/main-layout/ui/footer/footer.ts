@@ -12,7 +12,6 @@ import { socialsMedia } from "../../../../core/config/socials";
   selector: "app-footer",
   imports: [NgClass],
   templateUrl: "./footer.html",
-  styleUrl: "./footer.css",
 })
 export class Footer {
   currentYear = new Date().getFullYear();
