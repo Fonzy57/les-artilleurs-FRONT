@@ -1,0 +1,86 @@
+<footer class="bg-secondary px-6 pt-16 pb-10 lg:px-0 lg:pb-6">
+  <div
+    class="lg:mx-auto lg:flex lg:w-[1200px] lg:items-center lg:gap-x-32 xl:w-[1520px] xl:gap-x-60"
+  >
+    <!-- LOGO AND SOCIALS -->
+    <div
+      class="xs:justify-center flex justify-start gap-x-20 lg:flex-col lg:items-center lg:gap-y-16"
+    >
+      <img
+        src="/logos/logo-artilleurs-footer.svg"
+        alt="Deux canons et un ballon de football américain formant la lettre A"
+        class="w-[100px] lg:w-[120px] xl:w-[148px]"
+      />
+      <!-- SOCIALS -->
+      <div class="flex flex-col gap-y-4 lg:flex-row lg:gap-x-6">
+        @for (social of socials; track $index) {
+          <a
+            [href]="social.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-main-300 text-white transition-all duration-300 ease-out active:scale-90"
+          >
+            <span [ngClass]="social.icon" style="font-size: 1.5rem"></span>
+          </a>
+        }
+      </div>
+    </div>
+
+    <div class="sm:mt-12 sm:flex sm:items-start sm:justify-between lg:flex-1">
+      <!-- NAVIGATION -->
+      <!-- TODO FAIRE LES ANCRES FONCTIONNELLES QUAND IL Y AURA LES SECTIONS -->
+      <nav class="mt-10 text-white sm:mt-0">
+        <p class="font-staatliches text-3xl xl:text-4xl">Navigation</p>
+        <ul class="mt-6 flex flex-col gap-y-4">
+          @for (navLink of navLinks; track $index) {
+            <li
+              class="hover:text-main-300 active:text-main-200 cursor-pointer transition-colors duration-300 ease-out xl:text-xl"
+            >
+              {{ navLink.label }}
+            </li>
+          }
+        </ul>
+      </nav>
+      <!-- DOCUMENTS -->
+      <!-- TODO AJOUTER LES LIENS QUAND LES PAGES SERONT FINIES -->
+      <div class="mt-10 text-white sm:mt-0">
+        <p class="font-staatliches text-3xl xl:text-4xl">Documents utiles</p>
+        <ul class="mt-6 flex flex-col gap-y-4">
+          @for (document of documents; track $index) {
+            <li
+              class="hover:text-main-300 active:text-main-200 cursor-pointer transition-colors duration-300 ease-out xl:text-xl"
+            >
+              {{ document.label }}
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- TEXT -->
+      <p
+        class="font-staatliches mt-10 text-center text-3xl text-white sm:mt-0 sm:w-5/12 lg:w-1/3 xl:text-4xl"
+      >
+        un grand merci à ceux qui nous soutiennent ❤️
+      </p>
+    </div>
+  </div>
+
+  <!-- COPYRIGHT -->
+  <div class="text-text-300 text-center text-sm">
+    <p class="mt-10 lg:mt-20">
+      © LES ARTILLEURS - Tous droits réservés - {{ currentYear }} | v
+      {{ version }}
+    </p>
+    <p class="mt-2">
+      Développé avec amour par
+      <a
+        href="https://stephane-scheeres.dev/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline hover:no-underline"
+      >
+        Stéphane Scheeres
+      </a>
+    </p>
+  </div>
+</footer>
