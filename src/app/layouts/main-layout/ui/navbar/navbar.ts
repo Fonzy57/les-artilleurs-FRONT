@@ -19,6 +19,8 @@ export class Navbar {
   hasInteracted = false;
   navLinks = navlinks;
 
+  /* TODO AJOUTER LE CLICK QUE LES ANCRES */
+
   /* TODO IL FAUDRA VOIR SI ON PEUT SCROLL SUR MOBILE QUAND LE MENU EST OUVERT, SI C'EST LE CAS ENLEVER LE SCROLL */
   toggleMenu(): void {
     this.hasInteracted = true;
