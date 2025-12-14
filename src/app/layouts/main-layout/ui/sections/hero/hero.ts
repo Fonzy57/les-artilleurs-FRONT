@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+// ANGULAR
+import { Component } from "@angular/core";
+
+// COMPONENTS
+import { ButtonComponent } from "@shared/ui/button/button";
 
 @Component({
-  selector: 'app-hero',
-  imports: [],
-  templateUrl: './hero.html',
-  styleUrl: './hero.css',
+  selector: "app-website-hero",
+  imports: [ButtonComponent],
+  templateUrl: "./hero.html",
+  styleUrl: "./hero.css",
 })
-export class Hero {
-
-}
+export class Hero {}
