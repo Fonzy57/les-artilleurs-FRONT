@@ -1,0 +1,15 @@
+#nav-link::before {
+  content: "";
+  position: absolute;
+  background: rgb(255, 255, 255);
+  bottom: 0;
+  left: 50%;
+  height: 2px;
+  width: 0;
+  transform: translateX(-50%);
+  transition: all ease-out 300ms;
+}
+
+#nav-link:hover::before {
+  width: 100%;
+}

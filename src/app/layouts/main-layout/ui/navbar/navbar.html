@@ -1,0 +1,63 @@
+<div
+  class="bg-main relative top-0 z-50 w-full text-white shadow-[0_15px_30px_-15px_rgba(0,0,0,0.3)] md:sticky md:py-1 lg:flex lg:h-[70px] lg:items-center lg:justify-center lg:p-0"
+>
+  <div
+    class="flex items-center justify-between px-6 py-2.5 lg:mx-auto lg:w-[1200px] lg:p-0 xl:w-[1520px]"
+  >
+    <!-- LOGO AND TITLE -->
+    <div class="flex items-center gap-x-2" [routerLink]="'/'">
+      <img
+        src="/logos/logo-nav.svg"
+        alt="Deux canons et un ballon de football américain formant la lettre A"
+        srcset=""
+      />
+      <p class="font-staatliches text-xl md:text-2xl">Les Artilleurs</p>
+    </div>
+
+    <!-- BURGER MENU -->
+    <div
+      class="flex h-3.5 w-3.5 cursor-pointer flex-col gap-y-1 md:hidden"
+      (click)="toggleMenu()"
+    >
+      <span
+        class="min-h-0.5 w-full rounded-[20px] bg-white transition-all duration-300 ease-in-out"
+        [ngClass]="{ 'translate-y-1.5 rotate-45': isOpen, '': !isOpen }"
+      ></span>
+      <span
+        class="min-h-0.5 w-full rounded-[20px] bg-white transition-all duration-300 ease-in-out"
+        [ngClass]="{ 'opacity-0': isOpen, '': !isOpen }"
+      ></span>
+      <span
+        class="min-h-0.5 w-full rounded-[20px] bg-white transition-all duration-300 ease-in-out"
+        [ngClass]="{ '-translate-y-1.5 -rotate-45': isOpen, '': !isOpen }"
+      ></span>
+    </div>
+
+    <!-- NAVIGATION -->
+    <!-- TODO VOIR POUR LE TRANSLATE COMMENT NE PAS LE METTRE A PARTIR DE md -->
+    <nav
+      class="fixed top-[54px] left-0 min-h-[calc(100vh-54px)] w-full transform border-t border-white transition-transform duration-300 ease-out md:relative md:top-0 md:min-h-auto md:w-max md:border-none"
+      [ngClass]="{
+        'translate-x-0 md:translate-x-0': isOpen,
+        '-translate-x-full md:translate-x-0': !isOpen,
+      }"
+    >
+      <ul
+        class="bg-main flex min-h-[calc(100vh-54px)] flex-col items-start gap-y-5 px-6 pt-6 md:min-h-auto md:flex-row md:gap-x-10 md:p-0 xl:gap-x-24"
+      >
+        @for (navLink of navLinks; track $index) {
+          <div
+            class="w-full border-b border-white pb-3 md:w-max md:border-none md:p-0"
+          >
+            <li
+              id="nav-link"
+              class="font-poppins relative cursor-pointer py-1 md:p-0"
+            >
+              {{ navLink.label }}
+            </li>
+          </div>
+        }
+      </ul>
+    </nav>
+  </div>
+</div>
