@@ -1,54 +1,51 @@
-<section class="">
-  <div>
-    <h2>S’inscrire en 4 étapes</h2>
-    <p>
+<section
+  id="registration"
+  class="px-5 pt-16 pb-20 lg:bg-[url('/images/website/casque-football-americain.svg')] lg:bg-contain lg:bg-right lg:bg-no-repeat lg:px-0 xl:pb-56"
+>
+  <div class="sm:mx-auto sm:w-[403px]">
+    <h2 class="text-center text-4xl md:text-5xl">S’inscrire en 4 étapes</h2>
+    <p class="mt-3 text-center font-light">
       Pour rejoindre les Artilleurs, rien de plus simple - il suffit de
       compléter quelques documents
     </p>
   </div>
-  <div>
-    <div>
-      <p>1</p>
-      <p>Je viens tester</p>
-      <p>
-        Avant de remplir votre licence, venez donc tester nos différentes
-        disciplines, vous avez le droit à 4 entrainements offerts pris en charge
-        par le club. Une tenue de sport classique suffit, nous vous prêtons le
-        reste du matériel !
-      </p>
-    </div>
 
-    <div>
-      <p>2</p>
-      <p>Je télécharge le dossier de licence</p>
-      <p>
-        Une fois décidé.e, téléchargez simplement le dossier de licence pour la
-        saison en cours. Il y a notamment la demande de licence, une fiche de
-        renseignement, etc
-      </p>
-      <!-- TODO VOIR OU RENVOIE CE BOUTON -->
-      <app-button>Télécharger</app-button>
+  <div class="relative">
+    <div
+      class="absolute top-1/2 hidden w-full -translate-y-1/2 flex-col gap-y-5 lg:flex"
+    >
+      <div class="bg-main h-5 w-full"></div>
+      <div class="bg-main h-5 w-full"></div>
     </div>
-
-    <div>
-      <p>3</p>
-      <p>Je complète tous les documents</p>
-      <p>
-        N’oubliez pas de prendre rendez-vous avec votre médecin pour faire un
-        certificat médical et de bien compléter TOUS les documents demandés,
-        sinon on ne pourra pas valider la licence !
-      </p>
-    </div>
-
-    <div>
-      <p>4</p>
-      <p>Je règle la cotisation annuelle</p>
-      <p>
-        Directement en ligne depuis la plateforme HELLOASSO, vous pouvez payer
-        notamment en 3 mensualités si besoin !
-      </p>
-      <!-- TODO VOIR OU RENVOIE CE BOUTON -->
-      <app-button>Payer en ligne</app-button>
+    <div
+      class="mt-12 grid grid-cols-1 gap-16 md:mx-auto md:w-[816px] md:grid-cols-2 md:gap-24 lg:w-[1400px] lg:grid-cols-4 lg:gap-12 xl:mt-20 xl:w-[1610px] xl:gap-14"
+    >
+      <!-- CARD STYLE -->
+      @for (step of registrationSteps; track $index) {
+        <div
+          class="border-main relative border-4 bg-white px-5 pt-10 pb-6 sm:mx-auto sm:w-[360px] md:pt-12 lg:w-auto xl:w-[360px]"
+        >
+          <p
+            class="font-marker text-main absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white px-4 pb-1.5 text-center text-6xl leading-none md:text-7xl"
+          >
+            {{ step.id }}
+          </p>
+          <p class="font-staatliches text-center text-3xl md:text-4xl">
+            {{ step.title }}
+          </p>
+          <p class="mt-4 text-center font-light">
+            {{ step.content }}
+          </p>
+          @if (step.button) {
+            <!-- TODO VOIR POUR FAIRE LES BOUTONS FONCTIONNEL SELON LE LIEN OU L'ACTION DEFINIE -->
+            <div class="mx-auto mt-8 w-max">
+              <app-button>
+                {{ step.button }}
+              </app-button>
+            </div>
+          }
+        </div>
+      }
     </div>
   </div>
 </section>
