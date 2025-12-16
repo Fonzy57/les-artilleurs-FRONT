@@ -1,0 +1,93 @@
+<section
+  id="calendar"
+  class="mt-16 px-5 md:px-6 lg:mx-auto lg:w-[1376px] lg:px-0 xl:w-[1650px]"
+>
+  <h2
+    class="text-main xs:text-3xl text-2xl sm:text-center md:text-left md:text-5xl"
+  >
+    Calendrier {{ currentYear }}/{{ currentYear + 1 }}
+  </h2>
+
+  <!-- TABS -->
+  <div
+    class="mt-3 flex flex-col divide-y divide-white sm:mx-auto sm:w-[350px] md:w-auto md:flex-row md:divide-x md:divide-y-0"
+  >
+    @for (cat of licenceCategories; track cat.id) {
+      <button
+        type="button"
+        (click)="setActiveCategory(cat.name)"
+        class="bg-bg-gray font-staatliches text-center text-2xl transition-colors duration-300 ease-out md:w-[174px]"
+        [ngClass]="
+          activeCategory === cat.name
+            ? 'bg-main cursor-default text-white'
+            : 'hover:bg-main-100 cursor-pointer text-black'
+        "
+        [attr.aria-pressed]="activeCategory === cat.name"
+      >
+        {{ cat.label }}
+      </button>
+    }
+  </div>
+
+  <!-- CALENDAR DISPLAY -->
+  <div class="mt-5">
+    @if (activeCalendar.length === 0) {
+      <p class="text-center md:text-left">Aucun match pour cette catégorie.</p>
+    } @else {
+      <div
+        class="flex flex-col md:flex-row md:flex-wrap md:items-stretch md:justify-start"
+      >
+        @for (match of activeCalendar; track $index) {
+          <div
+            class="font-staatliches relative overflow-hidden py-8 text-center text-white sm:mx-auto sm:w-[350px] sm:px-7 md:mx-0 md:w-auto md:min-w-[190px]"
+          >
+            <!-- Image layer with grayscale -->
+            <!-- TODO VOIR POUR CHANGER LA PHOTO A CHAQUE MATCH -->
+            <div
+              class="absolute inset-0 bg-[url('/images/website/calendar/calendar-2.jpg')] bg-cover bg-center bg-no-repeat grayscale"
+            ></div>
+
+            <!-- Overlay layer -->
+            <div
+              class="absolute inset-0"
+              [ngClass]="$index % 2 === 0 ? 'bg-main/50' : 'bg-black/50'"
+            ></div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+              <!-- TODO VOIR SI ON LAISSE LE 'BADGE' DOMICILE -->
+              <p
+                class="text-3xl"
+                [ngClass]="
+                  match.place === 'domicile'
+                    ? 'bg-main mx-auto w-max rounded-full px-4 py-0.5'
+                    : 'mx-auto w-max rounded-full bg-none px-4 py-0.5'
+                "
+              >
+                {{ match.place }}
+              </p>
+
+              <div class="mt-4 text-5xl leading-none">
+                <p>{{ match.day }}</p>
+                <p class="">{{ match.month }}</p>
+                <p>{{ match.year }}</p>
+              </div>
+
+              <!-- TODO VOIR POUR LE SCORE COMMENT ON AFFICHE, SI ARTILLEURS TOUJOURS EN PREMIER ? -->
+              <p class="mt-12 text-7xl leading-none">
+                {{ match.scoreMyTeam }} - {{ match.scoreOtherTeam }}
+              </p>
+
+              <div class="mt-12">
+                <p class="text-3xl">vs</p>
+                <p class="mt-2 text-5xl">{{ match.team }}</p>
+              </div>
+
+              <p class="mt-10 text-3xl">{{ match.type }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>
