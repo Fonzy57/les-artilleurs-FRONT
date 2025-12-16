@@ -12,18 +12,18 @@
 
   <div class="relative">
     <div
-      class="absolute top-1/2 hidden w-full -translate-y-1/2 flex-col gap-y-5 lg:flex"
+      class="pointer-events-none absolute top-1/2 z-0 hidden w-full -translate-y-1/2 flex-col gap-y-5 lg:flex"
     >
       <div class="bg-main h-5 w-full"></div>
       <div class="bg-main h-5 w-full"></div>
     </div>
     <div
-      class="mt-12 grid grid-cols-1 gap-16 md:mx-auto md:w-[816px] md:grid-cols-2 md:gap-24 lg:w-[1400px] lg:grid-cols-4 lg:gap-12 xl:mt-20 xl:w-[1610px] xl:gap-14"
+      class="z-10 mt-12 grid grid-cols-1 gap-16 md:mx-auto md:w-[816px] md:grid-cols-2 md:gap-24 lg:w-[1400px] lg:grid-cols-4 lg:gap-12 xl:mt-20 xl:w-[1610px] xl:gap-14"
     >
       <!-- CARD STYLE -->
       @for (step of registrationSteps; track $index) {
         <div
-          class="border-main relative border-4 bg-white px-5 pt-10 pb-6 sm:mx-auto sm:w-[360px] md:pt-12 lg:w-auto xl:w-[360px]"
+          class="border-main relative flex h-full flex-col border-4 bg-white px-5 pt-10 pb-6 sm:mx-auto sm:w-[360px] md:pt-12 lg:w-auto xl:w-[360px] xl:px-7"
         >
           <p
             class="font-marker text-main absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white px-4 pb-1.5 text-center text-6xl leading-none md:text-7xl"
@@ -38,7 +38,7 @@
           </p>
           @if (step.button) {
             <!-- TODO VOIR POUR FAIRE LES BOUTONS FONCTIONNEL SELON LE LIEN OU L'ACTION DEFINIE -->
-            <div class="mx-auto mt-8 w-max">
+            <div class="mx-auto mt-auto w-max pt-8">
               <app-button>
                 {{ step.button }}
               </app-button>
