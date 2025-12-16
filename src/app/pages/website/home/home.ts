@@ -7,11 +7,12 @@ import { Category } from "@layouts/main-layout/ui/sections/category/category";
 import { Registration } from "@layouts/main-layout/ui/sections/registration/registration";
 import { History } from "@layouts/main-layout/ui/sections/history/history";
 import { Calendar } from "@layouts/main-layout/ui/sections/calendar/calendar";
+import { Club } from "@layouts/main-layout/ui/sections/club/club";
 
 @Component({
   standalone: true,
   selector: "app-home",
-  imports: [Hero, Category, Registration, History, Calendar],
+  imports: [Hero, Category, Registration, History, Calendar, Club],
   templateUrl: "./home.html",
 })
 export class Home {}
