@@ -137,6 +137,38 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
+    inputtext: {
+      root: {
+        background: "{colors.global.white}",
+        focusBorderColor: "{colors.primary.800}",
+        color: "{colors.global.black}",
+        placeholderColor: "{colors.global.bgGray}",
+        focusRing: {
+          style: "solid",
+          width: "2px",
+          color: "{colors.primary.200}",
+          offset: "0px",
+        },
+        invalidBorderColor: "{colors.global.error}",
+        invalidPlaceholderColor: "{colors.global.error}",
+      },
+    },
+    textarea: {
+      root: {
+        background: "{colors.global.white}",
+        focusBorderColor: "{colors.primary.800}",
+        color: "{colors.global.black}",
+        placeholderColor: "{colors.global.bgGray}",
+        focusRing: {
+          style: "solid",
+          width: "2px",
+          color: "{colors.primary.200}",
+          offset: "0px",
+        },
+        invalidBorderColor: "{colors.global.error}",
+        invalidPlaceholderColor: "{colors.global.error}",
+      },
+    },
     button: {},
     /* select: {
       colorScheme: {
