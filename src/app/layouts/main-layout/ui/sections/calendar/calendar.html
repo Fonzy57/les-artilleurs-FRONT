@@ -32,7 +32,11 @@
   <!-- CALENDAR DISPLAY -->
   <div class="mt-5">
     @if (activeCalendar.length === 0) {
-      <p class="text-center md:text-left">Aucun match pour cette catégorie.</p>
+      <p
+        class="pb-10 text-center md:text-left lg:min-h-[300px] lg:pb-0 xl:min-h-[400px]"
+      >
+        Aucun match pour cette catégorie.
+      </p>
     } @else {
       <div
         class="flex flex-col md:flex-row md:flex-wrap md:items-stretch md:justify-start"
