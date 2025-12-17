@@ -15,6 +15,9 @@ import { TextareaModule } from "primeng/textarea";
 // COMPONENTS
 import { ButtonComponent } from "@shared/ui/button/button";
 
+// SERVICES
+import { ToastService } from "@shared/ui/toast/toast.service";
+
 @Component({
   selector: "app-website-contact",
   imports: [
@@ -29,6 +32,7 @@ import { ButtonComponent } from "@shared/ui/button/button";
 })
 export class Contact {
   formBuilder: FormBuilder = inject(FormBuilder);
+  private toast = inject(ToastService);
 
   hasTriedSubmit = false; // validation
   isSubmitting = false; // API call
@@ -61,6 +65,14 @@ export class Contact {
       this.isSuccess = true;
 
       console.log("Valeur du formulaire : ", this.contactForm.value);
+      this.toast.success(
+        "Message envoyé",
+        "Message envoyé avec succès par notre serveur SMTP",
+        {
+          sticky: true,
+          position: "bottom-center",
+        },
+      );
 
       this.contactForm.reset();
       this.hasTriedSubmit = false;
