@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { RouterLink } from "@angular/router";
 
 type ButtonTarget = "_self" | "_blank";
+type ButtonType = "button" | "submit";
 
 @Component({
   selector: "app-button",
@@ -15,6 +16,7 @@ export class ButtonComponent {
   @Input() routerLink?: string | any[];
   @Input() href?: string;
   @Input() target: ButtonTarget = "_self";
+  @Input() type: ButtonType = "button";
 
   @Output() clicked = new EventEmitter<MouseEvent>();
 
