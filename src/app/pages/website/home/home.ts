@@ -10,6 +10,7 @@ import { Calendar } from "@layouts/main-layout/ui/sections/calendar/calendar";
 import { Club } from "@layouts/main-layout/ui/sections/club/club";
 import { Association } from "@layouts/main-layout/ui/sections/association/association";
 import { Infos } from "@layouts/main-layout/ui/sections/infos/infos";
+import { Faq } from "@layouts/main-layout/ui/sections/faq/faq";
 
 @Component({
   standalone: true,
@@ -23,6 +24,7 @@ import { Infos } from "@layouts/main-layout/ui/sections/infos/infos";
     Club,
     Association,
     Infos,
+    Faq,
   ],
   templateUrl: "./home.html",
 })
