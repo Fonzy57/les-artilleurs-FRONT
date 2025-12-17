@@ -1,0 +1,77 @@
+<section
+  id="association"
+  class="relative mt-20 px-5 sm:px-10 md:px-24 lg:flex lg:items-start lg:justify-center lg:gap-x-20 lg:px-0 xl:justify-start xl:gap-x-0"
+>
+  <!-- BARS -->
+  <div class="hidden flex-col items-start gap-y-5 xl:flex xl:pt-1.5">
+    <div class="bg-main h-4 w-[140px]"></div>
+    <div class="bg-main h-4 w-[140px]"></div>
+  </div>
+
+  <!-- TEXT -->
+  <div class="lg:w-[626px] xl:ml-4 xl:w-[750px]">
+    <div>
+      <h3
+        class="md:text-5x text-center text-3xl sm:text-4xl lg:text-left lg:text-5xl"
+      >
+        Rejoindre l’initiative
+        <span class="text-main">“ENSEMBLE”</span>
+      </h3>
+      <h4
+        class="mt-2 text-center text-xl sm:text-2xl md:text-3xl lg:mt-0.5 lg:text-left"
+      >
+        Le bénévolat, coeur de l’association
+      </h4>
+      <div class="mt-5 flex flex-col gap-y-2 lg:mt-8 lg:gap-y-6 xl:w-[465px]">
+        <p>
+          Il n’y a pas qu’en étant joueur ou sponsor que l’on peut contribuer au
+          développement des Artilleurs. C’est pourquoi nous avons lancé
+          l’initiative <span class="text-main font-medium">“Ensemble”</span>.
+        </p>
+        <p>
+          Cette initiative vise à accueillir tous ceux et celles qui
+          souhaiteraient participer à la vie du club, avec ou sans expérience et
+          leur permettre de faire partie de l’action bénévole, sociale et de se
+          former à la gestion associative sous toutes ses formes.
+        </p>
+        <p>
+          Toute compétence est utile, et nous sommes toujours à la recherche de
+          talents pour nous aider à aller de l’avant !
+        </p>
+      </div>
+      <div class="mx-auto mt-8 w-max sm:mt-5 lg:mx-0 lg:mt-10">
+        <app-button>Nous contacter</app-button>
+      </div>
+    </div>
+
+    <div class="mt-12 sm:mt-20 lg:mt-20">
+      <h3 class="text-center text-3xl sm:text-4xl md:text-5xl lg:text-left">
+        Aidez les artilleurs <span class="text-main">avec un don !</span>
+      </h3>
+      <p class="mt-5 lg:mt-8">
+        La ressource principale du bénévole, c’est le temps. Si vous n’en avez
+        pas mais que vous souhaitez tout de même aidez les Artilleurs, faites un
+        don, cela nous permettra de financer nos activités et déplacements.
+      </p>
+      <div class="mx-auto mt-8 w-max sm:mt-5 lg:mx-0 lg:mt-10">
+        <app-button>Faire un don !</app-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEXT AND IMAGES -->
+  <div class="mt-20 flex flex-col gap-y-10 md:gap-y-14 lg:mt-0 xl:ml-20">
+    @for (info of infos; track $index) {
+      <div
+        class="flex flex-col items-center justify-center gap-y-2 lg:flex-row lg:items-end lg:gap-x-8"
+      >
+        <img [src]="info.imageUrl" alt="" class="lg:w-[250px]" />
+        <p
+          class="text-justify sm:w-3/4 lg:w-[360px] lg:text-left xl:w-[452px] xl:pb-2"
+        >
+          {{ info.text }}
+        </p>
+      </div>
+    }
+  </div>
+</section>
