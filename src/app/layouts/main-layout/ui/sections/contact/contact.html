@@ -29,19 +29,26 @@
         voluptas exercitationem illo nemo perspiciatis facilis quae consectetur
         enim quidem.
       </p>
-      <p>Les champs marqués d’un * sont obligatoires.</p>
+      <p>
+        Les champs marqués d’un
+        <span class="text-main font-medium">*</span> sont obligatoires.
+      </p>
     </div>
 
     <!-- FORM -->
     <form
       [formGroup]="contactForm"
       (ngSubmit)="onSubmit()"
-      class="flex w-full flex-col gap-y-4"
+      class="flex w-full flex-col gap-y-4 lg:gap-y-6"
     >
       <!-- NAME -->
       <div class="flex flex-col gap-1">
         <label for="name" class="text-text text-sm">
-          Votre nom complet<span aria-hidden="true">*</span>
+          Votre nom complet<span
+            aria-hidden="true"
+            class="text-main font-medium"
+            >*</span
+          >
         </label>
         <input
           pInputText
@@ -60,7 +67,9 @@
       <!-- EMAIL -->
       <div class="flex flex-col gap-1">
         <label for="email" class="text-text text-sm">
-          Votre email<span aria-hidden="true">*</span>
+          Votre email<span aria-hidden="true" class="text-main font-medium"
+            >*</span
+          >
         </label>
         <input
           pInputText
@@ -86,7 +95,9 @@
       <!-- MESSAGE -->
       <div class="flex flex-col gap-1">
         <label for="message" class="text-text text-sm">
-          Votre message<span aria-hidden="true">*</span>
+          Votre message<span aria-hidden="true" class="text-main font-medium"
+            >*</span
+          >
         </label>
         <textarea
           pTextarea
@@ -102,9 +113,17 @@
           <p class="text-error text-xs">Le message est requis.</p>
         }
       </div>
-      <button pButton severity="primary" type="submit" class="mt-4 sm:w-max">
-        <span pButtonLabel>Envoyer</span>
-      </button>
+
+      <!-- TODO AJOUTER UN RECAPTCHA -->
+
+      <app-button
+        type="submit"
+        [disabled]="
+          (hasTriedSubmit && contactForm.invalid) || isSubmitting || isSuccess
+        "
+      >
+        Envoyer
+      </app-button>
     </form>
   </div>
 </section>

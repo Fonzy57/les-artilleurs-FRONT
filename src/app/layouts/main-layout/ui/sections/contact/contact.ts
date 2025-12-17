@@ -12,6 +12,9 @@ import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
 import { TextareaModule } from "primeng/textarea";
 
+// COMPONENTS
+import { ButtonComponent } from "@shared/ui/button/button";
+
 @Component({
   selector: "app-website-contact",
   imports: [
@@ -20,12 +23,16 @@ import { TextareaModule } from "primeng/textarea";
     FormsModule,
     ReactiveFormsModule,
     TextareaModule,
+    ButtonComponent,
   ],
   templateUrl: "./contact.html",
 })
 export class Contact {
   formBuilder: FormBuilder = inject(FormBuilder);
-  formSubmitted = false;
+
+  hasTriedSubmit = false; // validation
+  isSubmitting = false; // API call
+  isSuccess = false; // Send is ok
 
   contactForm = this.formBuilder.group({
     name: ["", Validators.required],
@@ -35,22 +42,33 @@ export class Contact {
 
   /* TODO FAIRE LA VERIFICATION DES CHAMPS EN FRONT ET EN BACK - MESSAGE D'ERREUR SERONT ENVOYES PAR L'API */
   onSubmit() {
-    this.formSubmitted = true;
-    if (this.contactForm.valid) {
-      /* TODO PLUS TARD AJOUTER LES TAOSTS MESSAGE */
-      /* this.messageService.add({
-        severity: "success",
-        summary: "Success",
-        detail: "Form Submitted",
-        life: 3000,
-      }); */
-      this.contactForm.reset();
-      this.formSubmitted = false;
+    this.hasTriedSubmit = true;
+
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
     }
+
+    if (this.isSubmitting || this.isSuccess) return;
+
+    this.isSubmitting = true;
+
+    // Simulation d'appel API
+    // Remplacer par call API en http
+    // TODO SUPPRIMER QUAND API FINIE
+    setTimeout(() => {
+      this.isSubmitting = false;
+      this.isSuccess = true;
+
+      console.log("Valeur du formulaire : ", this.contactForm.value);
+
+      this.contactForm.reset();
+      this.hasTriedSubmit = false;
+    }, 1200);
   }
 
   isInvalid(controlName: string) {
     const control = this.contactForm.get(controlName);
-    return control?.invalid && (control.touched || this.formSubmitted);
+    return !!(control && control.invalid && this.hasTriedSubmit);
   }
 }
