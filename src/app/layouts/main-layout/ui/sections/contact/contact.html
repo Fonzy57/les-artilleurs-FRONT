@@ -1,0 +1,110 @@
+<section id="faq" class="mt-20 pb-32 md:mt-28 lg:mt-40 lg:pb-40 xl:mt-52">
+  <div class="relative">
+    <!-- BORDERS BEHIND TITLE -->
+    <div
+      class="absolute top-1/2 z-0 flex w-full -translate-y-1/2 flex-col items-start gap-y-5"
+    >
+      <div class="bg-secondary h-4 w-full"></div>
+      <div class="bg-secondary h-4 w-full"></div>
+    </div>
+
+    <!-- TITLE -->
+    <div
+      class="xs:w-max xs:px-8 relative z-10 mx-auto w-10/12 bg-white py-5 sm:mx-0 sm:ml-7 md:ml-10 lg:ml-40 lg:px-16 xl:ml-80"
+    >
+      <h2 class="md:text-5x text-center text-3xl sm:text-4xl lg:text-5xl">
+        Nous contacter
+      </h2>
+    </div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div
+    class="mt-8 flex flex-col gap-y-8 px-5 sm:px-7 md:px-10 lg:ml-40 lg:w-[1120px] lg:px-0 xl:ml-80"
+  >
+    <div class="w-2/3">
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, dolorem!
+        Reprehenderit qui vel eaque, rerum explicabo aperiam fugit ea ab
+        voluptas exercitationem illo nemo perspiciatis facilis quae consectetur
+        enim quidem.
+      </p>
+      <p>Les champs marqués d’un * sont obligatoires.</p>
+    </div>
+
+    <!-- FORM -->
+    <form
+      [formGroup]="contactForm"
+      (ngSubmit)="onSubmit()"
+      class="flex w-full flex-col gap-y-4"
+    >
+      <!-- NAME -->
+      <div class="flex flex-col gap-1">
+        <label for="name" class="text-text text-sm">
+          Votre nom complet<span aria-hidden="true">*</span>
+        </label>
+        <input
+          pInputText
+          type="text"
+          id="name"
+          placeholder="John Madden"
+          formControlName="name"
+          [invalid]="isInvalid('name')"
+          aria-required="true"
+        />
+        @if (isInvalid("name")) {
+          <p class="text-error text-xs">Le nom est requis.</p>
+        }
+      </div>
+
+      <!-- EMAIL -->
+      <div class="flex flex-col gap-1">
+        <label for="email" class="text-text text-sm">
+          Votre email<span aria-hidden="true">*</span>
+        </label>
+        <input
+          pInputText
+          type="email"
+          id="email"
+          placeholder="john.madden@gmail.com"
+          formControlName="email"
+          [invalid]="isInvalid('email')"
+          aria-required="true"
+        />
+        @if (isInvalid("email")) {
+          @if (contactForm.get("email")?.errors?.["required"]) {
+            <p class="text-error text-xs">L'email est requis.</p>
+          }
+          @if (contactForm.get("email")?.errors?.["email"]) {
+            <p class="text-error text-xs">
+              Veuillez renseigner un email valide.
+            </p>
+          }
+        }
+      </div>
+
+      <!-- MESSAGE -->
+      <div class="flex flex-col gap-1">
+        <label for="message" class="text-text text-sm">
+          Votre message<span aria-hidden="true">*</span>
+        </label>
+        <textarea
+          pTextarea
+          id="message"
+          rows="5"
+          cols="30"
+          placeholder="Votre message ..."
+          formControlName="message"
+          [invalid]="isInvalid('message')"
+          aria-required="true"
+        ></textarea>
+        @if (isInvalid("message")) {
+          <p class="text-error text-xs">Le message est requis.</p>
+        }
+      </div>
+      <button pButton severity="primary" type="submit" class="mt-4 sm:w-max">
+        <span pButtonLabel>Envoyer</span>
+      </button>
+    </form>
+  </div>
+</section>
