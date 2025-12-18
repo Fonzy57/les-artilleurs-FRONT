@@ -1,6 +1,9 @@
 // ANGULAR
 import { Component } from "@angular/core";
 
+// COMPONENTS
+import { HorizontalAccordionComponent } from "../../accordion/accordion";
+
 type infoContent = {
   text: string;
   span: string;
@@ -8,7 +11,7 @@ type infoContent = {
 
 @Component({
   selector: "app-website-category",
-  imports: [],
+  imports: [HorizontalAccordionComponent],
   templateUrl: "./category.html",
 })
 export class Category {
