@@ -8,5 +8,9 @@ export const documentsUtil: doumentsUtil[] = [
   { name: "licence", label: "Dossiers de Licence", url: "#" },
   { name: "informations", label: "Fiche de renseignement", url: "#" },
   { name: "legal-notice", label: "Mentions légales", url: "mentions-legales" },
-  { name: "privacy-policy", label: "Politique de confidentialité", url: "#" },
+  {
+    name: "privacy-policy",
+    label: "Politique de confidentialité",
+    url: "politique-de-confidentialite",
+  },
 ];
