@@ -10,6 +10,7 @@ import { DashboardLayout } from "./layouts/dashboard-layout/dashboard-layout";
 // Website
 import { Home } from "./pages/website/home/home";
 import { LegalNotice } from "@pages/website/legal-notice/legal-notice";
+import { PrivacyPolicy } from "@pages/website/privacy-policy/privacy-policy";
 // Auth
 import { Login } from "./pages/auth/login/login";
 // Dashboard
@@ -26,6 +27,7 @@ export const routes: Routes = [
     children: [
       { path: "", component: Home },
       { path: "mentions-legales", component: LegalNotice },
+      { path: "politique-de-confidentialite", component: PrivacyPolicy },
     ],
   },
 
