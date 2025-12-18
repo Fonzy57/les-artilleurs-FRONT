@@ -1,0 +1,125 @@
+<h1
+  class="text-main pt-8 text-center text-3xl font-bold sm:pt-20 md:text-4xl lg:text-5xl"
+>
+  Politique de confidentialité
+</h1>
+<p class="mt-8 md:mt-10" [ngClass]="containerStyle">
+  Le club <strong [ngClass]="strongStyle">Les Artilleurs</strong> attache une
+  grande importance à la protection des données personnelles et s’engage à les
+  traiter dans le respect du Règlement Général sur la Protection des Données
+  (RGPD – UE 2016/679) et de la loi Informatique et Libertés.
+</p>
+
+<div class="mt-5 sm:mt-8" [ngClass]="containerStyle">
+  <h2 [ngClass]="titleStyle">Données collectées</h2>
+  <div class="mt-3 flex flex-col gap-y-2">
+    <p>
+      Les seules données personnelles collectées sont celles
+      <span [ngClass]="strongStyle"
+        >transmises volontairement via le formulaire de contact</span
+      >
+      :
+    </p>
+    <div>
+      <p>Via le formulaire de contact :</p>
+      <ul class="list-inside list-disc">
+        <li>Nom et prénom</li>
+        <li>Adresse e-mail</li>
+        <li>Message libre</li>
+      </ul>
+    </div>
+    <p>
+      Aucune autre donnée personnelle n’est collectée à des fins d’analyse, de
+      suivi ou de profilage par le club. Le site n’utilise aucun outil de mesure
+      d’audience ni cookie marketing.
+    </p>
+    <div>
+      <p>
+        Toutefois, l’intégration de Google Maps peut entraîner le dépôt de
+        cookies par Google, soumis à leur propre politique de confidentialité.
+      </p>
+      <p>
+        Ces services peuvent impliquer un transfert de données en dehors de
+        l’Union européenne, encadré par les clauses contractuelles types
+        approuvées par la Commission européenne.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="mt-5 sm:mt-8" [ngClass]="containerStyle">
+  <h2 [ngClass]="titleStyle">Finalité du traitement</h2>
+  <div class="flex flex-col gap-y-2">
+    <div class="mt-3">
+      <p>Les données sont collectées uniquement pour :</p>
+      <ul class="list-inside list-disc">
+        <li>Répondre aux demandes de contact envoyées via le formulaire.</li>
+        <li>Assurer les échanges entre l’utilisateur et le club</li>
+      </ul>
+    </div>
+    <p>
+      Elles ne sont en aucun cas utilisées à des fins commerciales, marketing ou
+      statistiques.
+    </p>
+  </div>
+</div>
+
+<div class="mt-5 sm:mt-8" [ngClass]="containerStyle">
+  <h2 [ngClass]="titleStyle">Base légale du traitement</h2>
+  <p class="mt-3">
+    Le traitement est fondé sur le
+    <span [ngClass]="strongStyle">consentement de l’utilisateur</span>, exprimé
+    lors de l’envoi du formulaire de contact.
+  </p>
+</div>
+
+<div class="mt-5 sm:mt-8" [ngClass]="containerStyle">
+  <h2 [ngClass]="titleStyle">Durée de conservation</h2>
+  <p class="mt-3">
+    Les données collectées sont conservées le temps nécessaire au traitement de
+    la demande, puis supprimées au plus tard
+    <span [ngClass]="strongStyle">12 mois</span> après le dernier échange.
+  </p>
+</div>
+
+<div class="mt-5 sm:mt-8" [ngClass]="containerStyle">
+  <h2 [ngClass]="titleStyle">Droits des utilisateurs</h2>
+  <div class="mt-3 flex flex-col gap-y-2">
+    <div>
+      <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+      <ul class="list-inside list-disc">
+        <li>Droit d’accès, de rectification et d’effacement de vos données,</li>
+        <li>Droit d’opposition et de limitation du traitement,</li>
+        <li>Droit à la portabilité des données.</li>
+      </ul>
+    </div>
+    <div>
+      <p>Pour exercer vos droits, vous pouvez contacter :</p>
+      <p>{{ contact }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="mt-5 sm:mt-8" [ngClass]="containerStyle">
+  <h2 [ngClass]="titleStyle">Sécurité des données</h2>
+  <p class="mt-3">
+    Le club met en œuvre toutes les mesures techniques et organisationnelles
+    raisonnables afin de protéger les données personnelles contre la perte,
+    l’altération, l’accès non autorisé ou la divulgation.
+  </p>
+</div>
+
+<div class="mt-5 pb-20 sm:mt-8 lg:pb-32" [ngClass]="containerStyle">
+  <h2 [ngClass]="titleStyle">Réclamation</h2>
+  <p class="mt-3">
+    Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire
+    une réclamation auprès de la CNIL :
+  </p>
+  <a
+    href="https://www.cnil.fr"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="hover:text-main underline active:no-underline"
+    >https://www.cnil.fr</a
+  >
+</div>

@@ -116,14 +116,61 @@
 
       <!-- TODO AJOUTER UN RECAPTCHA -->
 
-      <app-button
-        type="submit"
-        [disabled]="
-          (hasTriedSubmit && contactForm.invalid) || isSubmitting || isSuccess
-        "
-      >
-        Envoyer
-      </app-button>
+      <div>
+        <div class="flex gap-x-2">
+          <p-checkbox
+            inputId="consent"
+            formControlName="consent"
+            [binary]="true"
+            [invalid]="isInvalid('consent')"
+            aria-required="true"
+          />
+          <div class="text-text text-sm leading-snug">
+            <label for="consent">
+              J’accepte que
+              <span class="font-medium">Les Artilleurs</span> traite mes données
+              afin de répondre à ma demande.
+            </label>
+            <p>
+              Pour en savoir plus, consulter la
+              <a
+                href="/politique-de-confidentialite"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-main active:text-main-600 cursor-pointer border-b transition-all duration-300 ease-out hover:border-transparent"
+              >
+                politique de confidentialité</a
+              >
+              <span aria-hidden="true" class="text-main font-medium">*</span>
+            </p>
+          </div>
+        </div>
+        @if (isInvalid("consent")) {
+          <p class="text-error mt-0.5 text-xs">
+            Vous devez accepter la politique de confidentialité pour envoyer le
+            formulaire.
+          </p>
+        }
+      </div>
+
+      <div class="mt-4 flex items-center justify-start gap-x-8">
+        <app-button
+          type="submit"
+          [disabled]="
+            (hasTriedSubmit && contactForm.invalid) || isSubmitting || isSuccess
+          "
+        >
+          Envoyer
+        </app-button>
+        @if (isSuccess) {
+          <!-- TODO CE BOUTON DEVRAIT ÊTRE UN GHOST BUTTON -->
+          <div>
+            <app-button type="button" (click)="resetForm()">
+              Envoyer un autre message
+            </app-button>
+          </div>
+        }
+      </div>
     </form>
   </div>
 </section>

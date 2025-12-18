@@ -20,6 +20,7 @@ export class ButtonComponent {
 
   @Output() clicked = new EventEmitter<MouseEvent>();
 
+  /* TODO FAIRE UN GHOST BUTTON AVEC UN SWITCH POUR CHOISIR LA COULEUR */
   readonly buttonStyle =
     "bg-main active:ring-main-300 disabled:bg-main/50 disabled:hover:bg-main/50 cursor-pointer rounded-lg px-3 py-2 text-base font-medium text-white shadow-md transition-all duration-300 ease-out hover:bg-[#322053] active:ring-2 disabled:cursor-not-allowed disabled:active:ring-0";
 

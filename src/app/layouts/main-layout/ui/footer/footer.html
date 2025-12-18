@@ -47,11 +47,14 @@
         <p class="font-staatliches text-3xl xl:text-4xl">Documents utiles</p>
         <ul class="mt-6 flex flex-col gap-y-4">
           @for (document of documents; track $index) {
-            <li
-              class="hover:text-main-300 active:text-main-200 cursor-pointer transition-colors duration-300 ease-out xl:text-xl"
-            >
-              {{ document.label }}
-            </li>
+            <!-- TODO VOIR CAR PAS FORCEMENT DES LIENS MAIS AUSSI DES TELECHARGEMENTS -->
+            <a [href]="document.url">
+              <li
+                class="hover:text-main-300 active:text-main-200 cursor-pointer transition-colors duration-300 ease-out xl:text-xl"
+              >
+                {{ document.label }}
+              </li>
+            </a>
           }
         </ul>
       </div>

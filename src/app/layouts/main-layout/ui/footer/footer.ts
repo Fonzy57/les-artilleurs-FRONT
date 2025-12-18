@@ -3,10 +3,10 @@ import { Component } from "@angular/core";
 import { NgClass } from "@angular/common";
 
 // CONFIG
-import { artilleursConfig } from "../../../../core/config/app.config";
-import { navlinks } from "../../../../core/config/navigation";
-import { documentsUtil } from "../../../../core/config/documents";
-import { socialsMedia } from "../../../../core/config/socials";
+import { artilleursConfig } from "@core/config/app.config";
+import { navlinks } from "@core/config/navigation";
+import { documentsUtil } from "@core/config/documents";
+import { socialsMedia } from "@core/config/socials";
 
 @Component({
   selector: "app-footer",
