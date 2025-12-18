@@ -12,6 +12,7 @@ import { Home } from "./pages/website/home/home";
 import { LegalNotice } from "@pages/website/legal-notice/legal-notice";
 import { PrivacyPolicy } from "@pages/website/privacy-policy/privacy-policy";
 import { CookiePolicy } from "@pages/website/cookie-policy/cookie-policy";
+import { NotFound } from "@pages/website/not-found/not-found";
 // Auth
 import { Login } from "./pages/auth/login/login";
 // Dashboard
@@ -55,5 +56,5 @@ export const routes: Routes = [
   },
 
   /* TODO VOIR PLUS TARD POUR LES REDIRECTIONS */
-  { path: "**", redirectTo: "" },
+  { path: "**", component: NotFound },
 ];
