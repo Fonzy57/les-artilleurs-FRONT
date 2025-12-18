@@ -15,6 +15,7 @@ type faqContent = {
   templateUrl: "./faq.html",
 })
 export class Faq {
+  /* TODO VOIR SI ON MET CA DANS L'API, COMME CA L'ADMIN GERE LES TITRES ET CONTENU */
   faqQuestions: faqContent[] = [
     {
       title: "à partir de quel âge puis-je prendre une licence ?",

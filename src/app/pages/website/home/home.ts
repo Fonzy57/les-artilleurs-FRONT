@@ -11,6 +11,7 @@ import { Club } from "@layouts/main-layout/ui/sections/club/club";
 import { Association } from "@layouts/main-layout/ui/sections/association/association";
 import { Infos } from "@layouts/main-layout/ui/sections/infos/infos";
 import { Faq } from "@layouts/main-layout/ui/sections/faq/faq";
+import { Contact } from "@layouts/main-layout/ui/sections/contact/contact";
 
 @Component({
   standalone: true,
@@ -25,6 +26,7 @@ import { Faq } from "@layouts/main-layout/ui/sections/faq/faq";
     Association,
     Infos,
     Faq,
+    Contact,
   ],
   templateUrl: "./home.html",
 })

@@ -137,6 +137,91 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
+    inputtext: {
+      colorScheme: {
+        light: {
+          root: {
+            background: "{colors.global.white}",
+            focusBorderColor: "{colors.primary.800}",
+            color: "{colors.global.black}",
+            placeholderColor: "{colors.global.bgGray}",
+            focusRing: {
+              style: "solid",
+              width: "2px",
+              color: "{colors.primary.200}",
+              offset: "0px",
+            },
+            invalidBorderColor: "{colors.global.error}",
+            invalidPlaceholderColor: "{colors.global.error}",
+          },
+        },
+      },
+    },
+    textarea: {
+      colorScheme: {
+        light: {
+          root: {
+            background: "{colors.global.white}",
+            focusBorderColor: "{colors.primary.800}",
+            color: "{colors.global.black}",
+            placeholderColor: "{colors.global.bgGray}",
+            focusRing: {
+              style: "solid",
+              width: "2px",
+              color: "{colors.primary.200}",
+              offset: "0px",
+            },
+            invalidBorderColor: "{colors.global.error}",
+            invalidPlaceholderColor: "{colors.global.error}",
+          },
+        },
+      },
+    },
+    toast: {
+      colorScheme: {
+        light: {
+          root: {
+            borderWidth: "1px",
+          },
+          info: {
+            background: "{colors.info.50}",
+            borderColor: "{colors.global.information}",
+            color: "{colors.global.information}",
+            detailColor: "{colors.global.text}",
+            closeButton: {
+              hoverBackground: "{colors.info.100}",
+            },
+          },
+          success: {
+            background: "{colors.success.50}",
+            borderColor: "{colors.global.success}",
+            color: "{colors.global.success}",
+            detailColor: "{colors.global.text}",
+            closeButton: {
+              hoverBackground: "{colors.success.100}",
+            },
+          },
+          warn: {
+            background: "{colors.warning.50}",
+            borderColor: "{colors.global.warning}",
+            color: "{colors.global.warning}",
+            detailColor: "{colors.global.text}",
+            closeButton: {
+              hoverBackground: "{colors.warning.100}",
+            },
+          },
+          error: {
+            background: "{colors.error.50}",
+            borderColor: "{colors.global.error}",
+            color: "{colors.global.error}",
+            detailColor: "{colors.global.text}",
+            closeButton: {
+              hoverBackground: "{colors.error.100}",
+            },
+          },
+        },
+      },
+    },
     button: {},
     /* select: {
       colorScheme: {
