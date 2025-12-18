@@ -11,6 +11,7 @@ import { DashboardLayout } from "./layouts/dashboard-layout/dashboard-layout";
 import { Home } from "./pages/website/home/home";
 import { LegalNotice } from "@pages/website/legal-notice/legal-notice";
 import { PrivacyPolicy } from "@pages/website/privacy-policy/privacy-policy";
+import { CookiePolicy } from "@pages/website/cookie-policy/cookie-policy";
 // Auth
 import { Login } from "./pages/auth/login/login";
 // Dashboard
@@ -28,6 +29,7 @@ export const routes: Routes = [
       { path: "", component: Home },
       { path: "mentions-legales", component: LegalNotice },
       { path: "politique-de-confidentialite", component: PrivacyPolicy },
+      { path: "politique-des-cookies", component: CookiePolicy },
     ],
   },
 
