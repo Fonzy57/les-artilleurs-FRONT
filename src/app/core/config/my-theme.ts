@@ -177,6 +177,19 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
+    checkbox: {
+      colorScheme: {
+        light: {
+          root: {
+            checkedBackground: "{colors.global.main}",
+            checkedHoverBackground: "{colors.global.main}",
+            checkedBorderColor: "{colors.global.main}",
+            checkedHoverBorderColor: "{colors.primary.400}",
+            invalidBorderColor: "{colors.global.error}",
+          },
+        },
+      },
+    },
     toast: {
       colorScheme: {
         light: {
