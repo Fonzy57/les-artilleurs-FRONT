@@ -11,6 +11,7 @@ import {
 import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
 import { TextareaModule } from "primeng/textarea";
+import { CheckboxModule } from "primeng/checkbox";
 
 // COMPONENTS
 import { ButtonComponent } from "@shared/ui/button/button";
@@ -26,6 +27,7 @@ import { ToastService } from "@shared/ui/toast/toast.service";
     FormsModule,
     ReactiveFormsModule,
     TextareaModule,
+    CheckboxModule,
     ButtonComponent,
   ],
   templateUrl: "./contact.html",
@@ -42,6 +44,7 @@ export class Contact {
     name: ["", Validators.required],
     email: ["", [Validators.required, Validators.email]],
     message: ["", Validators.required],
+    consent: [false, Validators.requiredTrue],
   });
 
   /* TODO FAIRE LA VERIFICATION DES CHAMPS EN FRONT ET EN BACK - MESSAGE D'ERREUR SERONT ENVOYES PAR L'API */
@@ -63,6 +66,7 @@ export class Contact {
     setTimeout(() => {
       this.isSubmitting = false;
       this.isSuccess = true;
+      this.contactForm.disable();
 
       /* TODO SUPPRIMER QUAND TESTS FINIS */
       console.log("Valeur du formulaire : ", this.contactForm.value);
@@ -73,7 +77,6 @@ export class Contact {
         position: "bottom-center",
       }); */
 
-      this.contactForm.reset();
       this.hasTriedSubmit = false;
     }, 1200);
   }
@@ -81,5 +84,18 @@ export class Contact {
   isInvalid(controlName: string) {
     const control = this.contactForm.get(controlName);
     return !!(control && control.invalid && this.hasTriedSubmit);
+  }
+
+  resetForm() {
+    this.contactForm.enable(); // réactive les champs
+    this.contactForm.reset({
+      name: "",
+      email: "",
+      message: "",
+      consent: false,
+    });
+
+    this.isSuccess = false;
+    this.hasTriedSubmit = false;
   }
 }
