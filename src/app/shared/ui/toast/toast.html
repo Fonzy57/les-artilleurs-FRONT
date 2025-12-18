@@ -1,3 +1,9 @@
 @for (pos of positions; track pos) {
-  <p-toast [position]="pos" [key]="keyFor(pos)" />
+  <p-toast
+    [position]="pos"
+    [key]="keyFor(pos)"
+    [breakpoints]="{
+      '768px': { width: '95%', right: 'auto', paddingLeft: '5px' },
+    }"
+  />
 }
