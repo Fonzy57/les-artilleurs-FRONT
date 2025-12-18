@@ -13,4 +13,9 @@ export const documentsUtil: doumentsUtil[] = [
     label: "Politique de confidentialité",
     url: "politique-de-confidentialite",
   },
+  {
+    name: "cookie-policy",
+    label: "Politique des cookies",
+    url: "politique-des-cookies",
+  },
 ];
