@@ -1,0 +1,8 @@
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.delay-150 {
+  transition-delay: 150ms;
+}

@@ -1,0 +1,79 @@
+<!-- TODO ENLEVER LE GAP QUAND J'AURAIS FINI LE STYLE -->
+<div class="flex h-210 gap-4 bg-gray-50 p-8">
+  @for (item of items; track item.id) {
+    <div
+      (click)="toggleItem(item.id)"
+      class="relative cursor-pointer overflow-hidden rounded-lg shadow-lg transition-all duration-500 ease-out"
+      [class.cursor-pointer]="!item.isOpen"
+      [class.cursor-default]="item.isOpen"
+      [class.bg-secondary]="item.isOpen"
+      [class.bg-white]="!item.isOpen"
+      [class.w-[320px]]="!item.isOpen"
+      [class.min-w-[320px]]="!item.isOpen"
+      [class.w-[1100px]]="item.isOpen"
+      [class.min-w-[1100px]]="item.isOpen"
+    >
+      <!-- Contenu fermé (photo + catégorie) -->
+      <div
+        class="text-secondary flex h-full flex-col justify-between transition-opacity duration-200"
+        [class.opacity-100]="!item.isOpen"
+        [class.opacity-0]="item.isOpen"
+        [class.pointer-events-none]="item.isOpen"
+      >
+        <div
+          class="flex flex-1 items-center justify-center overflow-hidden pt-16"
+        >
+          <img
+            [src]="item.imageUrl"
+            [alt]="item.title"
+            class="h-138.5 w-auto object-contain filter-[brightness(0)_saturate(100%)_invert(29%)_sepia(37%)_saturate(520%)_hue-rotate(220deg)_brightness(89%)_contrast(85%)]"
+          />
+        </div>
+        <div class="flex items-center gap-x-10 pb-14 pl-10">
+          <p class="font-staatliches text-xl">
+            {{ item.category }}
+          </p>
+          <div class="bg-secondary h-1 flex-1"></div>
+        </div>
+      </div>
+
+      <!-- Contenu ouvert (titre + texte + photo + catégorie) -->
+      <div
+        class="absolute inset-0 flex h-full flex-col justify-between text-white transition-opacity duration-300"
+        [class.opacity-0]="!item.isOpen"
+        [class.opacity-100]="item.isOpen"
+        [class.pointer-events-none]="!item.isOpen"
+        [class.delay-150]="item.isOpen"
+      >
+        <!-- CONTENT -->
+        <div class="flex items-center justify-end gap-x-32">
+          <!-- TEXT -->
+          <div class="w-100">
+            <h2 class="text-5xl">{{ item.title }}</h2>
+            <div class="mt-8 flex flex-col gap-y-6">
+              @for (description of item.descriptions; track $index) {
+                <p>{{ description }}</p>
+              }
+            </div>
+          </div>
+          <!-- IMAGE -->
+          <div class="h-156.25 w-99.5">
+            <img
+              [src]="item.imageUrl"
+              [alt]="item.title"
+              class="block h-full w-full object-contain"
+            />
+          </div>
+        </div>
+
+        <!-- TAB -->
+        <div class="flex items-center gap-x-10 pb-14 pl-10">
+          <p class="font-staatliches text-xl">
+            {{ item.category }}
+          </p>
+          <div class="h-1 flex-1 bg-white"></div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
