@@ -64,15 +64,14 @@ export class Contact {
       this.isSubmitting = false;
       this.isSuccess = true;
 
+      /* TODO SUPPRIMER QUAND TESTS FINIS */
       console.log("Valeur du formulaire : ", this.contactForm.value);
-      this.toast.success(
-        "Message envoyé",
-        "Message envoyé avec succès par notre serveur SMTP",
-        {
-          sticky: true,
-          position: "bottom-center",
-        },
-      );
+
+      /* TODO REVOIR LE MESSAGE */
+      /* this.toast.success("Message envoyé", "Message envoyé avec succès !", {
+        sticky: true,
+        position: "bottom-center",
+      }); */
 
       this.contactForm.reset();
       this.hasTriedSubmit = false;
