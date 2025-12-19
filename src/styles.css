@@ -137,3 +137,11 @@ body {
   font-family: "Poppins", sans-serif;
   color: var(--color-text);
 }
+
+/* Don't allow scroll on mobile if menu is open */
+.no-scroll-mobile {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+  touch-action: none;
+}
