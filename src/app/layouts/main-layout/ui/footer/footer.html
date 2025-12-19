@@ -28,7 +28,6 @@
 
     <div class="sm:mt-12 sm:flex sm:items-start sm:justify-between lg:flex-1">
       <!-- NAVIGATION -->
-      <!-- TODO FAIRE LES ANCRES FONCTIONNELLES QUAND IL Y AURA LES SECTIONS -->
       <nav class="mt-10 text-white sm:mt-0">
         <p class="font-staatliches text-3xl xl:text-4xl">Navigation</p>
         <ul class="mt-6 flex flex-col gap-y-4">
@@ -36,7 +35,9 @@
             <li
               class="hover:text-main-300 active:text-main-200 cursor-pointer transition-colors duration-300 ease-out xl:text-xl"
             >
-              {{ navLink.label }}
+              <a [href]="'/#' + navLink.fragment">
+                {{ navLink.label }}
+              </a>
             </li>
           }
         </ul>
