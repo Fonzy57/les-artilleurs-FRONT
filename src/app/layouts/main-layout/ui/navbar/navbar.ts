@@ -1,5 +1,5 @@
 // ANGULAR
-import { Component } from "@angular/core";
+import { Component, DOCUMENT, inject, Renderer2 } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { NgClass } from "@angular/common";
 
@@ -14,31 +14,47 @@ import { navlinks } from "@core/config/navigation";
   styleUrl: "./navbar.css",
 })
 export class Navbar {
+  private renderer = inject(Renderer2);
+  private document = inject(DOCUMENT);
+
   isOpen = false;
   // Avoid transition on component mount
   hasInteracted = false;
   navLinks = navlinks;
+  isMobile = window.matchMedia("(max-width: 767px)").matches;
 
-  /* TODO AJOUTER LE CLICK QUE LES ANCRES */
+  private mq = window.matchMedia("(max-width: 767px)");
 
-  /* TODO IL FAUDRA VOIR SI ON PEUT SCROLL SUR MOBILE QUAND LE MENU EST OUVERT, SI C'EST LE CAS ENLEVER LE SCROLL */
+  ngOnInit() {
+    this.mq.addEventListener("change", (e) => {
+      this.isMobile = e.matches;
+
+      if (!this.isMobile) {
+        this.isOpen = false;
+        this.hasInteracted = false;
+        this.renderer.removeClass(this.document.body, "no-scroll-mobile");
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.renderer.removeClass(this.document.body, "no-scroll-mobile");
+  }
+
   toggleMenu(): void {
     this.hasInteracted = true;
     this.isOpen = !this.isOpen;
 
-    console.log("open ", this.isOpen);
-
-    // Toggle the 'no-scroll-mobile' class on the <body> element to prevent background scrolling
-    /* const body = this.document.body;
+    const body = this.document.body;
     if (this.isOpen) {
-      this.renderer.addClass(body, 'no-scroll-mobile');
+      this.renderer.addClass(body, "no-scroll-mobile");
     } else {
-      this.renderer.removeClass(body, 'no-scroll-mobile');
-    } */
+      this.renderer.removeClass(body, "no-scroll-mobile");
+    }
   }
 
   closeMenu(): void {
     this.isOpen = false;
-    /* this.renderer.removeClass(this.document.body, 'no-scroll-mobile'); */
+    this.renderer.removeClass(this.document.body, "no-scroll-mobile");
   }
 }

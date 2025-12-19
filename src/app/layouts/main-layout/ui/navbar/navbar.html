@@ -34,10 +34,11 @@
     </div>
 
     <!-- NAVIGATION -->
-    <!-- TODO VOIR POUR LE TRANSLATE COMMENT NE PAS LE METTRE A PARTIR DE md -->
     <nav
-      class="fixed top-13.5 left-0 min-h-[calc(100vh-54px)] w-full transform border-t border-white transition-transform duration-300 ease-out md:relative md:top-0 md:min-h-auto md:w-max md:border-none"
+      class="fixed top-13.5 left-0 min-h-[calc(100vh-54px)] w-full transform border-t border-white ease-out md:relative md:top-0 md:min-h-auto md:w-max md:transform-none md:border-none"
       [ngClass]="{
+        'transition-transform duration-300': hasInteracted && isMobile,
+        'transition-none': !hasInteracted || !isMobile,
         'translate-x-0 md:translate-x-0': isOpen,
         '-translate-x-full md:translate-x-0': !isOpen,
       }"
@@ -47,17 +48,12 @@
       >
         @for (navLink of navLinks; track $index) {
           <div
-            [id]="$index"
             class="w-full border-b border-white pb-3 md:w-max md:border-none md:p-0"
           >
             <li
               class="font-poppins nav-link relative cursor-pointer py-1 md:p-0"
             >
-              <a
-                [routerLink]="['/']"
-                [fragment]="navLink.fragment"
-                (click)="closeMenu()"
-              >
+              <a [href]="'/#' + navLink.fragment" (click)="closeMenu()">
                 {{ navLink.label }}
               </a>
             </li>
