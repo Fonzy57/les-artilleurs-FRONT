@@ -47,13 +47,19 @@
       >
         @for (navLink of navLinks; track $index) {
           <div
+            [id]="$index"
             class="w-full border-b border-white pb-3 md:w-max md:border-none md:p-0"
           >
             <li
-              id="nav-link"
-              class="font-poppins relative cursor-pointer py-1 md:p-0"
+              class="font-poppins nav-link relative cursor-pointer py-1 md:p-0"
             >
-              {{ navLink.label }}
+              <a
+                [routerLink]="['/']"
+                [fragment]="navLink.fragment"
+                (click)="closeMenu()"
+              >
+                {{ navLink.label }}
+              </a>
             </li>
           </div>
         }

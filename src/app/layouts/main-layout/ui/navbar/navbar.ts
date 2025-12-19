@@ -4,7 +4,7 @@ import { RouterLink } from "@angular/router";
 import { NgClass } from "@angular/common";
 
 // CONFIG
-import { navlinks } from "../../../../core/config/navigation";
+import { navlinks } from "@core/config/navigation";
 
 @Component({
   standalone: true,
