@@ -1,49 +1,26 @@
 // ANGULAR
 import { Component } from "@angular/core";
-import { NgClass } from "@angular/common";
+import { CommonModule } from "@angular/common";
 
-// COMPONENTS
-import { HorizontalAccordionComponent } from "../../accordion/accordion";
-
-type infoContent = {
-  text: string;
-  span: string;
-};
-
-type TextContent = {
+// TYPES
+type AccordionItem = {
   id: number;
   title: string;
   descriptions: string[];
   imageUrl: string;
+  category: string;
+  isOpen: boolean;
 };
 
 @Component({
-  selector: "app-website-category",
-  imports: [HorizontalAccordionComponent, NgClass],
-  templateUrl: "./category.html",
+  selector: "app-horizontal-accordion",
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: "./accordion.html",
+  styleUrls: ["./accordion.css"],
 })
-export class Category {
-  /* TODO CECI VIENDRA DE LA BASE DE DONNEES */
-  infos: infoContent[] = [
-    {
-      text: "Reprise des entraînements pour la saison 2023-2024 dès",
-      span: "le lundi 14 août !",
-    },
-    {
-      text: "Reprise des entraînements pour la saison 2023-2024 dès",
-      span: "le lundi 14 août !",
-    },
-    {
-      text: "Reprise des entraînements pour la saison 2023-2024 dès",
-      span: "le lundi 14 août !",
-    },
-    {
-      text: "AG au clubhouse",
-      span: "le lundi 14 août !",
-    },
-  ];
-
-  textContent: TextContent[] = [
+export class HorizontalAccordionComponent {
+  items: AccordionItem[] = [
     {
       id: 1,
       title: "LE FOOTBALL AMÉRICAIN EST À METZ",
@@ -53,6 +30,8 @@ export class Category {
         "L’équipe en possession de la balle, doit la faire progresser jusqu’à la zone d´en-but adverse (end zone). L’équipe de défense doit empêcher cette progression en plaquant le porteur de balle.",
       ],
       imageUrl: "/images/website/accordion/joueur-football-americain.png",
+      category: "foot us seniors",
+      isOpen: true,
     },
     {
       id: 2,
@@ -63,6 +42,8 @@ export class Category {
         "Encadrés par des coachs qualifiés, les jeunes participent à des compétitions officielles tout au long de la saison. L’objectif est de progresser collectivement, de gagner en confiance et de préparer une éventuelle transition vers le football senior.",
       ],
       imageUrl: "/images/website/accordion/joueur-football-americain-u20.png",
+      category: "U20 - U17",
+      isOpen: false,
     },
     {
       id: 3,
@@ -73,6 +54,22 @@ export class Category {
         "Ouvert aux hommes et aux femmes, le flag football est idéal pour débuter le football américain ou pour continuer à jouer dans une ambiance conviviale et compétitive. Les équipes participent à des tournois et championnats, dans un esprit fair-play et inclusif.",
       ],
       imageUrl: "/images/website/accordion/joueur-flag.png",
+      category: "FLAG FOOTBALL",
+      isOpen: false,
     },
   ];
+
+  toggleItem(selectedId: number): void {
+    // Ne rien faire si l'item cliqué est déjà ouvert
+    const clickedItem = this.items.find((item) => item.id === selectedId);
+    if (clickedItem?.isOpen) {
+      return;
+    }
+
+    // Ouvrir l'item cliqué et fermer les autres
+    this.items = this.items.map((item) => ({
+      ...item,
+      isOpen: item.id === selectedId,
+    }));
+  }
 }

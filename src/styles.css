@@ -120,6 +120,10 @@
   --color-info-950: #172e54;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 h1,
 h2,
 h3,
@@ -132,4 +136,12 @@ h6 {
 body {
   font-family: "Poppins", sans-serif;
   color: var(--color-text);
+}
+
+/* Don't allow scroll on mobile if menu is open */
+.no-scroll-mobile {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+  touch-action: none;
 }

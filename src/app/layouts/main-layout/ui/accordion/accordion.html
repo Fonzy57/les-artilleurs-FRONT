@@ -1,0 +1,88 @@
+<div class="flex h-150 w-full xl:h-187.5">
+  @for (item of items; track item.id) {
+    <div
+      (click)="toggleItem(item.id)"
+      class="relative cursor-pointer overflow-hidden transition-all duration-500 ease-out"
+      [class.cursor-pointer]="!item.isOpen"
+      [class.cursor-default]="item.isOpen"
+      [class.bg-secondary]="item.isOpen"
+      [class.bg-white]="!item.isOpen"
+      [class.w-[20%]]="!item.isOpen"
+      [class.min-w-[20%]]="!item.isOpen"
+      [class.w-[60%]]="item.isOpen"
+      [class.min-w-[60%]]="item.isOpen"
+    >
+      <!-- Contenu fermé (photo + catégorie) -->
+      <div
+        class="text-secondary flex h-full flex-col justify-between transition-opacity duration-200"
+        [class.opacity-100]="!item.isOpen"
+        [class.opacity-0]="item.isOpen"
+        [class.pointer-events-none]="item.isOpen"
+      >
+        <div
+          class="flex flex-1 items-center justify-center overflow-hidden pt-6 xl:pt-16"
+        >
+          <img
+            [src]="item.imageUrl"
+            [alt]="item.title"
+            class="h-125 w-auto object-contain filter-[brightness(0)_saturate(100%)_invert(29%)_sepia(37%)_saturate(520%)_hue-rotate(220deg)_brightness(89%)_contrast(85%)] xl:h-138.5"
+          />
+        </div>
+        <div class="flex items-center gap-x-10 pb-6 pl-10 xl:pb-14">
+          <p class="font-staatliches text-xl">
+            {{ item.category }}
+          </p>
+          <div class="bg-secondary h-1 flex-1"></div>
+        </div>
+      </div>
+
+      <!-- Contenu ouvert (titre + texte + photo + catégorie) -->
+      <div
+        class="absolute inset-0 flex h-full flex-col justify-between pt-6 text-white transition-opacity duration-300 xl:pt-10"
+        [class.opacity-0]="!item.isOpen"
+        [class.opacity-100]="item.isOpen"
+        [class.pointer-events-none]="!item.isOpen"
+        [class.delay-150]="item.isOpen"
+      >
+        <!-- CONTENT -->
+        <div
+          class="flex items-center justify-evenly xl:justify-end xl:gap-x-32"
+        >
+          <!-- TEXT -->
+          <div class="w-112.5 xl:w-100">
+            <h2 class="text-4xl xl:text-5xl">{{ item.title }}</h2>
+            <div class="mt-4 flex flex-col gap-y-2 xl:mt-8 xl:gap-y-6">
+              @for (description of item.descriptions; track $index) {
+                <p>{{ description }}</p>
+              }
+            </div>
+          </div>
+          <!-- IMAGE -->
+          <div
+            class="relative flex h-full w-75 items-center justify-center xl:w-99.5"
+          >
+            <!-- TODO REVOIR POUR L'IMAGE DE FOND PLUS TARD CAR SELON L'IMAGE CE N"EST PAS DU TOUT LE MÊME RESULTAT -->
+            <!-- <div
+              class="pointer-events-none absolute inset-0 bg-no-repeat opacity-15 blur-[0.5px]"
+              [style.backgroundImage]="'url(' + item.imageUrl + ')'"
+              style="background-size: 160% auto; background-position: 5% 25%"
+            ></div> -->
+            <img
+              [src]="item.imageUrl"
+              [alt]="item.title"
+              class="relative z-10 block h-125 w-auto xl:h-156.25"
+            />
+          </div>
+        </div>
+
+        <!-- TAB -->
+        <div class="flex items-center gap-x-10 pb-6 pl-10 xl:pb-14">
+          <p class="font-staatliches text-xl">
+            {{ item.category }}
+          </p>
+          <div class="h-1 flex-1 bg-white"></div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

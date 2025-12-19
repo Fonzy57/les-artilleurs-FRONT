@@ -1,15 +1,15 @@
-type navLink = { label: string; value: string; anchor: string };
+type navLink = { label: string; value: string; fragment: string };
 
 export const navlinks: navLink[] = [
   {
     label: "Nous rejoindre",
     value: "nous-rejoindre",
-    anchor: "#nous-rejoindre",
+    fragment: "registration",
   },
-  { label: "L'association", value: "association", anchor: "#association" },
-  { label: "Calendrier", value: "calendrier", anchor: "#calendrier" },
-  { label: "Nous aider", value: "nous-aider", anchor: "#nous-aider" },
-  { label: "Infos", value: "infos", anchor: "#infos" },
-  { label: "FAQ", value: "faq", anchor: "#faq" },
-  { label: "Contact", value: "contact", anchor: "#contact" },
+  { label: "L'association", value: "association", fragment: "history" },
+  { label: "Calendrier", value: "calendrier", fragment: "calendar" },
+  { label: "Nous aider", value: "nous-aider", fragment: "help" },
+  { label: "Infos", value: "infos", fragment: "infos" },
+  { label: "FAQ", value: "faq", fragment: "faq" },
+  { label: "Contact", value: "contact", fragment: "contact" },
 ];
