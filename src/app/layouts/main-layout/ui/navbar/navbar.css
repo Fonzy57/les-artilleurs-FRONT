@@ -1,4 +1,4 @@
-#nav-link::before {
+.nav-link::before {
   content: "";
   position: absolute;
   background: rgb(255, 255, 255);
@@ -10,6 +10,6 @@
   transition: all ease-out 300ms;
 }
 
-#nav-link:hover::before {
+.nav-link:hover::before {
   width: 100%;
 }
