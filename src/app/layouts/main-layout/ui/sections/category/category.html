@@ -19,6 +19,29 @@
 </section>
 
 <!-- CATEGORIES -->
-<section>
+<section class="mt-10 flex flex-col gap-y-20 px-5 md:px-0 lg:hidden">
+  @for (item of textContent; track $index) {
+    <div class="flex flex-col items-center gap-y-3 md:gap-y-5">
+      <h2 class="text-center text-4xl md:text-5xl">
+        {{ item.title }}
+      </h2>
+      <div
+        class="flex flex-col items-center gap-y-3 md:justify-center md:gap-x-20"
+        [ngClass]="item.id % 2 === 0 ? 'md:flex-row-reverse' : 'md:flex-row'"
+      >
+        <div class="w-40">
+          <img [src]="item.imageUrl" alt="#" class="object-contain" />
+        </div>
+        <div class="flex flex-col gap-y-2 md:w-1/2">
+          @for (text of item.descriptions; track $index) {
+            <p>{{ text }}</p>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</section>
+
+<section class="hidden lg:block">
   <app-horizontal-accordion></app-horizontal-accordion>
 </section>
