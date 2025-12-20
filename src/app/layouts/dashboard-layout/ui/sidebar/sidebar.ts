@@ -1,4 +1,7 @@
+// ANGULAR
 import { Component } from "@angular/core";
+
+// COMPONENTS
 import { DashboardNavItem } from "../nav-item/nav-item";
 
 type DasboardNavItem = {
