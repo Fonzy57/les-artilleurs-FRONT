@@ -1,3 +1,19 @@
-<main class="">
-  <router-outlet />
-</main>
+<div class="flex h-dvh">
+  <!-- SIDEBAR -->
+  <div class="w-2/12">
+    <app-dashboard-sidebar></app-dashboard-sidebar>
+  </div>
+  <!-- CONTENT -->
+  <div class="w-10/12">
+    <div class="flex h-full min-h-[calc(100vh-70px)] flex-col">
+      <main
+        class="flex-1 overflow-auto bg-[#f8f8f8] px-5 pt-6 pb-10 sm:px-10 lg:px-6 lg:pb-6 xl:pt-8"
+      >
+        <router-outlet />
+      </main>
+
+      <!-- COPYRIGHT -->
+      <app-dashboard-copyright />
+    </div>
+  </div>
+</div>
