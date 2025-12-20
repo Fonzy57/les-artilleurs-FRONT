@@ -47,6 +47,14 @@
   --color-black: #0c0c0c;
   --color-white: #fff;
 
+  /* ---------------------------------- */
+  /* --- CUSTOM COLOR FOR DASHBOARD --- */
+  /* ---------------------------------- */
+  --color-dash-tab-hover: #f5f7f7;
+  --color-dash-tab-active: #e8ebeb;
+  --color-dash-tab-border: #dddddd;
+  --color-dash-icon: #a4a4a4;
+
   --color-main-50: #efeeff;
   --color-main-100: #e3e0ff;
   --color-main-200: #cfc8fd;
