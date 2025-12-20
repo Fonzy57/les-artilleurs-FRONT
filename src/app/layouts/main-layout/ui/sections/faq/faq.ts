@@ -10,6 +10,7 @@ type faqContent = {
 };
 
 @Component({
+  standalone: true,
   selector: "app-website-faq",
   imports: [AccordionModule],
   templateUrl: "./faq.html",

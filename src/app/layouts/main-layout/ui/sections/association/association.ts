@@ -10,6 +10,7 @@ type infoContent = {
 };
 
 @Component({
+  standalone: true,
   selector: "app-website-association",
   imports: [ButtonComponent],
   templateUrl: "./association.html",

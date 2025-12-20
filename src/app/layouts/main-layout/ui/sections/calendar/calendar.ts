@@ -16,6 +16,7 @@ type Match = {
 };
 
 @Component({
+  standalone: true,
   selector: "app-website-calendar",
   imports: [NgClass],
   templateUrl: "./calendar.html",

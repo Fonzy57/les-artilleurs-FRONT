@@ -9,6 +9,7 @@ import { documentsUtil } from "@core/config/documents";
 import { socialsMedia } from "@core/config/socials";
 
 @Component({
+  standalone: true,
   selector: "app-footer",
   imports: [NgClass],
   templateUrl: "./footer.html",

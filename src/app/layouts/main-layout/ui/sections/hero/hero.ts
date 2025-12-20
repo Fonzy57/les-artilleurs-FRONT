@@ -5,6 +5,7 @@ import { Component } from "@angular/core";
 import { ButtonComponent } from "@shared/ui/button/button";
 
 @Component({
+  standalone: true,
   selector: "app-website-hero",
   imports: [ButtonComponent],
   templateUrl: "./hero.html",
