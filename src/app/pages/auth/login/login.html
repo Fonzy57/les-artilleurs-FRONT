@@ -1,1 +1,110 @@
-<h1>Page de login</h1>
+@if (isLaptop$ | async) {
+  <div
+    class="from-main-400 to-main-700 hidden h-screen bg-linear-to-br lg:flex lg:items-center lg:justify-center"
+  >
+    <div
+      class="border-main shadow-main flex w-239.5 overflow-hidden rounded-lg border shadow-xl"
+    >
+      <div class="w-1/2 bg-white px-10 py-20">
+        <h1 class="text-main text-center text-4xl tracking-wide">Connexion</h1>
+        <form
+          [formGroup]="loginForm"
+          (ngSubmit)="onSubmit()"
+          class="text-text mt-10 flex w-full flex-col lg:gap-y-4"
+        >
+          <!-- EMAIL -->
+          <div class="flex flex-col gap-1">
+            <label for="email" class="text-sm">Email</label>
+
+            <input
+              pInputText
+              type="email"
+              id="email"
+              placeholder="john.madden@gmail.com"
+              formControlName="email"
+              [invalid]="isInvalid('email')"
+              aria-required="true"
+            />
+            @if (isInvalid("email")) {
+              @if (loginForm.get("email")?.errors?.["required"]) {
+                <p class="text-error text-xs">L'email est requis.</p>
+              }
+              @if (loginForm.get("email")?.errors?.["email"]) {
+                <p class="text-error text-xs">
+                  Veuillez renseigner un email valide.
+                </p>
+              }
+            }
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="flex flex-col gap-1">
+            <label for="pwd" class="text-sm">Mot de passe</label>
+
+            <p-password
+              formControlName="pwd"
+              [invalid]="isInvalid('pwd')"
+              aria-required="true"
+              fluid
+              [toggleMask]="true"
+              [feedback]="false"
+            />
+
+            @if (isInvalid("pwd")) {
+              <p class="text-error text-xs">Le mot de passe est requis.</p>
+            }
+          </div>
+
+          <!-- TODO AJOUTER UN RECAPTCHA -->
+          <div>
+            <div class="flex gap-x-2">
+              <p-checkbox
+                inputId="remember"
+                formControlName="remember"
+                [binary]="true"
+                [invalid]="isInvalid('remember')"
+                aria-required="true"
+              />
+              <div class="text-sm leading-snug">
+                <label for="remember"> Se souvenir de moi </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 flex items-center justify-start gap-x-8">
+            <app-button type="submit"> Se connecter </app-button>
+          </div>
+        </form>
+        <!-- TODO FAIRE LE LIEN VERS MOT DE PASSE OUBLIE FONCTIONNEL -->
+        <p class="text-main mt-8 underline hover:no-underline">
+          Mot de passe oublié ?
+        </p>
+      </div>
+      <div class="bg-main flex w-1/2 items-center justify-center">
+        <img src="/logos/logo-artilleurs-footer.svg" alt="" />
+      </div>
+    </div>
+  </div>
+} @else {
+  <div
+    class="text-main flex h-screen items-center justify-center px-5 lg:hidden"
+  >
+    <div class="flex flex-col items-center gap-y-5">
+      <div class="flex flex-col items-center gap-y-4">
+        <h1 class="text-4xl sm:text-5xl">Accès impossible</h1>
+        <div class="w-full sm:w-2/3">
+          <img
+            src="/images/website/gif/no.gif"
+            alt=""
+            class="w-full rounded-lg"
+          />
+        </div>
+        <p class="text-text text-center sm:mt-2 sm:w-2/3">
+          Pour accéder au login et au dashboard il faut être sur un laptop (ou
+          desktop).
+        </p>
+      </div>
+      <a href="/" class="underline hover:no-underline">Retour au site</a>
+    </div>
+  </div>
+}
