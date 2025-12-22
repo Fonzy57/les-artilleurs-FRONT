@@ -44,5 +44,17 @@ export class DashboardSidebar {
       icon: "pi pi-euro",
       url: "/comptabilite",
     },
+    {
+      /* TODO SUR CETTE PAGE FAIRE DES TABS AVEC /
+        - INFOS sous hero (4 maximum)
+        - CALENDRIER (seniors, u20, u17, flag)
+        - Infos du club (horaire, jour d'entrainement, adresse selon catégorie)
+        - FAQ (question + réponse)
+      */
+      name: "gestion-site",
+      label: "Gestion du site",
+      icon: "pi pi-globe",
+      url: "/gestion-site",
+    },
   ];
 }
