@@ -1,0 +1,38 @@
+<div
+  class="border-dash-tab-border flex h-full w-full flex-col border-r bg-white"
+>
+  <!-- LOGO AND NAVIGATION -->
+  <div class="flex-1 px-4 pt-8">
+    <!-- LOGO -->
+    <div class="flex items-center justify-center">
+      <div class="w-15">
+        <img src="/logos/logo-artilleurs-footer.svg" alt="" class="w-full" />
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="mt-8 flex flex-col gap-y-1">
+      @for (item of navItems; track $index) {
+        <app-dashboard-nav-item
+          [label]="item.label"
+          [url]="item.url"
+          [iconName]="item.icon"
+        />
+      }
+    </div>
+  </div>
+
+  <!-- ACCOUNT AND LOGOUT -->
+  <div class="border-dash-tab-border w-full border-t px-4 py-4">
+    <div class="flex flex-col gap-y-1">
+      <app-dashboard-nav-item
+        label="Mon compte"
+        iconName="ionPersonOutline"
+        url="/compte"
+        iconName="pi pi-user"
+      />
+      <!-- TODO RAJOUTER UN COMPOSANT DE DECONNEXION -->
+      <!-- <app-disconnect-button /> -->
+    </div>
+  </div>
+</div>

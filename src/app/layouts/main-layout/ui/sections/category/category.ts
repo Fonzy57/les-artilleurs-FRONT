@@ -18,6 +18,7 @@ type TextContent = {
 };
 
 @Component({
+  standalone: true,
   selector: "app-website-category",
   imports: [HorizontalAccordionComponent, NgClass],
   templateUrl: "./category.html",

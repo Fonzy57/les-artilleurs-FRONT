@@ -1,2 +1,26 @@
-<h1>Page HOME du dashboard</h1>
-<p class="mt-2 opacity-80">Bienvenue dans l’espace admin.</p>
+<!-- TODO PRENDRE LE PRENOM DE LA BASE DE DONNEES -->
+<h1 class="text-4xl">Bonjour Eric</h1>
+<p class="mt-2">Bienvenue dans l’espace admin.</p>
+
+<!-- TODO PEUT ÊTRE FAIRE UN WRAPPER SELON LE CONTENT, A VOIR QUAND LE BACK SERA FAIT -->
+<div class="mt-6 grid grid-cols-12 place-items-stretch gap-6">
+  <!-- TODO IL FAUDRA VOIR SI JE PEUX GARDER UNE BOUCLE SELON LE CONTENT QUE JE VAIS RECEVOIR -->
+  @for (item of cardInfos; track $index) {
+    <app-dashboard-card-info [title]="item.title" class="col-span-4">
+      @if (isContentArray(item.content)) {
+        <div class="flex items-center justify-between">
+          @for (c of item.content; track c.name ?? $index) {
+            <div class="flex items-center gap-x-2 text-2xl">
+              <p>{{ c.label ?? c.name }} :</p>
+              <p>{{ c.value }}</p>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="text-2xl">
+          {{ item.content.value }}
+        </p>
+      }
+    </app-dashboard-card-info>
+  }
+</div>

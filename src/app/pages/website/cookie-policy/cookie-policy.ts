@@ -6,6 +6,7 @@ import { Component } from "@angular/core";
 import { artilleursConfig } from "@core/config/app.config";
 
 @Component({
+  standalone: true,
   selector: "app-cookie-policy",
   imports: [NgClass],
   templateUrl: "./cookie-policy.html",

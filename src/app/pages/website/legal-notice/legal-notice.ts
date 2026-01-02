@@ -6,6 +6,7 @@ import { Component } from "@angular/core";
 import { artilleursConfig } from "@core/config/app.config";
 
 @Component({
+  standalone: true,
   selector: "app-website-legal-notice",
   imports: [NgClass],
   templateUrl: "./legal-notice.html",

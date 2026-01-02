@@ -6,6 +6,7 @@ import { Component } from "@angular/core";
 import { artilleursConfig } from "@core/config/app.config";
 
 @Component({
+  standalone: true,
   selector: "app-privacy-policy",
   imports: [NgClass],
   templateUrl: "./privacy-policy.html",

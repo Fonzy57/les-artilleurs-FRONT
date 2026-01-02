@@ -13,6 +13,7 @@ type RegistrationType = {
 };
 
 @Component({
+  standalone: true,
   selector: "app-website-registration",
   imports: [ButtonComponent],
   templateUrl: "./registration.html",

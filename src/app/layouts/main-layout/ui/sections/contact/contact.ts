@@ -20,6 +20,7 @@ import { ButtonComponent } from "@shared/ui/button/button";
 import { ToastService } from "@shared/ui/toast/toast.service";
 
 @Component({
+  standalone: true,
   selector: "app-website-contact",
   imports: [
     InputTextModule,

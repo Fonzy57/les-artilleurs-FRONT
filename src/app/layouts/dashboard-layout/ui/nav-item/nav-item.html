@@ -1,0 +1,18 @@
+<button
+  class="group hover:bg-dash-tab-hover active:bg-dash-tab-active text-text flex w-full cursor-pointer items-center gap-x-3 rounded-lg border border-white bg-white px-3 py-2.5 transition duration-300 ease-out"
+  [routerLink]="url"
+  routerLinkActive
+  #rla="routerLinkActive"
+  [routerLinkActiveOptions]="{ exact: false }"
+  [ngClass]="{
+    'border-dash-tab-border! shadow-xs! hover:bg-white!': rla.isActive,
+  }"
+>
+  <!-- TODO AJOUTER ICON -->
+  <span
+    [ngClass]="iconName"
+    style="font-size: 1.5rem"
+    [class]="rla.isActive ? 'text-main' : 'text-dash-icon'"
+  ></span>
+  <p class="pt-0.5 font-medium">{{ label }}</p>
+</button>
