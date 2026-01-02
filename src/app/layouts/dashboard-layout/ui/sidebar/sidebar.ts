@@ -38,12 +38,12 @@ export class DashboardSidebar {
       icon: "pi pi-calendar",
       url: "/matchs",
     },
-    {
+    /* {
       name: "comptabilite",
       label: "Comptabilité",
       icon: "pi pi-euro",
       url: "/comptabilite",
-    },
+    }, */
     {
       /* TODO SUR CETTE PAGE FAIRE DES TABS AVEC /
         - INFOS sous hero (4 maximum)
