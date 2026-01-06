@@ -30,13 +30,13 @@ export class DashboardSidebar {
       name: "liencies",
       label: "Licenciés",
       icon: "pi pi-users",
-      url: "/licencies",
+      url: "/dashboard/licencies",
     },
     {
       name: "matchs",
       label: "Matchs",
       icon: "pi pi-calendar",
-      url: "/matchs",
+      url: "/dashboard/matchs",
     },
     /* {
       name: "comptabilite",
@@ -54,7 +54,7 @@ export class DashboardSidebar {
       name: "gestion-site",
       label: "Gestion du site",
       icon: "pi pi-globe",
-      url: "/gestion-site",
+      url: "/dashboard/gestion-du-site",
     },
   ];
 }
