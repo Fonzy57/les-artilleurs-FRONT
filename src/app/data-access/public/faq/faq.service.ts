@@ -7,7 +7,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FaqPublic } from "@shared/models/faq.model";
 
 // CONFIG
-import { artilleursConfig } from "@core/config/app.config";
+import { artilleursConfig } from "@core/config/global.config";
 
 @Injectable({
   providedIn: "root",

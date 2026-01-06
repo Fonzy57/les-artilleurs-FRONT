@@ -3,7 +3,7 @@ import { NgClass } from "@angular/common";
 import { Component } from "@angular/core";
 
 // CONFIG
-import { artilleursConfig } from "@core/config/app.config";
+import { artilleursConfig } from "@core/config/global.config";
 
 @Component({
   standalone: true,
