@@ -3,7 +3,7 @@
   [routerLink]="url"
   routerLinkActive
   #rla="routerLinkActive"
-  [routerLinkActiveOptions]="{ exact: false }"
+  [routerLinkActiveOptions]="{ exact: true }"
   [ngClass]="{
     'border-dash-tab-border! shadow-xs! hover:bg-white!': rla.isActive,
   }"
