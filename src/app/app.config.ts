@@ -4,6 +4,7 @@ import {
   provideBrowserGlobalErrorListeners,
 } from "@angular/core";
 import { provideRouter, withInMemoryScrolling } from "@angular/router";
+import { provideHttpClient, withFetch } from "@angular/common/http";
 
 // INTERCEPTORS
 
@@ -25,6 +26,7 @@ export const appConfig: ApplicationConfig = {
         scrollPositionRestoration: "enabled",
       }),
     ),
+    provideHttpClient(withFetch()),
     MessageService,
     providePrimeNG({
       theme: {

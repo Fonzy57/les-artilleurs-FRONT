@@ -20,19 +20,27 @@
 
   <!-- QUESTIONS -->
   <div class="xs:px-3 mt-8 px-1 md:px-10 lg:px-40 xl:px-80">
-    <p-accordion [value]="0">
-      @for (question of faqQuestions; track $index) {
-        <p-accordion-panel [value]="$index">
-          <p-accordion-header>
-            <p class="font-staatliches text-lg md:text-xl">
-              {{ question.title }}
-            </p>
-          </p-accordion-header>
-          <p-accordion-content>
-            <p class="m-0 sm:w-11/12 md:w-9/12">{{ question.content }}</p>
-          </p-accordion-content>
-        </p-accordion-panel>
-      }
-    </p-accordion>
+    @if (faqService.loading()) {
+      <app-faq-website-skeleton />
+    } @else if (faqService.error()) {
+      <p class="text-error">{{ faqService.error() }}</p>
+    } @else if (faqService.faqItems().length === 0) {
+      <p>Aucune question disponnible</p>
+    } @else {
+      <p-accordion [value]="0">
+        @for (items of faqService.faqItems(); track items.id) {
+          <p-accordion-panel [value]="items.id">
+            <p-accordion-header>
+              <p class="font-staatliches text-lg md:text-xl">
+                {{ items.question }}
+              </p>
+            </p-accordion-header>
+            <p-accordion-content>
+              <p class="m-0 sm:w-11/12 md:w-9/12">{{ items.answer }}</p>
+            </p-accordion-content>
+          </p-accordion-panel>
+        }
+      </p-accordion>
+    }
   </div>
 </section>
