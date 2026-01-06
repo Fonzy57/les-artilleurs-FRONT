@@ -1,52 +1,25 @@
 // ANGULAR
-import { Component } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
+
+// SERVICE
+import { FaqService } from "app/data-access/public/faq/faq.service";
 
 // PRIME NG
 import { AccordionModule } from "primeng/accordion";
 
-type faqContent = {
-  title: string;
-  content: string;
-};
+// COMPONENTS
+import { FaqWebsiteSkeleton } from "@shared/ui/skeleton/faq-website-skeleton/faq-website-skeleton";
 
 @Component({
   standalone: true,
   selector: "app-website-faq",
-  imports: [AccordionModule],
+  imports: [AccordionModule, FaqWebsiteSkeleton],
   templateUrl: "./faq.html",
 })
-export class Faq {
-  /* TODO VOIR SI ON MET CA DANS L'API, COMME CA L'ADMIN GERE LES TITRES ET CONTENU */
-  faqQuestions: faqContent[] = [
-    {
-      title: "à partir de quel âge puis-je prendre une licence ?",
-      content:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro cupiditate pariatur eaque quos totam commodi, saepe quas accusamus inventore consequuntur explicabo corporis enim. Quia necessitatibus rem ad eum in cupiditate?",
-    },
-    {
-      title: "Combien coûte la licence ?",
-      content:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro cupiditate pariatur eaque quos totam commodi, saepe quas accusamus inventore consequuntur explicabo corporis enim. Quia necessitatibus rem ad eum in cupiditate?",
-    },
-    {
-      title: "De quels équipements j’ai besoin ?",
-      content:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro cupiditate pariatur eaque quos totam commodi, saepe quas accusamus inventore consequuntur explicabo corporis enim. Quia necessitatibus rem ad eum in cupiditate?",
-    },
-    {
-      title: "à partir de quel âge puis-je prendre une licence ?",
-      content:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro cupiditate pariatur eaque quos totam commodi, saepe quas accusamus inventore consequuntur explicabo corporis enim. Quia necessitatibus rem ad eum in cupiditate?",
-    },
-    {
-      title: "Y’a-t-il une date limite pour s’inscrire ?",
-      content:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro cupiditate pariatur eaque quos totam commodi, saepe quas accusamus inventore consequuntur explicabo corporis enim. Quia necessitatibus rem ad eum in cupiditate?",
-    },
-    {
-      title: "Quel type de gabarit pour intégrer l’équipe ?",
-      content:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro cupiditate pariatur eaque quos totam commodi, saepe quas accusamus inventore consequuntur explicabo corporis enim. Quia necessitatibus rem ad eum in cupiditate?",
-    },
-  ];
+export class Faq implements OnInit {
+  readonly faqService = inject(FaqService);
+
+  ngOnInit(): void {
+    this.faqService.loadFaqItems();
+  }
 }
