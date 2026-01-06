@@ -27,7 +27,7 @@
     } @else if (faqService.faqItems().length === 0) {
       <p>Aucune question disponnible</p>
     } @else {
-      <p-accordion [value]="0">
+      <p-accordion [value]="faqService.faqItems()[0].id">
         @for (items of faqService.faqItems(); track items.id) {
           <p-accordion-panel [value]="items.id">
             <p-accordion-header>
