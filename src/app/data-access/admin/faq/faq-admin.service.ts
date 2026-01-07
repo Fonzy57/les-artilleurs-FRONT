@@ -1,7 +1,6 @@
 // ANGULAR
 import { HttpClient } from "@angular/common/http";
-import { DestroyRef, inject, Injectable, signal } from "@angular/core";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { inject, Injectable, signal } from "@angular/core";
 
 // MODELS
 import { FaqAdmin } from "@shared/models/faq.model";
@@ -17,7 +16,6 @@ import { artilleursConfig } from "@core/config/global.config";
 })
 export class FaqAdminService {
   private readonly http = inject(HttpClient);
-  private readonly destroyRef = inject(DestroyRef);
   private readonly toast = inject(ToastService);
 
   readonly faqItems = signal<FaqAdmin[]>([]);
@@ -30,7 +28,6 @@ export class FaqAdminService {
 
     this.http
       .get<FaqAdmin[]>(`${artilleursConfig.apiUrl}/admin/faq`)
-      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (items) => {
           this.faqItems.set(items);
@@ -49,6 +46,9 @@ export class FaqAdminService {
           this.toast.error(
             "Récupération des items",
             "Une erreur s'est produite lors de la récupération des items du FAQ.",
+            {
+              sticky: true,
+            },
           );
           this.loading.set(false);
         },
@@ -58,4 +58,8 @@ export class FaqAdminService {
   refresh(): void {
     this.loadFaqItems();
   }
+
+  /* TODO RECUPERER UN SEUL ELEMENT POUR LE EDIT */
+
+  /* TODO FAIRE METHODE POUR SUPPRIMER UN ITEM */
 }
