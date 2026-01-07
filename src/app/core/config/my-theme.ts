@@ -30,6 +30,10 @@ export const MyPreset = definePreset(Aura, {
         information: "#3b82f6",
         black: "#0c0c0c",
         white: "#ffffff",
+        dashTabHover: "#f5f7f7",
+        dashTabActive: "#e8ebeb",
+        dashTabBorder: "#dddddd",
+        dashIcon: "#a4a4a4",
       },
       primary: {
         50: "#efeeff",
@@ -235,7 +239,31 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
-    button: {},
+    tabs: {
+      colorScheme: {
+        light: {
+          tablist: {
+            background: "{colors.global.white}",
+            borderColor: "{colors.global.dashTabBorder}",
+          },
+          tab: {
+            borderColor: "{colors.global.dashTabBorder}",
+            hoverBorderColor: "{colors.primary.400}",
+            hoverBackground: "{colors.global.dashTabHover}",
+            hoverColor: "{colors.primary.400}",
+            activeBorderColor: "{colors.primary.700}",
+            activeColor: "{colors.primary.700}",
+          },
+          activeBar: {
+            background: "{colors.primary.700}",
+          },
+          tabpanel: {
+            background: "{colors.global.white}",
+            color: "{colors.global.text}",
+          },
+        },
+      },
+    },
     /* select: {
       colorScheme: {
         light: {
@@ -381,27 +409,6 @@ export const MyPreset = definePreset(Aura, {
       },
     },
 
-    tabs: {
-      colorScheme: {
-        light: {
-          tablist: {
-            background: '{colors.global.white}',
-            borderColor: '{colors.global.border}',
-          },
-          tab: {
-            borderColor: '{colors.global.border}',
-            hoverBorderColor: '{colors.global.border}',
-            activeBorderColor: '{colors.global.main}',
-            color: '{colors.global.text}',
-            hoverColor: '{colors.primary.500}',
-            activeColor: '{colors.global.main}',
-          },
-          tabpanel: {
-            background: '{colors.global.white}',
-            color: '{colors.global.text}',
-          },
-        },
-      },
-    }, */
+     */
   },
 });
