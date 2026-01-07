@@ -1,1 +1,60 @@
-<p>faq works!</p>
+<div class="">
+  @if (faqService.loading()) {
+    <!-- TODO FAIRE UN SKELETON LOADER POUR LES TABLEAUX -->
+    <p>Chargement des données...</p>
+  } @else if (faqService.error()) {
+    <p>Erreur lors du chargements</p>
+  } @else {
+    <!-- TODO VOIR SI JE LAISSE LE TABLEAU SCROLLABLE OU PAS -->
+    <!-- 
+    [scrollable]="true"
+      scrollHeight="550px"
+     -->
+    <p-table
+      [value]="faqService.faqItems()"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      stripedRows
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Question</th>
+          <th>Réponse</th>
+          <th class="whitespace-nowrap">Ajouté le</th>
+          <th class="whitespace-nowrap">Modifié le</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-faqItem>
+        <tr>
+          <td class="">{{ faqItem.question }}</td>
+          <td class="">{{ faqItem.answer }}</td>
+          <td class="whitespace-nowrap">
+            {{ faqItem.createdAt | date: "dd/MM/yy" }}
+          </td>
+          <td class="whitespace-nowrap">
+            {{ faqItem.updatedAt | date: "dd/MM/yy" }}
+          </td>
+          <td class="">
+            <div class="flex items-center justify-center gap-x-1.5">
+              <app-action-icon-button
+                type="edit"
+                ariaLabel="Bouton pour modifier un élément"
+                (clicked)="onEdit(faqItem.id)"
+              />
+              <app-action-icon-button
+                type="delete"
+                ariaLabel="Bouton pour supprimer un élément"
+                (clicked)="onDelete(faqItem.id)"
+              />
+              <app-action-icon-button
+                type="view"
+                ariaLabel="Bouton pour voir un élément"
+                (clicked)="onView(faqItem.id)"
+              />
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+</div>
