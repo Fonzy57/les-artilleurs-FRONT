@@ -1,9 +1,28 @@
 <div class="">
   @if (faqService.loading()) {
-    <!-- TODO FAIRE UN SKELETON LOADER POUR LES TABLEAUX -->
-    <p>Chargement des données...</p>
+    <app-table-skeleton
+      [headers]="['Question', 'Réponse', 'Ajouté le', 'Modifié le', 'Actions']"
+      [rows]="10"
+      minWidth="50rem"
+    />
   } @else if (faqService.error()) {
-    <p>Erreur lors du chargements</p>
+    <div class="flex flex-col items-center justify-center gap-y-10">
+      <app-alert-card type="error" containerClass="mt-3" [widthFull]="true">
+        <p>
+          Une erreur est survenue lors de la récupération des éléments de la
+          FAQ.
+        </p>
+        <p>Réessaie dans quelques instants.</p>
+        <p>Si le problème persiste, contacte l’assistance.</p>
+      </app-alert-card>
+      <app-button
+        type="button"
+        (click)="faqService.refresh()"
+        [disabled]="faqService.loading()"
+      >
+        Recharger la liste
+      </app-button>
+    </div>
   } @else {
     <!-- TODO VOIR SI JE LAISSE LE TABLEAU SCROLLABLE OU PAS -->
     <!-- 
@@ -27,7 +46,9 @@
       <ng-template pTemplate="body" let-faqItem>
         <tr>
           <td class="">{{ faqItem.question }}</td>
-          <td class="">{{ faqItem.answer }}</td>
+          <td class="">
+            {{ faqItem.answer }}
+          </td>
           <td class="whitespace-nowrap">
             {{ faqItem.createdAt | date: "dd/MM/yy" }}
           </td>
@@ -35,21 +56,16 @@
             {{ faqItem.updatedAt | date: "dd/MM/yy" }}
           </td>
           <td class="">
-            <div class="flex items-center justify-center gap-x-1.5">
+            <div class="flex items-center justify-center gap-x-2">
               <app-action-icon-button
                 type="edit"
-                ariaLabel="Bouton pour modifier un élément"
+                ariaLabel="Bouton pour modifier un élément de la FAQ"
                 (clicked)="onEdit(faqItem.id)"
               />
               <app-action-icon-button
                 type="delete"
-                ariaLabel="Bouton pour supprimer un élément"
+                ariaLabel="Bouton pour supprimer un élément de la FAQ"
                 (clicked)="onDelete(faqItem.id)"
-              />
-              <app-action-icon-button
-                type="view"
-                ariaLabel="Bouton pour voir un élément"
-                (clicked)="onView(faqItem.id)"
               />
             </div>
           </td>
