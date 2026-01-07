@@ -1,0 +1,19 @@
+<p-table [value]="rowPlaceholders()" [tableStyle]="{ 'min-width': minWidth() }">
+  <ng-template pTemplate="header">
+    <tr>
+      @for (header of headers(); track $index) {
+        <th class="whitespace-nowrap">{{ header }}</th>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-row>
+    <tr>
+      @for (header of headers(); track $index) {
+        <td>
+          <p-skeleton height="1.5rem"></p-skeleton>
+        </td>
+      }
+    </tr>
+  </ng-template>
+</p-table>
