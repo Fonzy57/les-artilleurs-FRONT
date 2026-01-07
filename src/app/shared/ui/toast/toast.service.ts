@@ -21,7 +21,7 @@ export class ToastService {
     detail?: string,
     options?: AppToastOptions,
   ) {
-    const position = options?.position ?? "top-right";
+    const position = options?.position ?? "bottom-center";
     const sticky = options?.sticky ?? false;
 
     this.messageService.add({
