@@ -1,6 +1,6 @@
 // ANGULAR
 import { NgClass } from "@angular/common";
-import { Component, computed, input } from "@angular/core";
+import { Component, computed, input, InputSignal, Signal } from "@angular/core";
 
 export type AlertCardType = "info" | "warning" | "success" | "error";
 
@@ -45,11 +45,15 @@ const ALERT_CARD_STYLES: Record<AlertCardType, AlertCardStyle> = {
   templateUrl: "./alert-card.html",
 })
 export class AlertCard {
-  type = input<AlertCardType>("info");
-  iconSize = input<string>("1.5rem");
-  containerClass = input<string>("");
-  widthFull = input<boolean>(false);
+  type: InputSignal<AlertCardType> = input<AlertCardType>("info");
+  iconSize: InputSignal<string> = input<string>("1.5rem");
+  containerClass: InputSignal<string> = input<string>("");
+  widthFull: InputSignal<boolean> = input<boolean>(false);
 
-  style = computed(() => ALERT_CARD_STYLES[this.type()]);
-  wrapperWidth = computed(() => (this.widthFull() ? "w-full" : "w-max"));
+  style: Signal<AlertCardStyle> = computed(
+    () => ALERT_CARD_STYLES[this.type()],
+  );
+  wrapperWidth: Signal<"w-full" | "w-max"> = computed(() =>
+    this.widthFull() ? "w-full" : "w-max",
+  );
 }
