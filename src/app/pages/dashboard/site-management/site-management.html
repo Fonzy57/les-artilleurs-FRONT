@@ -1,41 +1,58 @@
 <h1 class="text-4xl">Gestion du site</h1>
 
 <!-- WARNING CARD -->
-<div
-  class="bg-warning-100 border-warning mt-5 flex items-center gap-x-5 rounded-lg border p-5"
->
-  <i class="pi pi-exclamation-triangle"></i>
+<app-alert-card type="warning" containerClass="mt-5">
   <p>
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit quos
-    voluptas deserunt provident nesciunt ab, rerum ipsa incidunt quidem
-    voluptates tenetur officia accusamus repudiandae aperiam explicabo, facilis
-    accusantium dolorum autem!
+    Les modifications faites ici sont
+    <span class="font-semibold">visibles immédiatement</span> sur le site.
   </p>
-</div>
+  <p>
+    Assure-toi que les informations sont
+    <span class="font-semibold">correctes avant de valider</span>.
+  </p>
+</app-alert-card>
 
 <!-- TABS -->
 <!-- TODO PERSONNALISER LA COULEUR DES TABS -->
-<div class="mt-10">
-  <p-tabs value="0">
+<div class="mt-10 overflow-hidden rounded-lg shadow-md">
+  <p-tabs lazy value="0">
     <p-tablist>
       <p-tab value="0">Infos générales</p-tab>
       <p-tab value="1">Infos du club</p-tab>
       <p-tab value="2">FAQ</p-tab>
     </p-tablist>
+
     <p-tabpanels>
       <p-tabpanel value="0">
-        <p>Ici ce sont les infos qui se trouvent juste sous le hero</p>
-        <p>
-          Tu peux en ajouter autant que tu veux ici, mais seulement 4 seront
-          affichés sur le site.
-        </p>
-        <app-management-infos />
+        <ng-template #content>
+          <app-alert-card containerClass="mt-2">
+            <p>Ces informations sont affichées sous le hero du site.</p>
+            <p>
+              Tu peux en créer plusieurs, mais
+              <span class="font-semibold"
+                >seules 4 peuvent être affichées simultanément</span
+              >.
+            </p>
+            <p>
+              Les autres resteront stockées ici sans être visibles publiquement.
+            </p>
+          </app-alert-card>
+          <div class="mt-4">
+            <app-management-infos />
+          </div>
+        </ng-template>
       </p-tabpanel>
+
       <p-tabpanel value="1">
-        <app-management-club-infos />
+        <ng-template #content>
+          <app-management-club-infos />
+        </ng-template>
       </p-tabpanel>
+
       <p-tabpanel value="2">
-        <app-management-faq />
+        <ng-template #content>
+          <app-management-faq />
+        </ng-template>
       </p-tabpanel>
     </p-tabpanels>
   </p-tabs>
