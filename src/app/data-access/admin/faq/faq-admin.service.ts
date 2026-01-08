@@ -1,6 +1,7 @@
 // ANGULAR
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
+import { finalize } from "rxjs";
 
 // MODELS
 import { FaqAdmin } from "@shared/models/faq.model";
@@ -28,11 +29,10 @@ export class FaqAdminService {
 
     this.http
       .get<FaqAdmin[]>(`${artilleursConfig.apiUrl}/admin/faq`)
+      .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
         next: (items) => {
           this.faqItems.set(items);
-          this.loading.set(false);
-          this.error.set(false);
         },
         error: (error) => {
           this.error.set(true);
@@ -50,7 +50,6 @@ export class FaqAdminService {
               sticky: true,
             },
           );
-          this.loading.set(false);
         },
       });
   }
@@ -59,7 +58,33 @@ export class FaqAdminService {
     this.loadFaqItems();
   }
 
-  /* TODO RECUPERER UN SEUL ELEMENT POUR LE EDIT */
+  deleteFaqItem(faqItem: FaqAdmin): void {
+    this.loading.set(true);
+    this.error.set(false);
 
-  /* TODO FAIRE METHODE POUR SUPPRIMER UN ITEM */
+    this.http
+      .delete(`${artilleursConfig.apiUrl}/admin/faq/${faqItem.id}`)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: () => {
+          this.toast.success(
+            "Suppression d'un item de la FAQ",
+            `L'élément "${faqItem.question}" a bien été supprimé !`,
+          );
+          this.refresh();
+        },
+        error: (error) => {
+          console.error("❌ Erreur DELETE FAQ Admin:", error);
+          this.toast.error(
+            "Suppression",
+            "Une erreur s'est produite lors de la suppression de l’item.",
+            { sticky: true },
+          );
+        },
+      });
+  }
+
+  /* ------------------------------------------- */
+  /* TODO RECUPERER UN SEUL ELEMENT POUR LE EDIT */
+  /* ------------------------------------------- */
 }
