@@ -70,7 +70,6 @@ export class FaqManagement implements OnInit {
 
   /* --- DIALOG ACTIONS --- */
   onDeleteFaqItem(faqItem: FaqAdmin): void {
-    console.log("Je supprime l'élément avec l'id : " + faqItem.id);
-    /* TODO ICI LE SERVICE POUR FAIRE LA SUPPRESSION */
+    this.faqService.deleteFaqItem(faqItem);
   }
 }
