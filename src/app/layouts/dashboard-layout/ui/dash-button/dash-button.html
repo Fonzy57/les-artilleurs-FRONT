@@ -1,0 +1,21 @@
+@if (icon()) {
+  <p-button
+    [severity]="severity()"
+    [raised]="raised"
+    [label]="label()"
+    [icon]="icon()!"
+    [iconPos]="iconPos()"
+    [loading]="loading()"
+    [disabled]="disabled()"
+    (onClick)="handleClick()"
+  ></p-button>
+} @else {
+  <p-button
+    [severity]="severity()"
+    [raised]="raised"
+    [label]="label()"
+    [loading]="loading()"
+    [disabled]="disabled()"
+    (onClick)="handleClick()"
+  ></p-button>
+}
