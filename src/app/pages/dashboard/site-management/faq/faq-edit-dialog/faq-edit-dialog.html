@@ -1,0 +1,66 @@
+<p-dialog
+  header="Modifier l'élément de la FAQ"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '50rem' }"
+  [visible]="visible()"
+  (visibleChange)="visibleChange.emit($event)"
+  (onHide)="onHide()"
+>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="handleSubmit()"
+    class="flex flex-col gap-y-2"
+  >
+    <div class="flex flex-col gap-1">
+      <label for="question" class="text-sm">La question*</label>
+      <input
+        pInputText
+        id="question"
+        type="text"
+        placeholder="Votre question"
+        formControlName="question"
+        [disabled]="loading()"
+        [invalid]="isInvalid('question')"
+        aria-required="true"
+      />
+      @if (isInvalid("question")) {
+        <p class="text-error text-xs">La question est requise (max 255).</p>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label for="response" class="text-sm">La réponse*</label>
+      <textarea
+        pTextarea
+        id="response"
+        rows="5"
+        cols="30"
+        placeholder="Votre réponse..."
+        formControlName="response"
+        [disabled]="loading()"
+        [invalid]="isInvalid('response')"
+        aria-required="true"
+      ></textarea>
+      @if (isInvalid("response")) {
+        <p class="text-error text-xs">La réponse est requise (max 1500).</p>
+      }
+    </div>
+
+    <div class="mt-6 flex items-center justify-end gap-5">
+      <app-dash-button
+        severity="secondary"
+        label="Annuler"
+        [disabled]="loading()"
+        (clicked)="handleCancel()"
+      />
+
+      <app-dash-button
+        label="Modifier"
+        type="submit"
+        [loading]="loading()"
+        [disabled]="form.invalid || loading()"
+      />
+    </div>
+  </form>
+</p-dialog>
