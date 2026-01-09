@@ -1,5 +1,7 @@
+<!-- TODO FAIRE AFFICHAGE LORS DU LOADING ET POUR LES ERREURS -->
+
 <p-dialog
-  header="Modifier l'élément de la FAQ"
+  [header]="textHeader()"
   [modal]="true"
   [draggable]="false"
   [style]="{ width: '50rem' }"
@@ -102,7 +104,7 @@
       />
 
       <app-dash-button
-        label="Modifier"
+        [label]="submitLabel()"
         type="submit"
         [loading]="loading()"
         [disabled]="form.invalid || !form.dirty || loading()"
