@@ -5,8 +5,9 @@ import { Component, input, output } from "@angular/core";
 import { ButtonModule } from "primeng/button";
 
 // TYPES
-export type DashSeverity = "primary" | "secondary" | "danger";
-export type DashIconPos = "left" | "right";
+export type DashButtonSeverity = "primary" | "secondary" | "danger";
+export type DashButtonIconPos = "left" | "right";
+export type DashbuttonType = "button" | "submit" | "reset";
 
 @Component({
   standalone: true,
@@ -15,10 +16,11 @@ export type DashIconPos = "left" | "right";
   templateUrl: "./dash-button.html",
 })
 export class DashButton {
-  severity = input<DashSeverity>("primary");
+  severity = input<DashButtonSeverity>("primary");
+  type = input<DashbuttonType>("button");
   label = input.required<string>();
   icon = input<string | undefined>(undefined);
-  iconPos = input<DashIconPos>("left");
+  iconPos = input<DashButtonIconPos>("left");
   loading = input<boolean>(false);
   disabled = input<boolean>(false);
 
