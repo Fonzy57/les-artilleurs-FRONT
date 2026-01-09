@@ -19,6 +19,12 @@ import { TextareaModule } from "primeng/textarea";
 import { DashButton } from "@layouts/dashboard-layout/ui/dash-button/dash-button";
 import { FaqAdmin } from "@shared/models/faq.model";
 
+// UTILS
+import { sanitizeInput } from "@shared/utils/string-sanitize";
+
+// CUSTOM VALIDATORS
+import { requiredAndTrim } from "@shared/validators/trim-required.validator";
+
 // TYPES
 export type FaqFormMode = "create" | "edit";
 
@@ -67,14 +73,8 @@ export class FaqFormDialog {
   });
 
   readonly form = this.formBuilder.nonNullable.group({
-    question: [
-      "",
-      [Validators.required, Validators.maxLength(this.QUESTION_MAX)],
-    ],
-    response: [
-      "",
-      [Validators.required, Validators.maxLength(this.RESPONSE_MAX)],
-    ],
+    question: ["", [requiredAndTrim, Validators.maxLength(this.QUESTION_MAX)]],
+    response: ["", [requiredAndTrim, Validators.maxLength(this.RESPONSE_MAX)]],
   });
 
   constructor() {
@@ -138,6 +138,30 @@ export class FaqFormDialog {
     }
 
     const { question, response } = this.form.getRawValue();
-    this.save.emit({ question, answer: response });
+
+    const cleanQuestion = sanitizeInput(question);
+    const cleanResponse = sanitizeInput(response);
+
+    if (!cleanQuestion || !cleanResponse) {
+      this.form.patchValue(
+        { question: cleanQuestion, response: cleanResponse },
+        { emitEvent: false },
+      );
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.form.patchValue(
+      {
+        question: cleanQuestion,
+        response: cleanResponse,
+      },
+      { emitEvent: false },
+    );
+
+    this.save.emit({
+      question: cleanQuestion,
+      answer: cleanResponse,
+    });
   }
 }

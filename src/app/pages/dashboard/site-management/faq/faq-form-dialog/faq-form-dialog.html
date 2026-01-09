@@ -33,7 +33,7 @@
         }"
       >
         @if (isInvalid("question")) {
-          @if (form.controls.question.hasError("required")) {
+          @if (form.controls.question.hasError("requiredAndTrim")) {
             <p class="text-error text-xs">La question est requise.</p>
           } @else if (form.controls.question.hasError("maxlength")) {
             <p class="text-error text-xs">
@@ -75,7 +75,7 @@
         }"
       >
         @if (isInvalid("response")) {
-          @if (form.controls.response.hasError("required")) {
+          @if (form.controls.response.hasError("requiredAndTrim")) {
             <p class="text-error text-xs">La réponse est requise.</p>
           } @else if (form.controls.response.hasError("maxlength")) {
             <p class="text-error text-xs">
