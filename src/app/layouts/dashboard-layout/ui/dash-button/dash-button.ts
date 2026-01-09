@@ -19,6 +19,7 @@ export class DashButton {
   severity = input<DashButtonSeverity>("primary");
   type = input<DashbuttonType>("button");
   label = input.required<string>();
+  size = input<"small" | "large" | undefined>(undefined);
   icon = input<string | undefined>(undefined);
   iconPos = input<DashButtonIconPos>("left");
   loading = input<boolean>(false);
