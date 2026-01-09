@@ -5,7 +5,7 @@ import { catchError, finalize, Observable, tap, throwError } from "rxjs";
 
 // MODELS
 import { FaqAdmin } from "@shared/models/faq.model";
-import { FaqEditPayload } from "@pages/dashboard/site-management/faq/faq-edit-dialog/faq-edit-dialog";
+import { FaqFormPayload } from "@pages/dashboard/site-management/faq/faq-form-dialog/faq-form-dialog";
 
 // SERVICES
 import { ToastService } from "@shared/ui/toast/toast.service";
@@ -98,8 +98,51 @@ export class FaqAdminService {
     this.selectedFaqItem.set(null);
   }
 
+  addFaqItem(payload: FaqFormPayload): Observable<FaqAdmin> {
+    this.saving.set(true);
+    this.errorSave.set(false);
+
+    return this.http
+      .post<FaqAdmin>(`${artilleursConfig.apiUrl}/admin/faq`, payload)
+      .pipe(
+        tap(() => {
+          this.toast.success(
+            "Ajout d'un élément",
+            "L'élément a bien été ajouté à la FAQ !",
+          );
+          this.refresh();
+        }),
+        catchError((error) => {
+          this.errorSave.set(true);
+          console.error("❌ Erreur FAQ Admin (POST):", error);
+          if (error.status === 400) {
+            this.toast.error(
+              "Ajout impossible",
+              "Les données envoyées sont invalides. Vérifie les champs du formulaire.",
+              { sticky: true },
+            );
+          } else if (error.status === 401 || error.status === 403) {
+            this.toast.error(
+              "Accès refusé",
+              "Tu n'as pas les droits pour ajouter un élément.",
+              { sticky: true },
+            );
+          } else {
+            this.toast.error(
+              "Erreur serveur",
+              "Une erreur inattendue s'est produite. Réessaie plus tard.",
+              { sticky: true },
+            );
+          }
+
+          return throwError(() => error);
+        }),
+        finalize(() => this.saving.set(false)),
+      );
+  }
+
   // return an Observable → the component close the dialog if success
-  editFaqItem(id: number, payload: FaqEditPayload): Observable<FaqAdmin> {
+  editFaqItem(id: number, payload: FaqFormPayload): Observable<FaqAdmin> {
     this.saving.set(true);
     this.errorSave.set(false);
 
@@ -110,7 +153,7 @@ export class FaqAdminService {
           this.selectedFaqItem.set(updated);
           this.toast.success(
             "Modification d'un élément",
-            "L’élément a bien été modifié !",
+            "L'élément a bien été modifié !",
           );
           this.refresh();
         }),
@@ -127,7 +170,7 @@ export class FaqAdminService {
           } else if (error.status === 404) {
             this.toast.error(
               "Élément introuvable",
-              "Cet élément de la FAQ n’existe plus. La liste va être rechargée.",
+              "Cet élément de la FAQ n'existe plus. La liste va être rechargée.",
               { sticky: true },
             );
 
@@ -135,7 +178,7 @@ export class FaqAdminService {
           } else {
             this.toast.error(
               "Erreur serveur",
-              "Une erreur inattendue s’est produite. Réessaie plus tard.",
+              "Une erreur inattendue s'est produite. Réessaie plus tard.",
               { sticky: true },
             );
           }
