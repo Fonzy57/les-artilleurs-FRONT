@@ -1,6 +1,7 @@
 // ANGULAR
 import { Component, effect, inject, input, output } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { NgClass } from "@angular/common";
 
 // PRIME NG
 import { Dialog } from "primeng/dialog";
@@ -26,11 +27,14 @@ export type FaqEditPayload = {
     InputTextModule,
     TextareaModule,
     DashButton,
+    NgClass,
   ],
   templateUrl: "./faq-edit-dialog.html",
 })
 export class FaqEditDialog {
   private readonly formBuilder = inject(FormBuilder);
+  readonly QUESTION_MAX = 255;
+  readonly RESPONSE_MAX = 1500;
 
   // inputs
   visible = input<boolean>(false);
@@ -43,8 +47,14 @@ export class FaqEditDialog {
   save = output<FaqEditPayload>();
 
   readonly form = this.formBuilder.nonNullable.group({
-    question: ["", [Validators.required, Validators.maxLength(255)]],
-    response: ["", [Validators.required, Validators.maxLength(1500)]],
+    question: [
+      "",
+      [Validators.required, Validators.maxLength(this.QUESTION_MAX)],
+    ],
+    response: [
+      "",
+      [Validators.required, Validators.maxLength(this.RESPONSE_MAX)],
+    ],
   });
 
   constructor() {
@@ -56,12 +66,27 @@ export class FaqEditDialog {
         question: item.question,
         response: item.answer,
       });
+
+      this.form.markAsPristine();
+      this.form.markAsUntouched();
+    });
+
+    effect(() => {
+      if (this.loading()) {
+        this.form.disable({ emitEvent: false });
+      } else {
+        this.form.enable({ emitEvent: false });
+      }
     });
   }
 
   isInvalid(name: "question" | "response"): boolean {
     const control = this.form.get(name);
     return !!(control && control.invalid && (control.touched || control.dirty));
+  }
+
+  charCount(controlName: "question" | "response"): number {
+    return this.form.controls[controlName].value.length;
   }
 
   handleCancel(): void {
