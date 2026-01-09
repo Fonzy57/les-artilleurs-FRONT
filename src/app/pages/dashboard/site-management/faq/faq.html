@@ -1,11 +1,11 @@
 <div class="">
-  @if (faqService.loading()) {
+  @if (faqService.loadingList()) {
     <app-table-skeleton
       [headers]="['Question', 'Réponse', 'Ajouté le', 'Modifié le', 'Actions']"
       [rows]="10"
       minWidth="50rem"
     />
-  } @else if (faqService.error()) {
+  } @else if (faqService.errorList()) {
     <div class="flex flex-col items-center justify-center gap-y-10">
       <app-alert-card type="error" containerClass="mt-3" [widthFull]="true">
         <p>
@@ -18,7 +18,7 @@
       <app-button
         type="button"
         (click)="faqService.refresh()"
-        [disabled]="faqService.loading()"
+        [disabled]="faqService.loadingList()"
       >
         Recharger la liste
       </app-button>
@@ -60,7 +60,7 @@
               <app-action-icon-button
                 type="edit"
                 ariaLabel="Bouton pour modifier un élément de la FAQ"
-                (clicked)="onEdit(faqItem)"
+                (clicked)="onShowEditDialog(faqItem)"
               />
               <app-action-icon-button
                 type="delete"
@@ -126,3 +126,68 @@
     }
   </ng-template>
 </p-confirmdialog>
+
+<!-- EDIT DIALOG -->
+<!-- TODO VOIR POUR EN FAIRE UN COMPOSANT REUTILISABLE -->
+<p-dialog
+  header="Modifier l'élément de la FAQ"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '50rem' }"
+  (onHide)="onCancel()"
+  [draggable]="false"
+>
+  <!-- 
+  TODO FAIRE UN COMPOSANT DE CE FORMULAIRE POUR FAIRE DE LA PLACE DANS LE TS faq.ts 
+  -->
+  <form
+    [formGroup]="editFaqItemForm"
+    (ngSubmit)="onEditItem()"
+    class="flex flex-col gap-y-2"
+  >
+    <div class="flex flex-col gap-1">
+      <label for="question" class="text-sm">La question*</label>
+      <input
+        pInputText
+        type="text"
+        id="question"
+        placeholder="Votre question"
+        formControlName="question"
+        [invalid]="isInvalid('question')"
+        aria-required="true"
+      />
+      @if (isInvalid("question")) {
+        @if (editFaqItemForm.get("question")?.errors?.["required"]) {
+          <p class="text-error text-xs">La question est requise.</p>
+        }
+      }
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label for="message" class="text-text text-sm"> La réponse* </label>
+      <textarea
+        pTextarea
+        id="response"
+        rows="5"
+        cols="30"
+        placeholder="Votre response ..."
+        formControlName="response"
+        [invalid]="isInvalid('response')"
+        aria-required="true"
+      ></textarea>
+      @if (isInvalid("response")) {
+        <p class="text-error text-xs">Le réponse est requise.</p>
+      }
+      <!-- TODO FAIRE UN AFFICHAGE DU NOMBRE DE CARACTERES 1500 MAXs -->
+    </div>
+
+    <div class="mt-6 flex items-center justify-end gap-5">
+      <app-dash-button
+        severity="secondary"
+        label="Annuler"
+        (clicked)="onCancel()"
+      />
+      <app-dash-button label="Modifier" type="submit" />
+    </div>
+  </form>
+</p-dialog>

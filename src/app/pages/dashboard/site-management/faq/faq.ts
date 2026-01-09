@@ -1,11 +1,21 @@
 // ANGULAR
 import { CommonModule } from "@angular/common";
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, effect, inject, OnInit, signal } from "@angular/core";
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
 
 // PRIME NG
 import { TableModule } from "primeng/table";
 import { ConfirmDialog } from "primeng/confirmdialog";
 import { ConfirmationService } from "primeng/api";
+import { Dialog } from "primeng/dialog";
+import { ButtonModule } from "primeng/button";
+import { InputTextModule } from "primeng/inputtext";
+import { TextareaModule } from "primeng/textarea";
 
 // SERVICE
 import { FaqAdminService } from "app/data-access/admin/faq/faq-admin.service";
@@ -33,22 +43,56 @@ import { FaqAdmin } from "@shared/models/faq.model";
     AlertCard,
     ButtonComponent,
     DashButton,
+    Dialog,
+    ButtonModule,
+    InputTextModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TextareaModule,
   ],
   templateUrl: "./faq.html",
 })
 export class FaqManagement implements OnInit {
+  constructor() {
+    effect(() => {
+      const item = this.faqService.selectedFaqItem();
+
+      if (!item) return;
+
+      this.editFaqItemForm.patchValue({
+        question: item.question,
+        response: item.answer,
+      });
+    });
+  }
+
   readonly faqService = inject(FaqAdminService);
   private toast = inject(ToastService);
   confirmationService = inject(ConfirmationService);
+  visible: boolean = false;
 
   ngOnInit(): void {
     this.faqService.loadFaqItems();
   }
 
+  /* --- FORM --- */
+  formBuilder: FormBuilder = inject(FormBuilder);
+
+  editFaqItemForm = this.formBuilder.group({
+    question: ["", Validators.required],
+    response: ["", Validators.required],
+  });
+
+  isInvalid(controlName: string) {
+    const control = this.editFaqItemForm.get(controlName);
+    return !!(control && control.invalid);
+  }
+  /* --- END FORM --- */
+
   /* --- TABLE ACTIONS --- */
-  onEdit(faqItem: FaqAdmin): void {
-    console.log("Je clique sur éditer");
-    /* TODO AUTRE MODAL */
+  onShowEditDialog(faqItem: FaqAdmin): void {
+    this.faqService.getOneFaqItem(faqItem.id);
+    this.visible = true;
   }
 
   onDelete(faqItem: FaqAdmin): void {
@@ -71,5 +115,28 @@ export class FaqManagement implements OnInit {
   /* --- DIALOG ACTIONS --- */
   onDeleteFaqItem(faqItem: FaqAdmin): void {
     this.faqService.deleteFaqItem(faqItem);
+  }
+
+  onCancel() {
+    this.visible = false;
+    this.editFaqItemForm.reset();
+    this.faqService.selectedFaqItem.set(null);
+  }
+
+  onEditItem() {
+    if (this.editFaqItemForm.invalid) {
+      this.editFaqItemForm.markAllAsTouched();
+      return;
+    }
+
+    const item = this.faqService.selectedFaqItem();
+    if (!item) return;
+
+    const { question, response } = this.editFaqItemForm.getRawValue();
+
+    // ici tu appelleras ton service PUT
+    // this.faqService.editFaqItem({ ...item, question, answer: response });
+
+    console.log("submit", item.id, question, response);
   }
 }
