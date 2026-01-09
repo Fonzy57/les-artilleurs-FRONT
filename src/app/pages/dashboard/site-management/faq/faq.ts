@@ -63,14 +63,13 @@ export class FaqManagement implements OnInit {
   }
 
   onEditSave(editFormData: FaqEditPayload): void {
-    const current = this.faqService.selectedFaqItem();
-    if (!current) return;
+    const currentFaqItem = this.faqService.selectedFaqItem();
+    if (!currentFaqItem) return;
 
-    this.faqService.editFaqItem(current.id, editFormData).subscribe({
+    this.faqService.editFaqItem(currentFaqItem.id, editFormData).subscribe({
       next: () => {
         this.onEditCancel();
       },
-      error: () => {},
     });
   }
 
