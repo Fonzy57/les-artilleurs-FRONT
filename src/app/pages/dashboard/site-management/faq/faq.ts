@@ -71,9 +71,13 @@ export class FaqManagement implements OnInit {
   }
 
   onDialogSubmit(formData: FaqFormPayload): void {
+    // CREATE
     if (this.dialogMode === "create") {
-      /* TODO ICI FAIRE LE POST */
-      console.log("J'ajoute un nouvel item à la FAQ");
+      this.faqService.addFaqItem(formData).subscribe({
+        next: () => {
+          this.onDialogCancel();
+        },
+      });
       return;
     }
 
