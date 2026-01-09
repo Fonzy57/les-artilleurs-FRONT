@@ -165,3 +165,22 @@ body {
   width: 100%;
   touch-action: none;
 }
+
+/* --- CUSTOM STYLE FOR PRIME NG --- */
+/* TAB STYLE */
+@media screen and (min-width: 1440px) {
+  .p-tabpanels {
+    min-height: 400px;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .p-tabpanels {
+    min-height: 600px;
+  }
+}
+
+/* DIALOG STYLE */
+.p-dialog-title {
+  color: var(--color-main);
+}
