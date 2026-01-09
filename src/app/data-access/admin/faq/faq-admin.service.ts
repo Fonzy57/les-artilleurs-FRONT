@@ -1,10 +1,11 @@
 // ANGULAR
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
-import { finalize } from "rxjs";
+import { catchError, finalize, Observable, tap, throwError } from "rxjs";
 
 // MODELS
 import { FaqAdmin } from "@shared/models/faq.model";
+import { FaqEditPayload } from "@pages/dashboard/site-management/faq/faq-edit-dialog/faq-edit-dialog";
 
 // SERVICES
 import { ToastService } from "@shared/ui/toast/toast.service";
@@ -69,32 +70,6 @@ export class FaqAdminService {
     this.loadFaqItems();
   }
 
-  deleteFaqItem(faqItem: FaqAdmin): void {
-    this.deleting.set(true);
-    this.errorDelete.set(false);
-
-    this.http
-      .delete(`${artilleursConfig.apiUrl}/admin/faq/${faqItem.id}`)
-      .pipe(finalize(() => this.deleting.set(false)))
-      .subscribe({
-        next: () => {
-          this.toast.success(
-            "Suppression d'un élément de la FAQ",
-            `L'élément "${faqItem.question}" a bien été supprimé !`,
-          );
-          this.refresh();
-        },
-        error: (error) => {
-          console.error("❌ Erreur DELETE FAQ Admin:", error);
-          this.toast.error(
-            "Suppression d'un élément",
-            "Une erreur s'est produite lors de la suppression de l'élément.",
-            { sticky: true },
-          );
-        },
-      });
-  }
-
   getOneFaqItem(id: number) {
     this.loadingOne.set(true);
     this.errorOne.set(false);
@@ -123,8 +98,8 @@ export class FaqAdminService {
     this.selectedFaqItem.set(null);
   }
 
-  // ✅ retourne un Observable → le composant ferme la modal après succès
-  /* editFaqItem(id: number, payload: FaqUpdatePayload): Observable<FaqAdmin> {
+  // return an Observable → the component close the dialog if success
+  editFaqItem(id: number, payload: FaqEditPayload): Observable<FaqAdmin> {
     this.saving.set(true);
     this.errorSave.set(false);
 
@@ -132,7 +107,6 @@ export class FaqAdminService {
       .put<FaqAdmin>(`${artilleursConfig.apiUrl}/admin/faq/${id}`, payload)
       .pipe(
         tap((updated) => {
-          // on met à jour selected + on refresh la liste après succès
           this.selectedFaqItem.set(updated);
           this.toast.success(
             "Modification d'un élément",
@@ -144,16 +118,57 @@ export class FaqAdminService {
           this.errorSave.set(true);
           console.error("❌ Erreur FAQ Admin (EDIT):", error);
 
-          // tu peux améliorer le message selon status 400/404
-          this.toast.error(
-            "Modification d'un élément",
-            "Une erreur s'est produite lors de la modification de l'élément.",
-            { sticky: true },
-          );
+          if (error.status === 400) {
+            this.toast.error(
+              "Modification impossible",
+              "Les données envoyées sont invalides. Vérifie les champs du formulaire.",
+              { sticky: true },
+            );
+          } else if (error.status === 404) {
+            this.toast.error(
+              "Élément introuvable",
+              "Cet élément de la FAQ n’existe plus. La liste va être rechargée.",
+              { sticky: true },
+            );
+
+            this.refresh();
+          } else {
+            this.toast.error(
+              "Erreur serveur",
+              "Une erreur inattendue s’est produite. Réessaie plus tard.",
+              { sticky: true },
+            );
+          }
 
           return throwError(() => error);
         }),
         finalize(() => this.saving.set(false)),
       );
-  } */
+  }
+
+  deleteFaqItem(faqItem: FaqAdmin): void {
+    this.deleting.set(true);
+    this.errorDelete.set(false);
+
+    this.http
+      .delete(`${artilleursConfig.apiUrl}/admin/faq/${faqItem.id}`)
+      .pipe(finalize(() => this.deleting.set(false)))
+      .subscribe({
+        next: () => {
+          this.toast.success(
+            "Suppression d'un élément de la FAQ",
+            `L'élément "${faqItem.question}" a bien été supprimé !`,
+          );
+          this.refresh();
+        },
+        error: (error) => {
+          console.error("❌ Erreur DELETE FAQ Admin:", error);
+          this.toast.error(
+            "Suppression d'un élément",
+            "Une erreur s'est produite lors de la suppression de l'élément.",
+            { sticky: true },
+          );
+        },
+      });
+  }
 }
