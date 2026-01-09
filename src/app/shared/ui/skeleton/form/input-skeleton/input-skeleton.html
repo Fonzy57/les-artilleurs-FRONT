@@ -2,7 +2,7 @@
   @if (label()) {
     <p-skeleton height="1.25rem" [width]="labelWidth()" />
   }
-  <p-skeleton height="2.625rem" width="100%" />
+  <p-skeleton [height]="skeletonHeight()" width="100%" />
   @if (hint()) {
     <div
       class="flex"
