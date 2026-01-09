@@ -79,6 +79,18 @@
   --color-text-900: #3f3c3b;
   --color-text-950: #2a2727;
 
+  --color-black-50: #f6f6f6;
+  --color-black-100: #e7e7e7;
+  --color-black-200: #d1d1d1;
+  --color-black-300: #b0b0b0;
+  --color-black-400: #888888;
+  --color-black-500: #6d6d6d;
+  --color-black-600: #5d5d5d;
+  --color-black-700: #4f4f4f;
+  --color-black-800: #454545;
+  --color-black-900: #3d3d3d;
+  --color-black-950: #0c0c0c; /* same as --color-black */
+
   --color-warning-50: #fff8eb;
   --color-warning-100: #feeac7;
   --color-warning-200: #fdd28a;
@@ -152,4 +164,23 @@ body {
   position: fixed;
   width: 100%;
   touch-action: none;
+}
+
+/* --- CUSTOM STYLE FOR PRIME NG --- */
+/* TAB STYLE */
+@media screen and (min-width: 1440px) {
+  .p-tabpanels {
+    min-height: 400px;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .p-tabpanels {
+    min-height: 600px;
+  }
+}
+
+/* DIALOG STYLE */
+.p-dialog-title {
+  color: var(--color-main);
 }

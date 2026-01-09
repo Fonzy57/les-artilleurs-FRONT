@@ -1,0 +1,132 @@
+<p-dialog
+  [header]="textHeader()"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '50rem' }"
+  [visible]="visible()"
+  (visibleChange)="visibleChange.emit($event)"
+  (onHide)="onHide()"
+>
+  @if (loadingData()) {
+    <div class="flex flex-col gap-y-2">
+      <app-input-skeleton [hint]="true" hintPosition="end" hintWidth="25%" />
+      <app-input-skeleton
+        [hint]="true"
+        hintPosition="end"
+        hintWidth="25%"
+        type="textarea"
+      />
+      <div class="mt-6 flex items-center justify-end gap-5">
+        <app-button-skeleton />
+        <app-button-skeleton />
+      </div>
+    </div>
+  } @else {
+    <form
+      [formGroup]="form"
+      (ngSubmit)="handleSubmit()"
+      class="flex flex-col gap-y-2"
+    >
+      <div class="flex flex-col gap-1">
+        <label for="question" class="w-max text-sm">La question*</label>
+        <input
+          pInputText
+          id="question"
+          type="text"
+          placeholder="Votre question"
+          formControlName="question"
+          [invalid]="isInvalid('question')"
+          aria-required="true"
+        />
+        <div
+          class="flex items-center"
+          [ngClass]="{
+            'justify-between': isInvalid('question'),
+            'justify-end': !isInvalid('question'),
+          }"
+        >
+          @if (isInvalid("question")) {
+            @if (form.controls.question.hasError("requiredAndTrim")) {
+              <p class="text-error text-xs">La question est requise.</p>
+            } @else if (form.controls.question.hasError("maxlength")) {
+              <p class="text-error text-xs">
+                La question ne peut pas dépasser {{ QUESTION_MAX }} caractères.
+              </p>
+            }
+          }
+
+          <p
+            class="text-xs"
+            [ngClass]="{
+              'text-error': charCount('question') > QUESTION_MAX,
+              'text-text': charCount('question') <= QUESTION_MAX,
+            }"
+          >
+            Nombre de caractères :
+            {{ charCount("question") }}/{{ QUESTION_MAX }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label for="response" class="w-max text-sm">La réponse*</label>
+        <textarea
+          pTextarea
+          id="response"
+          rows="5"
+          cols="30"
+          placeholder="Votre réponse..."
+          formControlName="response"
+          [invalid]="isInvalid('response')"
+          aria-required="true"
+        ></textarea>
+        <div
+          class="flex items-center"
+          [ngClass]="{
+            'justify-between': isInvalid('response'),
+            'justify-end': !isInvalid('response'),
+          }"
+        >
+          @if (isInvalid("response")) {
+            @if (form.controls.response.hasError("requiredAndTrim")) {
+              <p class="text-error text-xs">La réponse est requise.</p>
+            } @else if (form.controls.response.hasError("maxlength")) {
+              <p class="text-error text-xs">
+                La réponse ne peut pas dépasser {{ RESPONSE_MAX }} caractères.
+              </p>
+            }
+          }
+          <p
+            class="text-xs"
+            [ngClass]="{
+              'text-error': charCount('response') > RESPONSE_MAX,
+              'text-text': charCount('response') <= RESPONSE_MAX,
+            }"
+          >
+            Nombre de caractères : {{ charCount("response") }}/{{
+              RESPONSE_MAX
+            }}
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-end gap-5">
+        <app-dash-button
+          severity="secondary"
+          label="Annuler"
+          [disabled]="loadingData() || isSaving()"
+          (clicked)="handleCancel()"
+        />
+
+        <app-dash-button
+          [label]="submitLabel()"
+          type="submit"
+          [loading]="isSaving()"
+          [disabled]="
+            form.invalid || !form.dirty || loadingData() || isSaving()
+          "
+        />
+      </div>
+    </form>
+  }
+</p-dialog>

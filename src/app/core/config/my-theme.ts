@@ -30,8 +30,12 @@ export const MyPreset = definePreset(Aura, {
         information: "#3b82f6",
         black: "#0c0c0c",
         white: "#ffffff",
+        dashTabHover: "#f5f7f7",
+        dashTabActive: "#e8ebeb",
+        dashTabBorder: "#dddddd",
+        dashIcon: "#a4a4a4",
       },
-      primary: {
+      main: {
         50: "#efeeff",
         100: "#e3e0ff",
         200: "#cfc8fd",
@@ -118,14 +122,14 @@ export const MyPreset = definePreset(Aura, {
           header: {
             color: "{colors.global.black}",
             activeColor: "{colors.global.main}",
-            hoverColor: "{colors.primary.700}",
-            activeHoverColor: "{colors.primary.700}",
+            hoverColor: "{colors.main.700}",
+            activeHoverColor: "{colors.main.700}",
             fontWeight: "normal",
             toggleIcon: {
               color: "{colors.global.black}",
-              hoverColor: "{colors.primary.700}",
+              hoverColor: "{colors.main.700}",
               activeColor: "{colors.global.main}",
-              activeHoverColor: "{colors.primary.700}",
+              activeHoverColor: "{colors.main.700}",
             },
           },
           panel: {
@@ -142,13 +146,13 @@ export const MyPreset = definePreset(Aura, {
         light: {
           root: {
             background: "{colors.global.white}",
-            focusBorderColor: "{colors.primary.800}",
+            focusBorderColor: "{colors.main.800}",
             color: "{colors.global.black}",
             placeholderColor: "{colors.global.bgGray}",
             focusRing: {
               style: "solid",
               width: "2px",
-              color: "{colors.primary.200}",
+              color: "{colors.main.200}",
               offset: "0px",
             },
             invalidBorderColor: "{colors.global.error}",
@@ -162,13 +166,13 @@ export const MyPreset = definePreset(Aura, {
         light: {
           root: {
             background: "{colors.global.white}",
-            focusBorderColor: "{colors.primary.800}",
+            focusBorderColor: "{colors.main.800}",
             color: "{colors.global.black}",
             placeholderColor: "{colors.global.bgGray}",
             focusRing: {
               style: "solid",
               width: "2px",
-              color: "{colors.primary.200}",
+              color: "{colors.main.200}",
               offset: "0px",
             },
             invalidBorderColor: "{colors.global.error}",
@@ -184,7 +188,7 @@ export const MyPreset = definePreset(Aura, {
             checkedBackground: "{colors.global.main}",
             checkedHoverBackground: "{colors.global.main}",
             checkedBorderColor: "{colors.global.main}",
-            checkedHoverBorderColor: "{colors.primary.400}",
+            checkedHoverBorderColor: "{colors.main.400}",
             invalidBorderColor: "{colors.global.error}",
           },
         },
@@ -235,7 +239,74 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
-    button: {},
+    tabs: {
+      colorScheme: {
+        light: {
+          tablist: {
+            background: "{colors.global.white}",
+            borderColor: "{colors.global.dashTabBorder}",
+          },
+          tab: {
+            borderColor: "{colors.global.dashTabBorder}",
+            hoverBorderColor: "{colors.main.400}",
+            hoverBackground: "{colors.global.dashTabHover}",
+            hoverColor: "{colors.main.400}",
+            activeBorderColor: "{colors.main.700}",
+            activeColor: "{colors.main.700}",
+          },
+          activeBar: {
+            background: "{colors.main.700}",
+          },
+          tabpanel: {
+            background: "{colors.global.white}",
+            color: "{colors.global.text}",
+            padding: "16px 18px",
+          },
+        },
+      },
+    },
+    button: {
+      colorScheme: {
+        light: {
+          root: {
+            borderRadius: "8px",
+            gap: "12px",
+            raisedShadow:
+              "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+            transitionDuration: "0.3s",
+            primary: {
+              background: "{colors.global.main}",
+              borderColor: "{colors.global.main}",
+              hoverBackground: "#322053",
+              hoverBorderColor: "#322053",
+              activeBackground: "{colors.main.700}",
+              activeBorderColor: "#322053",
+              color: "{colors.global.white}",
+            },
+            secondary: {
+              background: "{colors.global.white}",
+              borderColor: "{colors.global.text}",
+              color: "{colors.global.text}",
+              hoverBackground: "{colors.global.dashTabActive}",
+              hoverBorderColor: "{colors.global.text}",
+              hoverColor: "{colors.global.text}",
+              activeBackground: "{colors.global.dashTabActive}",
+              activeBorderColor: "{colors.global.dashTabActive}",
+              activeColor: "{colors.global.text}",
+            },
+            danger: {
+              background: "{colors.global.error}",
+              borderColor: "{colors.global.error}",
+              hoverBackground: "{colors.error.700}",
+              hoverBorderColor: "{colors.error.700}",
+              activeBackground: "{colors.error.500}",
+              activeBorderColor: "{colors.error.700}",
+              color: "{colors.global.white}",
+            },
+          },
+        },
+      },
+    },
     /* select: {
       colorScheme: {
         light: {
@@ -270,27 +341,11 @@ export const MyPreset = definePreset(Aura, {
             shadow: '{shadow.lg}',
           },
           option: {
-            selectedBackground: '{colors.primary.100}',
-            selectedFocusBackground: '{colors.primary.100}',
+            selectedBackground: '{colors.main.100}',
+            selectedFocusBackground: '{colors.main.100}',
           },
           checkmark: {
             color: '{colors.global.main}',
-          },
-        },
-      },
-    },
-    inputtext: {
-      colorScheme: {
-        light: {
-          root: {
-            borderColor: '{colors.global.border}',
-            hoverBorderColor: '{colors.global.main}',
-            focusBorderColor: '{colors.global.main}',
-            focusRing: {
-              width: '2px',
-              style: 'solid',
-              color: 'rgba(21, 128, 61, 0.2)',
-            },
           },
         },
       },
@@ -301,38 +356,16 @@ export const MyPreset = definePreset(Aura, {
           root: {
             background: '{colors.global.white}',
             checkedBackground: '{colors.global.main}',
-            checkedHoverBackground: '{colors.primary.500}',
+            checkedHoverBackground: '{colors.main.500}',
             borderColor: '{colors.global.border}',
             hoverBorderColor: '{colors.global.main}',
             checkedBorderColor: '{colors.global.main}',
-            checkedHoverBorderColor: '{colors.primary.500}',
+            checkedHoverBorderColor: '{colors.main.500}',
             checkedFocusBorderColor: '{colors.global.main}',
             invalidBorderColor: '{colors.global.error}',
           },
           icon: {
             color: '{colors.global.white}',
-          },
-        },
-      },
-    },
-    checkbox: {
-      colorScheme: {
-        light: {
-          root: {
-            background: '{colors.global.white}',
-            checkedBackground: '{colors.global.main}',
-            checkedHoverBackground: '{colors.primary.500}',
-            borderColor: '{colors.global.border}',
-            hoverBorderColor: '{colors.global.main}',
-            checkedBorderColor: '{colors.global.main}',
-            checkedHoverBorderColor: '{colors.primary.500}',
-            checkedFocusBorderColor: '{colors.global.main}',
-            invalidBorderColor: '{colors.global.error}',
-          },
-          icon: {
-            color: '{colors.global.white}',
-            checkedColor: '{colors.global.white}',
-            checkedHoverColor: '{colors.global.white}',
           },
         },
       },
@@ -354,12 +387,12 @@ export const MyPreset = definePreset(Aura, {
             color: '{colors.global.icon}',
           },
           selectMonth: {
-            hoverBackground: '{colors.primary.200}',
+            hoverBackground: '{colors.main.200}',
             color: '{colors.global.text}',
             hoverColor: '{colors.global.text}',
           },
           selectYear: {
-            hoverBackground: '{colors.primary.200}',
+            hoverBackground: '{colors.main.200}',
             color: '{colors.global.text}',
             hoverColor: '{colors.global.text}',
           },
@@ -367,7 +400,7 @@ export const MyPreset = definePreset(Aura, {
             color: '{colors.global.main}',
           },
           date: {
-            hoverBackground: '{colors.primary.200}',
+            hoverBackground: '{colors.main.200}',
             selectedBackground: '{colors.global.main}',
             color: '{colors.global.text}',
             hoverColor: '{colors.global.text}',
@@ -381,27 +414,6 @@ export const MyPreset = definePreset(Aura, {
       },
     },
 
-    tabs: {
-      colorScheme: {
-        light: {
-          tablist: {
-            background: '{colors.global.white}',
-            borderColor: '{colors.global.border}',
-          },
-          tab: {
-            borderColor: '{colors.global.border}',
-            hoverBorderColor: '{colors.global.border}',
-            activeBorderColor: '{colors.global.main}',
-            color: '{colors.global.text}',
-            hoverColor: '{colors.primary.500}',
-            activeColor: '{colors.global.main}',
-          },
-          tabpanel: {
-            background: '{colors.global.white}',
-            color: '{colors.global.text}',
-          },
-        },
-      },
-    }, */
+     */
   },
 });

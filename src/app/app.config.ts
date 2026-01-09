@@ -13,7 +13,7 @@ import { routes } from "./app.routes";
 
 // PRIME NG
 import { providePrimeNG } from "primeng/config";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { MyPreset } from "./core/config/my-theme";
 
 export const appConfig: ApplicationConfig = {
@@ -28,6 +28,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withFetch()),
     MessageService,
+    ConfirmationService,
     providePrimeNG({
       theme: {
         preset: MyPreset,

@@ -1,0 +1,58 @@
+<h1 class="text-4xl">Gestion du site</h1>
+
+<!-- WARNING CARD -->
+<app-alert-card type="warning" containerClass="mt-3">
+  <p>
+    Les modifications faites ici sont
+    <span class="font-semibold">visibles immédiatement</span> sur le site.
+  </p>
+  <p>
+    Assure-toi que les informations sont
+    <span class="font-semibold">correctes avant de valider</span>.
+  </p>
+</app-alert-card>
+
+<!-- TABS -->
+<div class="mt-5 overflow-hidden rounded-lg shadow-md">
+  <p-tabs lazy value="0">
+    <p-tablist>
+      <p-tab value="0">Infos générales</p-tab>
+      <p-tab value="1">Infos du club</p-tab>
+      <p-tab value="2">FAQ</p-tab>
+    </p-tablist>
+
+    <p-tabpanels>
+      <p-tabpanel value="0">
+        <ng-template #content>
+          <app-alert-card containerClass="mt-2">
+            <p>Ces informations sont affichées sous le hero du site.</p>
+            <p>
+              Tu peux en créer plusieurs, mais
+              <span class="font-semibold"
+                >seules 4 peuvent être affichées simultanément</span
+              >.
+            </p>
+            <p>
+              Les autres resteront stockées ici sans être visibles publiquement.
+            </p>
+          </app-alert-card>
+          <div class="mt-4">
+            <app-management-infos />
+          </div>
+        </ng-template>
+      </p-tabpanel>
+
+      <p-tabpanel value="1">
+        <ng-template #content>
+          <app-management-club-infos />
+        </ng-template>
+      </p-tabpanel>
+
+      <p-tabpanel value="2">
+        <ng-template #content>
+          <app-management-faq />
+        </ng-template>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</div>

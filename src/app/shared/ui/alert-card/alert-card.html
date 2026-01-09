@@ -1,0 +1,14 @@
+<div
+  class="flex items-center gap-x-5 rounded-lg border px-5 py-3 shadow-sm"
+  [ngClass]="[style().wrapper, wrapperWidth(), containerClass()]"
+  role="alert"
+  aria-live="polite"
+>
+  <i
+    [ngClass]="[style().iconName, style().iconColor]"
+    [style.fontSize]="iconSize()"
+  ></i>
+  <div [ngClass]="style().content">
+    <ng-content></ng-content>
+  </div>
+</div>

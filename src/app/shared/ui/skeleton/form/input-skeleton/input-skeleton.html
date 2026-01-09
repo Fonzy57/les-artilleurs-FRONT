@@ -1,0 +1,17 @@
+<div class="flex flex-col gap-1">
+  @if (label()) {
+    <p-skeleton height="1.25rem" [width]="labelWidth()" />
+  }
+  <p-skeleton [height]="skeletonHeight()" width="100%" class="shadow-sm" />
+  @if (hint()) {
+    <div
+      class="flex"
+      [ngClass]="{
+        'justify-start': hintPosition() === 'start',
+        'justify-end': hintPosition() === 'end',
+      }"
+    >
+      <p-skeleton height="1rem" [width]="hintWidth()" />
+    </div>
+  }
+</div>

@@ -17,6 +17,7 @@ import { NotFound } from "@pages/website/not-found/not-found";
 import { Login } from "./pages/auth/login/login";
 // Dashboard
 import { HomeDashboard } from "./pages/dashboard/home/home-dashboard";
+import { SiteManagement } from "@pages/dashboard/site-management/site-management";
 
 /* TODO METTRE LES GUARDS QUAND ILS SERONT EN PLACE */
 export const routes: Routes = [
@@ -52,7 +53,10 @@ export const routes: Routes = [
   {
     path: "dashboard",
     component: DashboardLayout,
-    children: [{ path: "", component: HomeDashboard }],
+    children: [
+      { path: "", component: HomeDashboard },
+      { path: "gestion-du-site", component: SiteManagement },
+    ],
   },
 
   /* TODO VOIR PLUS TARD POUR LES REDIRECTIONS */
