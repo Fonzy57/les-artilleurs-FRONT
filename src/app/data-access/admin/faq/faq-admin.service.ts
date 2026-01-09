@@ -19,6 +19,7 @@ import { artilleursConfig } from "@core/config/global.config";
 export class FaqAdminService {
   private readonly http = inject(HttpClient);
   private readonly toast = inject(ToastService);
+  private readonly requestedId = signal<number | null>(null);
 
   readonly faqItems = signal<FaqAdmin[]>([]);
   readonly selectedFaqItem = signal<FaqAdmin | null>(null);
@@ -71,6 +72,7 @@ export class FaqAdminService {
   }
 
   getOneFaqItem(id: number) {
+    this.requestedId.set(id);
     this.loadingOne.set(true);
     this.errorOne.set(false);
 
@@ -79,9 +81,11 @@ export class FaqAdminService {
       .pipe(finalize(() => this.loadingOne.set(false)))
       .subscribe({
         next: (item) => {
+          if (this.requestedId() !== id) return;
           this.selectedFaqItem.set(item);
         },
         error: (error) => {
+          this.errorOne.set(true);
           console.error("❌ Erreur GET ONE FAQ Admin:", error);
           this.toast.error(
             "Récupération d'un item",
@@ -95,6 +99,7 @@ export class FaqAdminService {
   }
 
   clearSelected(): void {
+    this.requestedId.set(null);
     this.selectedFaqItem.set(null);
   }
 
@@ -205,6 +210,7 @@ export class FaqAdminService {
           this.refresh();
         },
         error: (error) => {
+          this.errorDelete.set(true);
           console.error("❌ Erreur DELETE FAQ Admin:", error);
           this.toast.error(
             "Suppression d'un élément",

@@ -17,6 +17,10 @@ import { TextareaModule } from "primeng/textarea";
 
 // COMPONENTS
 import { DashButton } from "@layouts/dashboard-layout/ui/dash-button/dash-button";
+import { ButtonSkeleton } from "@shared/ui/skeleton/button-skeleton/button-skeleton";
+import { InputSkeleton } from "@shared/ui/skeleton/form/input-skeleton/input-skeleton";
+
+// MODELS
 import { FaqAdmin } from "@shared/models/faq.model";
 
 // UTILS
@@ -43,6 +47,8 @@ export type FaqFormPayload = {
     TextareaModule,
     DashButton,
     NgClass,
+    InputSkeleton,
+    ButtonSkeleton,
   ],
   templateUrl: "./faq-form-dialog.html",
 })
@@ -55,7 +61,8 @@ export class FaqFormDialog {
   visible = input<boolean>(false);
   mode = input<FaqFormMode>("edit");
   item = input<FaqAdmin | null>(null);
-  loading = input<boolean>(false);
+  loadingData = input<boolean>(false);
+  isSaving = input<boolean>(false);
 
   // outputs
   visibleChange = output<boolean>();
@@ -104,7 +111,7 @@ export class FaqFormDialog {
 
     // Disable form if loading
     effect(() => {
-      if (this.loading()) {
+      if (this.loadingData() || this.isSaving()) {
         this.form.disable({ emitEvent: false });
       } else {
         this.form.enable({ emitEvent: false });
@@ -128,6 +135,11 @@ export class FaqFormDialog {
   }
 
   onHide(): void {
+    if (this.loadingData() || this.isSaving()) {
+      this.visibleChange.emit(false);
+      return;
+    }
+
     this.handleCancel();
   }
 
