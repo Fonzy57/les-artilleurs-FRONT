@@ -17,13 +17,14 @@ import { TableSkeleton } from "@shared/ui/skeleton/table-skeleton/table-skeleton
 import { AlertCard } from "@shared/ui/alert-card/alert-card";
 import { ButtonComponent } from "@shared/ui/button/button";
 import { DashButton } from "@layouts/dashboard-layout/ui/dash-button/dash-button";
-import {
-  FaqEditPayload,
-  FaqEditDialog,
-} from "./faq-edit-dialog/faq-edit-dialog";
 
 // MODELS
 import { FaqAdmin } from "@shared/models/faq.model";
+import {
+  FaqFormPayload,
+  FaqFormDialog,
+  FaqFormMode,
+} from "./faq-form-dialog/faq-form-dialog";
 
 @Component({
   standalone: true,
@@ -37,7 +38,7 @@ import { FaqAdmin } from "@shared/models/faq.model";
     AlertCard,
     ButtonComponent,
     DashButton,
-    FaqEditDialog,
+    FaqFormDialog,
   ],
   templateUrl: "./faq.html",
 })
@@ -45,30 +46,44 @@ export class FaqManagement implements OnInit {
   readonly faqService = inject(FaqAdminService);
   private toast = inject(ToastService);
   confirmationService = inject(ConfirmationService);
-  visible: boolean = false;
+  dialogVisible: boolean = false;
+  dialogMode: FaqFormMode = "edit";
 
   ngOnInit(): void {
     this.faqService.loadFaqItems();
   }
 
-  /* --- TABLE ACTIONS --- */
-  onShowEditDialog(faqItem: FaqAdmin): void {
-    this.faqService.getOneFaqItem(faqItem.id);
-    this.visible = true;
+  openCreateDialog(): void {
+    this.dialogMode = "create";
+    this.faqService.clearSelected();
+    this.dialogVisible = true;
   }
 
-  onEditCancel(): void {
-    this.visible = false;
+  openEditDialog(faqItem: FaqAdmin): void {
+    this.dialogMode = "edit";
+    this.faqService.getOneFaqItem(faqItem.id);
+    this.dialogVisible = true;
+  }
+
+  onDialogCancel(): void {
+    this.dialogVisible = false;
     this.faqService.clearSelected();
   }
 
-  onEditSave(editFormData: FaqEditPayload): void {
+  onDialogSubmit(formData: FaqFormPayload): void {
+    if (this.dialogMode === "create") {
+      /* TODO ICI FAIRE LE POST */
+      console.log("J'ajoute un nouvel item à la FAQ");
+      return;
+    }
+
+    // EDIT
     const currentFaqItem = this.faqService.selectedFaqItem();
     if (!currentFaqItem) return;
 
-    this.faqService.editFaqItem(currentFaqItem.id, editFormData).subscribe({
+    this.faqService.editFaqItem(currentFaqItem.id, formData).subscribe({
       next: () => {
-        this.onEditCancel();
+        this.onDialogCancel();
       },
     });
   }
@@ -90,7 +105,7 @@ export class FaqManagement implements OnInit {
     });
   }
 
-  /* --- DIALOG ACTIONS --- */
+  /* --- CONFIRM DIALOG ACTIONS --- */
   onDeleteFaqItem(faqItem: FaqAdmin): void {
     this.faqService.deleteFaqItem(faqItem);
   }
