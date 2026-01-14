@@ -4,6 +4,8 @@ export type InfoBlockChunk = {
   isItalic: boolean;
 };
 
+/* TODO SIMPLE POUR LE MOMENT, SI JE VEUX AJOUTER D'AUTRES MARKDOWN UTILISER UNE LIBRAIRIE (ngx-markdown, marked, markdown-it) */
+/* TODO Gérer espaces avant ponctuation */
 // ONLY for bold '**' and italic '_'
 export function markdownParser(content: string): InfoBlockChunk[] {
   const arrayOfChunks: InfoBlockChunk[] = [];
