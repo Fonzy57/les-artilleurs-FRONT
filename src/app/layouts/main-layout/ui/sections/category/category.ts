@@ -1,14 +1,12 @@
 // ANGULAR
-import { Component } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { NgClass } from "@angular/common";
+
+// SERVICE
+import { InfoBlockService } from "app/data-access/public/info-block/info-block.service";
 
 // COMPONENTS
 import { HorizontalAccordionComponent } from "../../accordion/accordion";
-
-type infoContent = {
-  text: string;
-  span: string;
-};
 
 type TextContent = {
   id: number;
@@ -23,26 +21,12 @@ type TextContent = {
   imports: [HorizontalAccordionComponent, NgClass],
   templateUrl: "./category.html",
 })
-export class Category {
-  /* TODO CECI VIENDRA DE LA BASE DE DONNEES */
-  infos: infoContent[] = [
-    {
-      text: "Reprise des entraînements pour la saison 2023-2024 dès",
-      span: "le lundi 14 août !",
-    },
-    {
-      text: "Reprise des entraînements pour la saison 2023-2024 dès",
-      span: "le lundi 14 août !",
-    },
-    {
-      text: "Reprise des entraînements pour la saison 2023-2024 dès",
-      span: "le lundi 14 août !",
-    },
-    {
-      text: "AG au clubhouse",
-      span: "le lundi 14 août !",
-    },
-  ];
+export class Category implements OnInit {
+  readonly infoBlockService = inject(InfoBlockService);
+
+  ngOnInit(): void {
+    this.infoBlockService.laodingInfoBlocks();
+  }
 
   textContent: TextContent[] = [
     {

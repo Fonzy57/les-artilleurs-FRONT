@@ -7,13 +7,18 @@
   <div
     class="mt-5 flex flex-col gap-y-5 md:mx-auto md:mt-10 md:w-2/3 lg:mx-0 lg:mt-0 lg:w-auto lg:flex-row lg:gap-x-2 xl:gap-x-4"
   >
-    @for (info of infos; track $index) {
-      <div class="border-main border-l-4 pl-2.5 lg:max-w-1/4">
-        <p class="text-main text-sm">
-          {{ info.text }}
-          <span class="font-bold">{{ info.span }}</span>
-        </p>
-      </div>
+    @if (infoBlockService.loading()) {
+      <p>Chargement des données...</p>
+    } @else if (infoBlockService.error()) {
+      <p>Erreur lors du chargement des infos...</p>
+    } @else {
+      @for (infoItem of infoBlockService.infoBlocks(); track $index) {
+        <div class="border-main border-l-4 pl-2.5 lg:max-w-1/4">
+          <p class="text-main text-sm">
+            {{ infoItem.content }}
+          </p>
+        </div>
+      }
     }
   </div>
 </section>
