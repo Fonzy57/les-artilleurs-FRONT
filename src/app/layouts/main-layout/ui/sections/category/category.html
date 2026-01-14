@@ -1,4 +1,5 @@
 <!-- INFOS -->
+<!-- TODO EN FAIRE UN COMPOSANT A PART POUR LES INFOS => INFO-BLOCK comme l'API -->
 <section
   id="category"
   class="px-5 py-12 md:px-0 lg:flex lg:items-center lg:justify-between lg:gap-x-10 lg:px-8 xl:mx-auto xl:w-400 xl:px-0"
@@ -15,10 +16,19 @@
       @if (infoBlockService.infoBlocks().length === 0) {
         <p>Aucune info disponible !</p>
       } @else {
-        @for (infoItem of infoBlockService.infoBlocks(); track infoItem.id) {
+        @for (infoItem of parsedInfoBlocks(); track infoItem.id) {
           <div class="border-main border-l-4 pl-2.5 lg:max-w-1/4">
             <p class="text-main text-sm">
-              {{ infoItem.content }}
+              @for (chunk of infoItem.chunks; track $index) {
+                <span
+                  [ngClass]="{
+                    'font-bold': chunk.isBold,
+                    italic: chunk.isItalic,
+                  }"
+                >
+                  {{ chunk.text }}
+                </span>
+              }
             </p>
           </div>
         }
