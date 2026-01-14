@@ -2,6 +2,7 @@
 import { HttpClient } from "@angular/common/http";
 import { DestroyRef, inject, Injectable, signal } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { finalize } from "rxjs";
 
 // MODELS
 import { FaqPublic } from "@shared/models/faq.model";
@@ -26,23 +27,25 @@ export class FaqService {
 
     this.http
       .get<FaqPublic[]>(`${artilleursConfig.apiUrl}/public/site/faq`)
-      // TODO VOIR SI JE LE LAISSE ICI, PAS NECESSAIRE
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading.set(false)),
+      )
       .subscribe({
         next: (items) => {
           this.faqItems.set(items);
-          this.loading.set(false);
         },
         error: (error) => {
+          this.error.set("Erreur lors du chargement de la FAQ");
           console.error("❌ Erreur FAQ Site:", error);
+
+          /* TODO A SUPPRIMER QUAND TESTS FINIS */
           console.error("📝 Détails de l'erreur:", {
             status: error.status,
             statusText: error.statusText,
             message: error.message,
             url: error.url,
           });
-          this.loading.set(false);
-          this.error.set("Erreur lors du chargement de la FAQ");
         },
       });
   }
