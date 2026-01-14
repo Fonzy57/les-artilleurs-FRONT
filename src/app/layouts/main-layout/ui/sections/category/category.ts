@@ -25,7 +25,7 @@ export class Category implements OnInit {
   readonly infoBlockService = inject(InfoBlockService);
 
   ngOnInit(): void {
-    this.infoBlockService.laodingInfoBlocks();
+    this.infoBlockService.loadInfoBlocks();
   }
 
   textContent: TextContent[] = [

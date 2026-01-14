@@ -12,12 +12,16 @@
     } @else if (infoBlockService.error()) {
       <p>Erreur lors du chargement des infos...</p>
     } @else {
-      @for (infoItem of infoBlockService.infoBlocks(); track $index) {
-        <div class="border-main border-l-4 pl-2.5 lg:max-w-1/4">
-          <p class="text-main text-sm">
-            {{ infoItem.content }}
-          </p>
-        </div>
+      @if (infoBlockService.infoBlocks().length === 0) {
+        <p>Aucune info disponible !</p>
+      } @else {
+        @for (infoItem of infoBlockService.infoBlocks(); track infoItem.id) {
+          <div class="border-main border-l-4 pl-2.5 lg:max-w-1/4">
+            <p class="text-main text-sm">
+              {{ infoItem.content }}
+            </p>
+          </div>
+        }
       }
     }
   </div>
