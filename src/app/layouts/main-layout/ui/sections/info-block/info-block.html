@@ -6,14 +6,26 @@
   <h2 class="text-main text-center text-3xl md:text-5xl">Infos</h2>
   <div
     class="mt-5 flex flex-col gap-y-5 md:mx-auto md:mt-10 md:w-2/3 lg:mx-0 lg:mt-0 lg:w-auto lg:flex-row lg:gap-x-2 xl:gap-x-4"
+    [ngClass]="{
+      'flex-1': infoBlockService.error,
+    }"
   >
     @if (infoBlockService.loading()) {
-      <p>Chargement des données...</p>
+      <app-info-block-skeleton />
     } @else if (infoBlockService.error()) {
-      <p>Erreur lors du chargement des infos...</p>
+      <div class="text-error w-full text-center">
+        <p>Erreur lors du chargement des infos.</p>
+        <p>Essayer de rafraichir la page.</p>
+      </div>
     } @else {
       @if (infoBlockService.infoBlocks().length === 0) {
-        <p>Aucune info disponible !</p>
+        <div class="text-main w-full text-center font-semibold">
+          <p>Il n'y a pas d'infos pour le moment.</p>
+          <p>
+            Revenez plus tard, ou suivez nous sur les réseaux pour rester
+            informé !
+          </p>
+        </div>
       } @else {
         @for (infoItem of parsedInfoBlocks(); track infoItem.id) {
           <div class="border-main border-l-4 pl-2.5 lg:max-w-1/4">

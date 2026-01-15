@@ -1,8 +1,18 @@
-import { NgClass } from "@angular/common";
+// ANGULAR
 import { Component, computed, inject, OnInit } from "@angular/core";
-import { InfoBlockPublic } from "@shared/models/info-block.model";
-import { InfoBlockChunk, markdownParser } from "@shared/utils/markdown-parser";
+import { NgClass } from "@angular/common";
+
+// SERVICE
 import { InfoBlockService } from "app/data-access/public/info-block/info-block.service";
+
+// COMPONENTS
+import { InfoBlockSkeleton } from "@shared/ui/skeleton/info-block-skeleton/info-block-skeleton";
+
+// UTILS
+import { InfoBlockChunk, markdownParser } from "@shared/utils/markdown-parser";
+
+// MODELS
+import { InfoBlockPublic } from "@shared/models/info-block.model";
 
 // TYPES
 type InfoBlockPublicParsed = InfoBlockPublic & {
@@ -10,8 +20,9 @@ type InfoBlockPublicParsed = InfoBlockPublic & {
 };
 
 @Component({
-  selector: "app-info-block",
-  imports: [NgClass],
+  standalone: true,
+  selector: "app-website-info-block",
+  imports: [NgClass, InfoBlockSkeleton],
   templateUrl: "./info-block.html",
 })
 export class InfoBlock implements OnInit {
