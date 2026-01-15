@@ -1,0 +1,7 @@
+<div class="flex flex-col gap-y-5 lg:flex-row lg:gap-x-2 xl:gap-x-4">
+  @for (item of items; track $index) {
+    <div class="border-main w-full border-l-4 pl-2.5">
+      <p-skeleton class="" [height]="skeletonHeight()" />
+    </div>
+  }
+</div>
