@@ -15,7 +15,7 @@ import { InfoBlockChunk, markdownParser } from "@shared/utils/markdown-parser";
 import { InfoBlockPublic } from "@shared/models/info-block.model";
 
 // TYPES
-type InfoBlockPublicParsed = InfoBlockPublic & {
+export type InfoBlockPublicParsed = InfoBlockPublic & {
   chunks: InfoBlockChunk[];
 };
 
