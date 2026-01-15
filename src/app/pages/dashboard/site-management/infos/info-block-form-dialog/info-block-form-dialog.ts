@@ -1,3 +1,4 @@
+// ANGULAR
 import {
   Component,
   computed,
@@ -7,17 +8,29 @@ import {
   output,
 } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
-import { InfoBlockAdmin } from "@shared/models/info-block.model";
+import { NgClass } from "@angular/common";
+
+// PRIME NG
 import { Dialog } from "primeng/dialog";
+import { TextareaModule } from "primeng/textarea";
+import { InputTextModule } from "primeng/inputtext";
+import { RadioButton } from "primeng/radiobutton";
+
+// COMPONENTS
 import { InputSkeleton } from "@shared/ui/skeleton/form/input-skeleton/input-skeleton";
 import { ButtonSkeleton } from "@shared/ui/skeleton/button-skeleton/button-skeleton";
-import { TextareaModule } from "primeng/textarea";
-import { NgClass } from "@angular/common";
-import { requiredAndTrim } from "@shared/validators/trim-required.validator";
-import { InputTextModule } from "primeng/inputtext";
 import { DashButton } from "@layouts/dashboard-layout/ui/dash-button/dash-button";
+
+// MODELS
+import { InfoBlockAdmin } from "@shared/models/info-block.model";
+
+// UTILS
 import { sanitizeInput } from "@shared/utils/string-sanitize";
 
+// CUSTOM VALIDATORS
+import { requiredAndTrim } from "@shared/validators/trim-required.validator";
+
+// TYPES
 export type InfoBlockFormMode = "edit" | "create";
 
 export type InfoBlockPayload = {
@@ -37,6 +50,7 @@ export type InfoBlockPayload = {
     NgClass,
     InputTextModule,
     DashButton,
+    RadioButton,
   ],
   templateUrl: "./info-block-form-dialog.html",
 })
@@ -65,7 +79,6 @@ export class InfoBlockFormDialog {
     this.mode() === "create" ? "Ajouter" : "Modifier",
   );
 
-  // OPTIONS POUR LE SELECT (slots)
   readonly slotOptions = [
     { label: "Ne pas le définir", value: null },
     { label: "Slot 1", value: 1 },

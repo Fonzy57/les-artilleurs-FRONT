@@ -28,11 +28,11 @@
       class="flex flex-col gap-y-2"
     >
       <div class="flex flex-col gap-1">
-        <label for="content" class="w-max text-sm">La réponse*</label>
+        <label for="content" class="w-max text-sm">L'info*</label>
         <textarea
           pTextarea
           id="content"
-          rows="5"
+          rows="2"
           cols="30"
           placeholder="Votre réponse..."
           formControlName="content"
@@ -67,6 +67,28 @@
               CONTENT_MAX_LENGTH
             }}
           </p> -->
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label for="">La position</label>
+        <div class="flex items-center gap-x-5">
+          @for (option of slotOptions; track option.label) {
+            <div class="flex items-center gap-2">
+              <p-radioButton
+                name="slot"
+                formControlName="slot"
+                [value]="option.value"
+                [inputId]="'slot-' + option.label"
+              />
+              <label
+                class="cursor-pointer text-sm"
+                [for]="'slot-' + option.label"
+              >
+                {{ option.label }}
+              </label>
+            </div>
+          }
         </div>
       </div>
 
