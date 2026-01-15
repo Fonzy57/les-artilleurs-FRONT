@@ -13,6 +13,11 @@ import { ActionIconButton } from "@layouts/dashboard-layout/ui/action-icon-butto
 import { TableSkeleton } from "@shared/ui/skeleton/table-skeleton/table-skeleton";
 import { InfoPreview } from "./info-preview/info-preview";
 import { DashButton } from "@layouts/dashboard-layout/ui/dash-button/dash-button";
+import {
+  InfoBlockFormDialog,
+  InfoBlockFormMode,
+  InfoBlockPayload,
+} from "./info-block-form-dialog/info-block-form-dialog";
 
 // PRIME NG
 import { TableModule } from "primeng/table";
@@ -35,6 +40,7 @@ import { InfoBlockAdmin } from "@shared/models/info-block.model";
     InfoPreview,
     ConfirmDialog,
     DashButton,
+    InfoBlockFormDialog,
   ],
   templateUrl: "./infos.html",
 })
@@ -42,27 +48,57 @@ export class InfosManagement implements OnInit {
   readonly infoBlockAdminService = inject(InfoBlockAdminService);
   private readonly toast = inject(ToastService);
   confirmationService = inject(ConfirmationService);
+  dialogVisible: boolean = false;
+  dialogMode: InfoBlockFormMode = "edit";
 
   ngOnInit(): void {
     this.infoBlockAdminService.loadInfoBlocks();
   }
 
   /* --- ADD --- */
-  openCreateDialog() {
-    /* TODO FAIRE LE BOUTON FONCTIONNEL */
-    console.log("j'ouvre la dialog de création");
+  openCreateInfoDialog(): void {
+    this.dialogMode = "create";
+    this.infoBlockAdminService.clearSelectedInfo();
+    this.dialogVisible = true;
   }
 
   /* --- EDIT --- */
-  openEditDialog(infoBlock: InfoBlockAdmin): void {
-    console.log("Je clique sur le bouton modifier : ", infoBlock);
-    /* this.dialogMode = "edit";
-      this.faqService.getOneFaqItem(faqItem.id);
-      this.dialogVisible = true; */
+  openEditInfoDialog(infoBlock: InfoBlockAdmin): void {
+    this.dialogMode = "edit";
+    this.infoBlockAdminService.getOneInfoBlock(infoBlock.id);
+    this.dialogVisible = true;
+  }
+
+  onEditCreatInfoDialogCancel(): void {
+    this.dialogVisible = false;
+    this.infoBlockAdminService.clearSelectedInfo();
+  }
+
+  onDialogSubmit(formData: InfoBlockPayload): void {
+    console.log("Je submit");
+    // CREATE
+    /* if (this.dialogMode === "create") {
+        this.faqService.addFaqItem(formData).subscribe({
+          next: () => {
+            this.onDialogCancel();
+          },
+        });
+        return;
+      }
+  
+      // EDIT
+      const currentFaqItem = this.faqService.selectedFaqItem();
+      if (!currentFaqItem) return;
+  
+      this.faqService.editFaqItem(currentFaqItem.id, formData).subscribe({
+        next: () => {
+          this.onDialogCancel();
+        },
+      }); */
   }
 
   /* --- DELETE --- */
-  onClickDelete(infoBlock: InfoBlockAdmin): void {
+  onClickDeleteInfo(infoBlock: InfoBlockAdmin): void {
     const truncateContent = infoBlock.content.slice(0, 45);
     this.confirmationService.confirm({
       key: "info-block-delete",

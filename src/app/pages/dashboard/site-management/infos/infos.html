@@ -2,7 +2,7 @@
   <app-dash-button
     severity="primary"
     label="Ajouter une info"
-    (clicked)="openCreateDialog()"
+    (clicked)="openCreateInfoDialog()"
     icon="pi pi-plus"
     size="small"
   />
@@ -75,12 +75,12 @@
               <app-action-icon-button
                 type="edit"
                 ariaLabel="Bouton pour modifier un élément des info blocs"
-                (clicked)="openEditDialog(infoBlockItem)"
+                (clicked)="openEditInfoDialog(infoBlockItem)"
               />
               <app-action-icon-button
                 type="delete"
                 ariaLabel="Bouton pour supprimer un élément des info blocs"
-                (clicked)="onClickDelete(infoBlockItem)"
+                (clicked)="onClickDeleteInfo(infoBlockItem)"
               />
             </div>
           </td>
@@ -148,3 +148,14 @@
     }
   </ng-template>
 </p-confirmdialog>
+
+<!-- CREATE AND EDIT INFO DIALOG -->
+<app-info-block-form-dialog
+  [(visible)]="dialogVisible"
+  [mode]="dialogMode"
+  [item]="infoBlockAdminService.selectedInfoBlock()"
+  [loadingData]="infoBlockAdminService.loadingOne()"
+  [isSaving]="infoBlockAdminService.saving()"
+  (cancel)="onEditCreatInfoDialogCancel()"
+  (save)="onDialogSubmit($event)"
+/>
