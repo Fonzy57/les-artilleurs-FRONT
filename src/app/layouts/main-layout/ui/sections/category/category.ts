@@ -1,22 +1,9 @@
 // ANGULAR
-import { Component, computed, inject, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { NgClass } from "@angular/common";
-
-// SERVICE
-import { InfoBlockService } from "app/data-access/public/info-block/info-block.service";
 
 // COMPONENTS
 import { HorizontalAccordionComponent } from "../../accordion/accordion";
-
-// UTILS
-import { InfoBlockChunk, markdownParser } from "@shared/utils/markdown-parser";
-
-// MODELS
-import { InfoBlockPublic } from "@shared/models/info-block.model";
-
-type InfoBlockPublicParsed = InfoBlockPublic & {
-  chunks: InfoBlockChunk[];
-};
 
 type TextContent = {
   id: number;
@@ -31,22 +18,7 @@ type TextContent = {
   imports: [HorizontalAccordionComponent, NgClass],
   templateUrl: "./category.html",
 })
-export class Category implements OnInit {
-  readonly infoBlockService = inject(InfoBlockService);
-
-  ngOnInit(): void {
-    this.infoBlockService.loadInfoBlocks();
-  }
-
-  parsedInfoBlocks = computed<InfoBlockPublicParsed[]>(() => {
-    const blocks = this.infoBlockService.infoBlocks();
-
-    return blocks.map((block) => ({
-      ...block,
-      chunks: markdownParser(block.content),
-    }));
-  });
-
+export class Category {
   textContent: TextContent[] = [
     {
       id: 1,

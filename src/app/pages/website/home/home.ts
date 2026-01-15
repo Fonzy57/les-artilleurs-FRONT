@@ -3,6 +3,7 @@ import { Component } from "@angular/core";
 
 // SECTIONS
 import { Hero } from "@layouts/main-layout/ui/sections/hero/hero";
+import { InfoBlock } from "@layouts/main-layout/ui/sections/info-block/info-block";
 import { Category } from "@layouts/main-layout/ui/sections/category/category";
 import { Registration } from "@layouts/main-layout/ui/sections/registration/registration";
 import { History } from "@layouts/main-layout/ui/sections/history/history";
@@ -18,6 +19,7 @@ import { Contact } from "@layouts/main-layout/ui/sections/contact/contact";
   selector: "app-home",
   imports: [
     Hero,
+    InfoBlock,
     Category,
     Registration,
     History,
