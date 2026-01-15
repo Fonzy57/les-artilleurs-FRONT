@@ -82,3 +82,55 @@
 
 <!-- PREVIEW -->
 <app-info-block-preview />
+
+<!-- DELETE CONFIRM DIALOG -->
+<!-- TODO VOIR POUR EN FAIRE UN COMPOSANT REUTILISABLE -->
+<p-confirmdialog #cdInfoBlock key="info-block-delete">
+  <ng-template
+    #headless
+    let-message
+    let-onAccept="onAccept"
+    let-onReject="onReject"
+  >
+    @if (message) {
+      <div
+        class="bg-surface-0 dark:bg-surface-900 flex flex-col items-center rounded p-8"
+      >
+        <!-- WARNING LOGO -->
+        <div
+          class="bg-error-100 -mt-20 flex h-24 w-24 items-center justify-center rounded-full"
+        >
+          <i class="pi pi-exclamation-triangle text-error text-5xl!"></i>
+        </div>
+
+        <!-- MESSAGE -->
+        <div
+          class="mt-6 flex flex-col items-center justify-center gap-y-3 text-center"
+        >
+          <p class="text-error text-center text-2xl font-bold">
+            {{ message.header }}
+          </p>
+          <div class="text-text flex flex-col gap-y-1">
+            <p>Veux-tu vraiment supprimer cette info ?</p>
+            <p class="font-semibold italic">"{{ message.message }}"</p>
+          </div>
+          <p class="text-error underline">Cette action est irréversible !</p>
+        </div>
+
+        <!-- BUTTONS ROW -->
+        <div class="mt-6 flex items-center gap-5">
+          <app-dash-button
+            severity="secondary"
+            label="Annuler"
+            (clicked)="onReject()"
+          />
+          <app-dash-button
+            severity="danger"
+            label="Supprimer"
+            (clicked)="onAccept()"
+          />
+        </div>
+      </div>
+    }
+  </ng-template>
+</p-confirmdialog>

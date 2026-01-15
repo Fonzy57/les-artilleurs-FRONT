@@ -4,6 +4,7 @@ import { CommonModule } from "@angular/common";
 
 // SERVICES
 import { InfoBlockAdminService } from "app/data-access/admin/info-block/info-block-admin.service";
+import { ToastService } from "@shared/ui/toast/toast.service";
 
 // COMPONENTS
 import { AlertCard } from "@shared/ui/alert-card/alert-card";
@@ -11,9 +12,12 @@ import { ButtonComponent } from "@shared/ui/button/button";
 import { ActionIconButton } from "@layouts/dashboard-layout/ui/action-icon-button/action-icon-button";
 import { TableSkeleton } from "@shared/ui/skeleton/table-skeleton/table-skeleton";
 import { InfoPreview } from "./info-preview/info-preview";
+import { DashButton } from "@layouts/dashboard-layout/ui/dash-button/dash-button";
 
 // PRIME NG
 import { TableModule } from "primeng/table";
+import { ConfirmationService } from "primeng/api";
+import { ConfirmDialog } from "primeng/confirmdialog";
 
 // MODELS
 import { InfoBlockAdmin } from "@shared/models/info-block.model";
@@ -29,11 +33,15 @@ import { InfoBlockAdmin } from "@shared/models/info-block.model";
     CommonModule,
     TableSkeleton,
     InfoPreview,
+    ConfirmDialog,
+    DashButton,
   ],
   templateUrl: "./infos.html",
 })
 export class InfosManagement implements OnInit {
   readonly infoBlockAdminService = inject(InfoBlockAdminService);
+  private readonly toast = inject(ToastService);
+  confirmationService = inject(ConfirmationService);
 
   ngOnInit(): void {
     this.infoBlockAdminService.loadInfoBlocks();
@@ -47,6 +55,26 @@ export class InfosManagement implements OnInit {
   }
 
   onDelete(infoBlock: InfoBlockAdmin): void {
-    console.log("Je clique sur supprimer");
+    const truncateContent = infoBlock.content.slice(0, 45);
+
+    this.confirmationService.confirm({
+      key: "info-block-delete",
+      header: "Supprimer une info",
+      message: `${truncateContent}...`,
+      accept: () => {
+        console.log(
+          "Je supprime l'élément : ",
+          infoBlock.id,
+          infoBlock.content,
+        );
+        // this.onDeleteFaqItem(infoBlock);
+      },
+      reject: () => {
+        this.toast.info(
+          "Suppression annulée",
+          `L'élément de la FAQ "${truncateContent}" n'a pas été supprimé.`,
+        );
+      },
+    });
   }
 }
