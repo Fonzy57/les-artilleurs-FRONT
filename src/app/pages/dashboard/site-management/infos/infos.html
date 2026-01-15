@@ -1,1 +1,84 @@
-<p>infos works!</p>
+<!-- TABLE OF FAQ ITEMS -->
+<div class="mt-5">
+  @if (infoBlockAdminService.loadingList()) {
+    <app-table-skeleton
+      [headers]="['Contenu', 'Position', 'Ajouté le', 'Modifié le', 'Actions']"
+      [rows]="6"
+      minWidth="50rem"
+    />
+  } @else if (infoBlockAdminService.errorList()) {
+    <div class="flex flex-col items-center justify-center gap-y-10">
+      <app-alert-card type="error" containerClass="mt-3" [widthFull]="true">
+        <p>
+          Une erreur est survenue lors de la récupération des éléments des blocs
+          d'infos
+        </p>
+        <p>Réessaie dans quelques instants.</p>
+        <p>Si le problème persiste, contacte l’assistance.</p>
+      </app-alert-card>
+      <app-button
+        type="button"
+        (click)="infoBlockAdminService.refresh()"
+        [disabled]="infoBlockAdminService.loadingList()"
+      >
+        Recharger la liste
+      </app-button>
+    </div>
+  } @else {
+    <!-- TODO VOIR SI JE LAISSE LE TABLEAU SCROLLABLE OU PAS -->
+    <!-- 
+    [scrollable]="true"
+      scrollHeight="550px"
+     -->
+    <p-table
+      [value]="infoBlockAdminService.infoBlocks()"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      stripedRows
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Contenu</th>
+          <th class="text-center!">Position</th>
+          <th class="text-center! whitespace-nowrap">Ajouté le</th>
+          <th class="text-center! whitespace-nowrap">Modifié le</th>
+          <th class="text-center!">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-infoBlockItem>
+        <tr>
+          <td class="">{{ infoBlockItem.content }}</td>
+          <td class="text-center! whitespace-nowrap">
+            @if (infoBlockItem.slot === null) {
+              Non définie
+            } @else {
+              {{ infoBlockItem.slot }}
+            }
+          </td>
+          <td class="text-center! whitespace-nowrap">
+            {{ infoBlockItem.createdAt | date: "dd/MM/yy à HH:mm" }}
+          </td>
+          <td class="text-center! whitespace-nowrap">
+            {{ infoBlockItem.updatedAt | date: "dd/MM/yy à HH:mm" }}
+          </td>
+          <td class="text-center!">
+            <div class="flex items-center justify-center gap-x-2">
+              <app-action-icon-button
+                type="edit"
+                ariaLabel="Bouton pour modifier un élément des info blocs"
+                (clicked)="openEditDialog(infoBlockItem)"
+              />
+              <app-action-icon-button
+                type="delete"
+                ariaLabel="Bouton pour supprimer un élément des info blocs"
+                (clicked)="onDelete(infoBlockItem)"
+              />
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+</div>
+
+<!-- PREVIEW -->
+<app-info-block-preview />
