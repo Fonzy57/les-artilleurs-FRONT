@@ -19,7 +19,8 @@ import { artilleursConfig } from "@core/config/global.config";
 })
 export class InfoBlockAdminService {
   private readonly http = inject(HttpClient);
-  toast = inject(ToastService);
+  private readonly toast = inject(ToastService);
+  private readonly requestedId = signal<number | null>(null);
 
   readonly infoBlocks = signal<InfoBlockAdmin[]>([]);
   readonly selectedInfoBlock = signal<InfoBlockAdmin | null>(null);
@@ -59,6 +60,38 @@ export class InfoBlockAdminService {
           );
         },
       });
+  }
+
+  getOneInfoBlock(id: number): void {
+    this.requestedId.set(id);
+    this.loadingOne.set(true);
+    this.errorOne.set(false);
+
+    this.http
+      .get<InfoBlockAdmin>(`${artilleursConfig.apiUrl}/admin/info-block/${id}`)
+      .pipe(finalize(() => this.loadingOne.set(false)))
+      .subscribe({
+        next: (infoBlock) => {
+          if (this.requestedId() !== id) return;
+          this.selectedInfoBlock.set(infoBlock);
+        },
+        error: (error) => {
+          this.errorOne.set(true);
+          console.error("❌ Erreur GET ONE INFO BLOCK Admin:", error);
+          this.toast.error(
+            "Récupération d'une info",
+            "Une erreur s'est produite lors de la récupération de l'info.",
+            {
+              sticky: true,
+            },
+          );
+        },
+      });
+  }
+
+  clearSelectedInfo(): void {
+    this.requestedId.set(null);
+    this.selectedInfoBlock.set(null);
   }
 
   deleteInfo(infoBlock: InfoBlockAdmin): void {
