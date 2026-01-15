@@ -1,8 +1,15 @@
+// ANGULAR
 import { NgClass } from "@angular/common";
 import { Component, computed, inject, OnInit } from "@angular/core";
-import { InfoBlockPublicParsed } from "@layouts/main-layout/ui/sections/info-block/info-block";
-import { markdownParser } from "@shared/utils/markdown-parser";
+
+// SERVICE
 import { InfoBlockService } from "app/data-access/public/info-block/info-block.service";
+
+// TYPES
+import { InfoBlockPublicParsed } from "@layouts/main-layout/ui/sections/info-block/info-block";
+
+// UTILS
+import { markdownParser } from "@shared/utils/markdown-parser";
 
 @Component({
   standalone: true,
