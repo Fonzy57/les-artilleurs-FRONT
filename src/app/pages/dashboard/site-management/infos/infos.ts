@@ -47,6 +47,13 @@ export class InfosManagement implements OnInit {
     this.infoBlockAdminService.loadInfoBlocks();
   }
 
+  /* --- ADD --- */
+  openCreateDialog() {
+    /* TODO FAIRE LE BOUTON FONCTIONNEL */
+    console.log("j'ouvre la dialog de création");
+  }
+
+  /* --- EDIT --- */
   openEditDialog(infoBlock: InfoBlockAdmin): void {
     console.log("Je clique sur le bouton modifier : ", infoBlock);
     /* this.dialogMode = "edit";
@@ -54,27 +61,27 @@ export class InfosManagement implements OnInit {
       this.dialogVisible = true; */
   }
 
-  onDelete(infoBlock: InfoBlockAdmin): void {
+  /* --- DELETE --- */
+  onClickDelete(infoBlock: InfoBlockAdmin): void {
     const truncateContent = infoBlock.content.slice(0, 45);
-
     this.confirmationService.confirm({
       key: "info-block-delete",
       header: "Supprimer une info",
       message: `${truncateContent}...`,
       accept: () => {
-        console.log(
-          "Je supprime l'élément : ",
-          infoBlock.id,
-          infoBlock.content,
-        );
-        // this.onDeleteFaqItem(infoBlock);
+        this.onDeleteInfo(infoBlock);
       },
       reject: () => {
         this.toast.info(
           "Suppression annulée",
-          `L'élément de la FAQ "${truncateContent}" n'a pas été supprimé.`,
+          `L'info "${truncateContent}..." n'a pas été supprimé.`,
         );
       },
     });
+  }
+
+  /* --- CONFIRM DIALOG ACTIONS --- */
+  onDeleteInfo(infoBlock: InfoBlockAdmin): void {
+    this.infoBlockAdminService.deleteInfo(infoBlock);
   }
 }

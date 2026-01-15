@@ -1,3 +1,13 @@
+<div class="flex items-center justify-end">
+  <app-dash-button
+    severity="primary"
+    label="Ajouter une info"
+    (clicked)="openCreateDialog()"
+    icon="pi pi-plus"
+    size="small"
+  />
+</div>
+
 <!-- TABLE OF FAQ ITEMS -->
 <div class="mt-5">
   @if (infoBlockAdminService.loadingList()) {
@@ -70,7 +80,7 @@
               <app-action-icon-button
                 type="delete"
                 ariaLabel="Bouton pour supprimer un élément des info blocs"
-                (clicked)="onDelete(infoBlockItem)"
+                (clicked)="onClickDelete(infoBlockItem)"
               />
             </div>
           </td>
@@ -81,7 +91,11 @@
 </div>
 
 <!-- PREVIEW -->
-<app-info-block-preview />
+<app-info-block-preview
+  [infoBlocks]="infoBlockAdminService.infoBlocks()"
+  [loading]="infoBlockAdminService.loadingList()"
+  [error]="infoBlockAdminService.errorList()"
+/>
 
 <!-- DELETE CONFIRM DIALOG -->
 <!-- TODO VOIR POUR EN FAIRE UN COMPOSANT REUTILISABLE -->
