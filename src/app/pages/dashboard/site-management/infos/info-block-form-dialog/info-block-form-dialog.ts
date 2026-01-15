@@ -164,7 +164,6 @@ export class InfoBlockFormDialog {
     const cleanContent = sanitizeInput(content);
     const cleanSlot: number | null = slot ?? null;
 
-    // Si le sanitize vide le texte, on patch et on force l'erreur requiredAndTrim
     if (!cleanContent) {
       this.form.patchValue(
         { content: cleanContent, slot: cleanSlot },
@@ -174,7 +173,6 @@ export class InfoBlockFormDialog {
       return;
     }
 
-    // Patch des valeurs nettoyées (optionnel mais cohérent avec FAQ)
     this.form.patchValue(
       { content: cleanContent, slot: cleanSlot },
       { emitEvent: false },
