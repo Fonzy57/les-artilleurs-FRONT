@@ -38,14 +38,6 @@ export class FaqService {
         error: (error) => {
           this.error.set("Erreur lors du chargement de la FAQ");
           console.error("❌ Erreur FAQ Site:", error);
-
-          /* TODO A SUPPRIMER QUAND TESTS FINIS */
-          console.error("📝 Détails de l'erreur:", {
-            status: error.status,
-            statusText: error.statusText,
-            message: error.message,
-            url: error.url,
-          });
         },
       });
   }

@@ -50,12 +50,6 @@ export class FaqAdminService {
         error: (error) => {
           this.errorList.set(true);
           console.error("❌ Erreur FAQ Admin:", error);
-          console.error("📝 Détails de l'erreur:", {
-            status: error.status,
-            statusText: error.statusText,
-            message: error.message,
-            url: error.url,
-          });
           this.toast.error(
             "Récupération des items",
             "Une erreur s'est produite lors de la récupération des items de la FAQ.",

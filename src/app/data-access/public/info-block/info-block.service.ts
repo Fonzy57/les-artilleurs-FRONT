@@ -40,14 +40,6 @@ export class InfoBlockService {
         error: (error) => {
           this.error.set(true);
           console.error("❌ Erreur INFO BLOCKS Site:", error);
-
-          /* TODO A SUPPRIMER QUAND TESTS FINIS */
-          console.error("📝 Détails de l'erreur:", {
-            status: error.status,
-            statusText: error.statusText,
-            message: error.message,
-            url: error.url,
-          });
         },
       });
   }
