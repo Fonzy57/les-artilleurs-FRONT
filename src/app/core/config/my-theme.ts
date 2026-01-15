@@ -307,6 +307,19 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
+    radiobutton: {
+      colorScheme: {
+        light: {
+          root: {
+            checkedBackground: "{colors.main.700}",
+            checkedBorderColor: "{colors.main.700}",
+            checkedHoverBackground: "{colors.main.900}",
+            checkedHoverBorderColor: "{colors.main.900}",
+            hoverBorderColor: "{colors.main.700}",
+          },
+        },
+      },
+    },
     /* select: {
       colorScheme: {
         light: {
@@ -346,26 +359,6 @@ export const MyPreset = definePreset(Aura, {
           },
           checkmark: {
             color: '{colors.global.main}',
-          },
-        },
-      },
-    },
-    radiobutton: {
-      colorScheme: {
-        light: {
-          root: {
-            background: '{colors.global.white}',
-            checkedBackground: '{colors.global.main}',
-            checkedHoverBackground: '{colors.main.500}',
-            borderColor: '{colors.global.border}',
-            hoverBorderColor: '{colors.global.main}',
-            checkedBorderColor: '{colors.global.main}',
-            checkedHoverBorderColor: '{colors.main.500}',
-            checkedFocusBorderColor: '{colors.global.main}',
-            invalidBorderColor: '{colors.global.error}',
-          },
-          icon: {
-            color: '{colors.global.white}',
           },
         },
       },
