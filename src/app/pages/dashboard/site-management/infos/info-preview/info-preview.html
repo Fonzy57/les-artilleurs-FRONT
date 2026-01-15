@@ -1,0 +1,38 @@
+<div class="mt-5 pt-5 pb-5">
+  <h2 class="text-text text-3xl">Aperçu du site :</h2>
+  <div class="mt-3">
+    @if (infoBlockPublicService.loading()) {
+      <p>Chargement des données</p>
+    } @else if (infoBlockPublicService.error()) {
+      <div class="text-error w-full text-center">
+        <p>Erreur lors du chargement des infos.</p>
+        <p>Essayer de rafraichir la page.</p>
+      </div>
+    } @else {
+      @if (infoBlockPublicService.infoBlocks().length === 0) {
+        <p class="text-main w-full text-center font-semibold">
+          Il n'y a pas d'infos sur le site pour le moment.
+        </p>
+      } @else {
+        <div class="flex gap-x-2">
+          @for (infoItem of parsedInfoBlocks(); track infoItem.id) {
+            <div class="border-main border-l-4 pl-2.5 lg:max-w-1/4">
+              <p class="text-main text-sm">
+                @for (chunk of infoItem.chunks; track $index) {
+                  <span
+                    [ngClass]="{
+                      'font-bold': chunk.isBold,
+                      italic: chunk.isItalic,
+                    }"
+                  >
+                    {{ chunk.text }}
+                  </span>
+                }
+              </p>
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+</div>
