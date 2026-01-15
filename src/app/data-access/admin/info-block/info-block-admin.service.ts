@@ -51,11 +51,38 @@ export class InfoBlockAdminService {
           this.errorList.set(true);
           console.error("❌ Erreur INFO BLOCK Admin:", error);
           this.toast.error(
-            "Récupération des items",
+            "Récupération des infos",
             "Une erreur s'est produite lors de la récupération des blocs d'infos.",
             {
               sticky: true,
             },
+          );
+        },
+      });
+  }
+
+  deleteInfo(infoBlock: InfoBlockAdmin): void {
+    this.deleting.set(true);
+    this.errorDelete.set(false);
+
+    this.http
+      .delete(`${artilleursConfig.apiUrl}/admin/info-block/${infoBlock.id}`)
+      .pipe(finalize(() => this.deleting.set(false)))
+      .subscribe({
+        next: () => {
+          this.toast.success(
+            "Suppression d'une info",
+            `L'info "${infoBlock.content.slice(0, 45)}" a bien été supprimée !`,
+          );
+          this.refresh();
+        },
+        error: (error) => {
+          this.errorDelete.set(true);
+          console.error("❌ Erreur suppression INFO BLOCK Admin:", error);
+          this.toast.error(
+            "Suppression d'une info",
+            "Une erreur s'est produite lors de la suppression de l'info.",
+            { sticky: true },
           );
         },
       });
