@@ -336,6 +336,20 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
+    datatable: {
+      colorScheme: {
+        light: {
+          headerCell: {
+            hoverBackground: "{colors.global.dashTabHover}",
+            selectedBackground: "{colors.main.50}",
+            selectedColor: "{colors.global.main}",
+            focusRing: {
+              color: "{colors.main.200}",
+            },
+          },
+        },
+      },
+    },
     /* select: {
       colorScheme: {
         light: {
