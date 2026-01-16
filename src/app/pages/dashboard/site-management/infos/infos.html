@@ -158,4 +158,5 @@
   [isSaving]="infoBlockAdminService.saving()"
   (cancel)="onEditCreatInfoDialogCancel()"
   (save)="onDialogSubmit($event)"
+  [error]="infoBlockAdminService.errorOne()"
 />

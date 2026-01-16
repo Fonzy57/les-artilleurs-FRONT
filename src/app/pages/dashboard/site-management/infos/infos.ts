@@ -75,26 +75,27 @@ export class InfosManagement implements OnInit {
   }
 
   onDialogSubmit(formData: InfoBlockPayload): void {
-    console.log("Je submit");
     // CREATE
-    /* if (this.dialogMode === "create") {
-        this.faqService.addFaqItem(formData).subscribe({
-          next: () => {
-            this.onDialogCancel();
-          },
-        });
-        return;
-      }
-  
-      // EDIT
-      const currentFaqItem = this.faqService.selectedFaqItem();
-      if (!currentFaqItem) return;
-  
-      this.faqService.editFaqItem(currentFaqItem.id, formData).subscribe({
+    if (this.dialogMode === "create") {
+      this.infoBlockAdminService.addInfoBlock(formData).subscribe({
         next: () => {
-          this.onDialogCancel();
+          this.onEditCreatInfoDialogCancel();
         },
-      }); */
+      });
+      return;
+    }
+
+    // EDIT
+    const currentInfoBlock = this.infoBlockAdminService.selectedInfoBlock();
+    if (!currentInfoBlock) return;
+
+    this.infoBlockAdminService
+      .editInfoBlock(currentInfoBlock.id, formData)
+      .subscribe({
+        next: () => {
+          this.onEditCreatInfoDialogCancel();
+        },
+      });
   }
 
   /* --- DELETE --- */
