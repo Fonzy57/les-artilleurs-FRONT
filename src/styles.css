@@ -167,6 +167,10 @@ body {
 }
 
 /* --- CUSTOM STYLE FOR PRIME NG --- */
+.p-tooltip-text {
+  font-size: 14px;
+}
+
 /* TAB STYLE */
 @media screen and (min-width: 1440px) {
   .p-tabpanels {

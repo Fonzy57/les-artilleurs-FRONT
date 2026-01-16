@@ -313,9 +313,25 @@ export const MyPreset = definePreset(Aura, {
           root: {
             checkedBackground: "{colors.main.700}",
             checkedBorderColor: "{colors.main.700}",
+            checkedFocusBorderColor: "{colors.main.700}",
             checkedHoverBackground: "{colors.main.900}",
             checkedHoverBorderColor: "{colors.main.900}",
             hoverBorderColor: "{colors.main.700}",
+            focusRing: {
+              color: "{colors.main.700}",
+            },
+          },
+        },
+      },
+    },
+    tooltip: {
+      colorScheme: {
+        light: {
+          root: {
+            gutter: "8px",
+            maxWidth: "18.75rem",
+            background: "#f2f2f2",
+            color: "{colors.global.black}",
           },
         },
       },
