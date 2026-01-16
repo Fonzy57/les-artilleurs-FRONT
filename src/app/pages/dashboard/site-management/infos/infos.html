@@ -48,9 +48,30 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Contenu</th>
-          <th class="text-center!">Position</th>
-          <th class="text-center! whitespace-nowrap">Ajouté le</th>
-          <th class="text-center! whitespace-nowrap">Modifié le</th>
+          <th pSortableColumn="slot" class="text-center!">
+            <div class="flex items-center gap-x-2">
+              Position
+              <p-sortIcon field="slot" />
+            </div>
+          </th>
+          <th
+            pSortableColumn="createdAt"
+            class="text-center! whitespace-nowrap"
+          >
+            <div class="flex items-center gap-x-2">
+              Ajouté le
+              <p-sortIcon field="createdAt" />
+            </div>
+          </th>
+          <th
+            pSortableColumn="updatedAt"
+            class="text-center! whitespace-nowrap"
+          >
+            <div class="flex items-center gap-x-2">
+              Modifié le
+              <p-sortIcon field="updatedAt" />
+            </div>
+          </th>
           <th class="text-center!">Actions</th>
         </tr>
       </ng-template>
