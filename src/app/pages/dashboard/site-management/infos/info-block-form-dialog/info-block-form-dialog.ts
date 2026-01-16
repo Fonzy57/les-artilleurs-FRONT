@@ -87,11 +87,11 @@ export class InfoBlockFormDialog {
   );
 
   readonly slotOptions = [
-    { label: "Ne pas le définir", value: null },
-    { label: "Slot 1", value: 1 },
-    { label: "Slot 2", value: 2 },
-    { label: "Slot 3", value: 3 },
-    { label: "Slot 4", value: 4 },
+    { label: "Non définie", value: null },
+    { label: "Position 1", value: 1 },
+    { label: "Position 2", value: 2 },
+    { label: "Position 3", value: 3 },
+    { label: "Position 4", value: 4 },
   ];
 
   // FORM

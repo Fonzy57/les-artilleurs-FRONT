@@ -16,19 +16,22 @@
       } @else {
         <div class="flex gap-x-2">
           @for (infoItem of parsedInfoBlocks(); track infoItem.id) {
-            <div class="border-main border-l-4 pl-2.5 lg:max-w-1/4">
-              <p class="text-main text-sm">
-                @for (chunk of infoItem.chunks; track $index) {
-                  <span
-                    [ngClass]="{
-                      'font-bold': chunk.isBold,
-                      italic: chunk.isItalic,
-                    }"
-                  >
-                    {{ chunk.text }}
-                  </span>
-                }
-              </p>
+            <div class="flex flex-col items-center gap-y-2 lg:max-w-1/4">
+              <p class="text-bg-gray">(Position {{ infoItem.slot }})</p>
+              <div class="border-main border-l-4 pl-2.5">
+                <p class="text-main text-sm">
+                  @for (chunk of infoItem.chunks; track $index) {
+                    <span
+                      [ngClass]="{
+                        'font-bold': chunk.isBold,
+                        italic: chunk.isItalic,
+                      }"
+                    >
+                      {{ chunk.text }}
+                    </span>
+                  }
+                </p>
+              </div>
             </div>
           }
         </div>
