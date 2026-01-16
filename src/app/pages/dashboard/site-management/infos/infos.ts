@@ -69,7 +69,7 @@ export class InfosManagement implements OnInit {
     this.dialogVisible = true;
   }
 
-  onEditCreatInfoDialogCancel(): void {
+  onEditCreateInfoDialogCancel(): void {
     this.dialogVisible = false;
     this.infoBlockAdminService.clearSelectedInfo();
   }
@@ -79,7 +79,7 @@ export class InfosManagement implements OnInit {
     if (this.dialogMode === "create") {
       this.infoBlockAdminService.addInfoBlock(formData).subscribe({
         next: () => {
-          this.onEditCreatInfoDialogCancel();
+          this.onEditCreateInfoDialogCancel();
         },
       });
       return;
@@ -93,7 +93,7 @@ export class InfosManagement implements OnInit {
       .editInfoBlock(currentInfoBlock.id, formData)
       .subscribe({
         next: () => {
-          this.onEditCreatInfoDialogCancel();
+          this.onEditCreateInfoDialogCancel();
         },
       });
   }
