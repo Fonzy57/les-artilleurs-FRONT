@@ -10,12 +10,7 @@
   @if (loadingData()) {
     <div class="flex flex-col gap-y-2">
       <app-input-skeleton [hint]="true" hintPosition="end" hintWidth="25%" />
-      <app-input-skeleton
-        [hint]="true"
-        hintPosition="end"
-        hintWidth="25%"
-        type="textarea"
-      />
+      <app-input-skeleton />
       <div class="mt-6 flex items-center justify-end gap-5">
         <app-button-skeleton />
         <app-button-skeleton />
@@ -28,7 +23,15 @@
       class="flex flex-col gap-y-2"
     >
       <div class="flex flex-col gap-1">
-        <label for="content" class="w-max text-sm">L'info*</label>
+        <div class="flex items-center gap-x-1">
+          <label for="content" class="w-max text-sm">L'info*</label>
+          <i
+            class="pi pi-info-circle text-md! cursor-pointer"
+            pTooltip="Tu peux utiliser le markdown pour mettre en **gras** ou en _italique_"
+            tooltipPosition="top"
+            placeholder="Right"
+          ></i>
+        </div>
         <textarea
           pTextarea
           id="content"
@@ -56,17 +59,15 @@
               </p>
             }
           }
-          <!-- <p
+          <p
             class="text-xs"
             [ngClass]="{
-              'text-error': charCount('response') > CONTENT_MAX_LENGTH,
-              'text-text': charCount('response') <= CONTENT_MAX_LENGTH,
+              'text-error': charCount() > CONTENT_MAX_LENGTH,
+              'text-text': charCount() <= CONTENT_MAX_LENGTH,
             }"
           >
-            Nombre de caractères : {{ charCount("response") }}/{{
-              CONTENT_MAX_LENGTH
-            }}
-          </p> -->
+            Nombre de caractères : {{ charCount() }}/{{ CONTENT_MAX_LENGTH }}
+          </p>
         </div>
       </div>
 
@@ -105,7 +106,11 @@
           type="submit"
           [loading]="isSaving()"
           [disabled]="
-            form.invalid || !form.dirty || loadingData() || isSaving()
+            form.invalid ||
+            !form.dirty ||
+            loadingData() ||
+            isSaving() ||
+            error()
           "
         />
       </div>

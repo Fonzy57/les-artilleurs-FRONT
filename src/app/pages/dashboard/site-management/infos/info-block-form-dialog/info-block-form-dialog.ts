@@ -15,6 +15,7 @@ import { Dialog } from "primeng/dialog";
 import { TextareaModule } from "primeng/textarea";
 import { InputTextModule } from "primeng/inputtext";
 import { RadioButton } from "primeng/radiobutton";
+import { Tooltip } from "primeng/tooltip";
 
 // COMPONENTS
 import { InputSkeleton } from "@shared/ui/skeleton/form/input-skeleton/input-skeleton";
@@ -51,6 +52,7 @@ export type InfoBlockPayload = {
     InputTextModule,
     DashButton,
     RadioButton,
+    Tooltip,
   ],
   templateUrl: "./info-block-form-dialog.html",
 })
@@ -64,6 +66,7 @@ export class InfoBlockFormDialog {
   item = input<InfoBlockAdmin | null>(null);
   loadingData = input<boolean>(false);
   isSaving = input<boolean>(false);
+  error = input<boolean>(false);
 
   // OUTPUTS
   visibleChange = output<boolean>();
@@ -77,6 +80,10 @@ export class InfoBlockFormDialog {
 
   readonly submitLabel = computed(() =>
     this.mode() === "create" ? "Ajouter" : "Modifier",
+  );
+
+  readonly shouldDisableForm = computed(
+    () => this.loadingData() || this.isSaving() || this.error(),
   );
 
   readonly slotOptions = [
@@ -122,7 +129,7 @@ export class InfoBlockFormDialog {
 
     // Disable form when loading or saving
     effect(() => {
-      if (this.loadingData() || this.isSaving()) {
+      if (this.shouldDisableForm()) {
         this.form.disable({ emitEvent: false });
       } else {
         this.form.enable({ emitEvent: false });
