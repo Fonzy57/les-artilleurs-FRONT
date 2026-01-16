@@ -4,8 +4,8 @@ import { inject, Injectable, signal } from "@angular/core";
 import { catchError, finalize, Observable, tap, throwError } from "rxjs";
 
 // MODELS
-import { FaqAdmin } from "@shared/models/faq.model";
-import { FaqFormPayload } from "@pages/dashboard/site-management/faq/faq-form-dialog/faq-form-dialog";
+import { InfoBlockAdmin } from "@shared/models/info-block.model";
+import { InfoBlockPayload } from "@pages/dashboard/site-management/infos/info-block-form-dialog/info-block-form-dialog";
 
 // SERVICES
 import { ToastService } from "@shared/ui/toast/toast.service";
@@ -23,13 +23,13 @@ import { artilleursConfig } from "@core/config/global.config";
 @Injectable({
   providedIn: "root",
 })
-export class FaqAdminService {
+export class InfoBlockAdminService {
   private readonly http = inject(HttpClient);
   private readonly toast = inject(ToastService);
   private readonly requestedId = signal<number | null>(null);
 
-  readonly faqItems = signal<FaqAdmin[]>([]);
-  readonly selectedFaqItem = signal<FaqAdmin | null>(null);
+  readonly infoBlocks = signal<InfoBlockAdmin[]>([]);
+  readonly selectedInfoBlock = signal<InfoBlockAdmin | null>(null);
 
   readonly loadingList = signal(false);
   readonly errorList = signal(false);
@@ -43,23 +43,23 @@ export class FaqAdminService {
   readonly deleting = signal(false);
   readonly errorDelete = signal(false);
 
-  loadFaqItems(): void {
+  loadInfoBlocks(): void {
     this.loadingList.set(true);
     this.errorList.set(false);
 
     this.http
-      .get<FaqAdmin[]>(`${artilleursConfig.apiUrl}/admin/faq`)
+      .get<InfoBlockAdmin[]>(`${artilleursConfig.apiUrl}/admin/info-block`)
       .pipe(finalize(() => this.loadingList.set(false)))
       .subscribe({
         next: (items) => {
-          this.faqItems.set(items);
+          this.infoBlocks.set(items);
         },
         error: (error) => {
           this.errorList.set(true);
-          console.error("❌ Erreur FAQ Admin:", error);
+          console.error("❌ Erreur INFO BLOCK Admin:", error);
           this.toast.error(
-            "Récupération des items",
-            "Une erreur s'est produite lors de la récupération des items de la FAQ.",
+            "Récupération des infos",
+            "Une erreur s'est produite lors de la récupération des blocs d'infos.",
             {
               sticky: true,
             },
@@ -68,29 +68,25 @@ export class FaqAdminService {
       });
   }
 
-  refresh(): void {
-    this.loadFaqItems();
-  }
-
-  getOneFaqItem(id: number) {
+  getOneInfoBlock(id: number): void {
     this.requestedId.set(id);
     this.loadingOne.set(true);
     this.errorOne.set(false);
 
     this.http
-      .get<FaqAdmin>(`${artilleursConfig.apiUrl}/admin/faq/${id}`)
+      .get<InfoBlockAdmin>(`${artilleursConfig.apiUrl}/admin/info-block/${id}`)
       .pipe(finalize(() => this.loadingOne.set(false)))
       .subscribe({
-        next: (item) => {
+        next: (infoBlock) => {
           if (this.requestedId() !== id) return;
-          this.selectedFaqItem.set(item);
+          this.selectedInfoBlock.set(infoBlock);
         },
         error: (error) => {
           this.errorOne.set(true);
-          console.error("❌ Erreur GET ONE FAQ Admin:", error);
+          console.error("❌ Erreur GET ONE INFO BLOCK Admin:", error);
           this.toast.error(
-            "Récupération d'un item",
-            "Une erreur s'est produite lors de la récupération de l'item de la FAQ.",
+            "Récupération d'une info",
+            "Une erreur s'est produite lors de la récupération de l'info.",
             {
               sticky: true,
             },
@@ -99,28 +95,25 @@ export class FaqAdminService {
       });
   }
 
-  clearSelected(): void {
-    this.requestedId.set(null);
-    this.selectedFaqItem.set(null);
-  }
-
-  addFaqItem(payload: FaqFormPayload): Observable<FaqAdmin> {
+  addInfoBlock(payload: InfoBlockPayload): Observable<InfoBlockAdmin> {
     this.saving.set(true);
     this.errorSave.set(false);
 
     return this.http
-      .post<FaqAdmin>(`${artilleursConfig.apiUrl}/admin/faq`, payload)
+      .post<InfoBlockAdmin>(
+        `${artilleursConfig.apiUrl}/admin/info-block`,
+        payload,
+      )
       .pipe(
         tap(() => {
-          this.toast.success(
-            "Ajout d'un élément",
-            "L'élément a bien été ajouté à la FAQ !",
-          );
+          this.toast.success("Ajout d'une info", "L'info a bien été ajoutée !");
           this.refresh();
         }),
         catchError((error) => {
           this.errorSave.set(true);
-          console.error("❌ Erreur FAQ Admin (POST):", error);
+          console.error("❌ Erreur INFO BLOCK Admin (POST):", error);
+
+          /* TODO JE POURRAIS FAIRE UNE FONCTION POUR CE BLOC CAR REPETITION DANS D'AUTRES SERVICES */
           if (error.status === 400) {
             showToastBadRequestError(this.toast);
           } else if (error.status === 401 || error.status === 403) {
@@ -135,32 +128,37 @@ export class FaqAdminService {
       );
   }
 
-  // return an Observable → the component close the dialog if success
-  editFaqItem(id: number, payload: FaqFormPayload): Observable<FaqAdmin> {
+  editInfoBlock(
+    id: number,
+    payload: InfoBlockPayload,
+  ): Observable<InfoBlockAdmin> {
     this.saving.set(true);
     this.errorSave.set(false);
 
     return this.http
-      .put<FaqAdmin>(`${artilleursConfig.apiUrl}/admin/faq/${id}`, payload)
+      .put<InfoBlockAdmin>(
+        `${artilleursConfig.apiUrl}/admin/info-block/${id}`,
+        payload,
+      )
       .pipe(
-        tap((updated) => {
-          this.selectedFaqItem.set(updated);
+        tap((infoUpdated) => {
+          this.selectedInfoBlock.set(infoUpdated);
           this.toast.success(
-            "Modification d'un élément",
-            "L'élément a bien été modifié !",
+            "Modification de l'info",
+            "L'info a bien été modifiée !",
           );
           this.refresh();
         }),
         catchError((error) => {
           this.errorSave.set(true);
-          console.error("❌ Erreur FAQ Admin (EDIT):", error);
+          console.error("❌ Erreur INFO BLOCK Admin (EDIT):", error);
 
           if (error.status === 400) {
             showToastBadRequestError(this.toast, "put");
           } else if (error.status === 404) {
             this.toast.error(
-              "Élément introuvable",
-              "Cet élément de la FAQ n'existe plus. La liste va être rechargée.",
+              "Info introuvable",
+              "Cette info n'existe plus. La liste va être rechargée.",
               { sticky: true },
             );
 
@@ -177,30 +175,39 @@ export class FaqAdminService {
       );
   }
 
-  deleteFaqItem(faqItem: FaqAdmin): void {
+  clearSelectedInfo(): void {
+    this.requestedId.set(null);
+    this.selectedInfoBlock.set(null);
+  }
+
+  deleteInfo(infoBlock: InfoBlockAdmin): void {
     this.deleting.set(true);
     this.errorDelete.set(false);
 
     this.http
-      .delete(`${artilleursConfig.apiUrl}/admin/faq/${faqItem.id}`)
+      .delete(`${artilleursConfig.apiUrl}/admin/info-block/${infoBlock.id}`)
       .pipe(finalize(() => this.deleting.set(false)))
       .subscribe({
         next: () => {
           this.toast.success(
-            "Suppression d'un élément de la FAQ",
-            `L'élément "${faqItem.question}" a bien été supprimé !`,
+            "Suppression d'une info",
+            `L'info "${infoBlock.content.slice(0, 45)}" a bien été supprimée !`,
           );
           this.refresh();
         },
         error: (error) => {
           this.errorDelete.set(true);
-          console.error("❌ Erreur DELETE FAQ Admin:", error);
+          console.error("❌ Erreur suppression INFO BLOCK Admin:", error);
           this.toast.error(
-            "Suppression d'un élément",
-            "Une erreur s'est produite lors de la suppression de l'élément.",
+            "Suppression d'une info",
+            "Une erreur s'est produite lors de la suppression de l'info.",
             { sticky: true },
           );
         },
       });
+  }
+
+  refresh(): void {
+    this.loadInfoBlocks();
   }
 }

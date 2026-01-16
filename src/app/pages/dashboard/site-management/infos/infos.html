@@ -1,1 +1,183 @@
-<p>infos works!</p>
+<div class="flex items-center justify-end">
+  <app-dash-button
+    severity="primary"
+    label="Ajouter une info"
+    (clicked)="openCreateInfoDialog()"
+    icon="pi pi-plus"
+    size="small"
+  />
+</div>
+
+<!-- TABLE OF FAQ ITEMS -->
+<div class="mt-5">
+  @if (infoBlockAdminService.loadingList()) {
+    <app-table-skeleton
+      [headers]="['Contenu', 'Position', 'Ajouté le', 'Modifié le', 'Actions']"
+      [rows]="6"
+      minWidth="50rem"
+    />
+  } @else if (infoBlockAdminService.errorList()) {
+    <div class="flex flex-col items-center justify-center gap-y-10">
+      <app-alert-card type="error" containerClass="mt-3" [widthFull]="true">
+        <p>
+          Une erreur est survenue lors de la récupération des éléments des blocs
+          d'infos
+        </p>
+        <p>Réessaie dans quelques instants.</p>
+        <p>Si le problème persiste, contacte l’assistance.</p>
+      </app-alert-card>
+      <app-button
+        type="button"
+        (click)="infoBlockAdminService.refresh()"
+        [disabled]="infoBlockAdminService.loadingList()"
+      >
+        Recharger la liste
+      </app-button>
+    </div>
+  } @else {
+    <!-- TODO VOIR SI JE LAISSE LE TABLEAU SCROLLABLE OU PAS -->
+    <!-- 
+    [scrollable]="true"
+      scrollHeight="550px"
+     -->
+    <p-table
+      [value]="infoBlockAdminService.infoBlocks()"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      stripedRows
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Contenu</th>
+          <th pSortableColumn="slot" class="text-center!">
+            <div class="flex items-center gap-x-2">
+              Position
+              <p-sortIcon field="slot" />
+            </div>
+          </th>
+          <th
+            pSortableColumn="createdAt"
+            class="text-center! whitespace-nowrap"
+          >
+            <div class="flex items-center gap-x-2">
+              Ajouté le
+              <p-sortIcon field="createdAt" />
+            </div>
+          </th>
+          <th
+            pSortableColumn="updatedAt"
+            class="text-center! whitespace-nowrap"
+          >
+            <div class="flex items-center gap-x-2">
+              Modifié le
+              <p-sortIcon field="updatedAt" />
+            </div>
+          </th>
+          <th class="text-center!">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-infoBlockItem>
+        <tr>
+          <td class="">{{ infoBlockItem.content }}</td>
+          <td class="text-center! whitespace-nowrap">
+            @if (infoBlockItem.slot === null) {
+              Non définie
+            } @else {
+              {{ infoBlockItem.slot }}
+            }
+          </td>
+          <td class="text-center! whitespace-nowrap">
+            {{ infoBlockItem.createdAt | date: "dd/MM/yy à HH:mm" }}
+          </td>
+          <td class="text-center! whitespace-nowrap">
+            {{ infoBlockItem.updatedAt | date: "dd/MM/yy à HH:mm" }}
+          </td>
+          <td class="text-center!">
+            <div class="flex items-center justify-center gap-x-2">
+              <app-action-icon-button
+                type="edit"
+                ariaLabel="Bouton pour modifier un élément des info blocs"
+                (clicked)="openEditInfoDialog(infoBlockItem)"
+              />
+              <app-action-icon-button
+                type="delete"
+                ariaLabel="Bouton pour supprimer un élément des info blocs"
+                (clicked)="onClickDeleteInfo(infoBlockItem)"
+              />
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  }
+</div>
+
+<!-- PREVIEW -->
+<app-info-block-preview
+  [infoBlocks]="infoBlockAdminService.infoBlocks()"
+  [loading]="infoBlockAdminService.loadingList()"
+  [error]="infoBlockAdminService.errorList()"
+/>
+
+<!-- DELETE CONFIRM DIALOG -->
+<!-- TODO VOIR POUR EN FAIRE UN COMPOSANT REUTILISABLE -->
+<p-confirmdialog #cdInfoBlock key="info-block-delete">
+  <ng-template
+    #headless
+    let-message
+    let-onAccept="onAccept"
+    let-onReject="onReject"
+  >
+    @if (message) {
+      <div
+        class="bg-surface-0 dark:bg-surface-900 flex flex-col items-center rounded p-8"
+      >
+        <!-- WARNING LOGO -->
+        <div
+          class="bg-error-100 -mt-20 flex h-24 w-24 items-center justify-center rounded-full"
+        >
+          <i class="pi pi-exclamation-triangle text-error text-5xl!"></i>
+        </div>
+
+        <!-- MESSAGE -->
+        <div
+          class="mt-6 flex flex-col items-center justify-center gap-y-3 text-center"
+        >
+          <p class="text-error text-center text-2xl font-bold">
+            {{ message.header }}
+          </p>
+          <div class="text-text flex flex-col gap-y-1">
+            <p>Veux-tu vraiment supprimer cette info ?</p>
+            <p class="font-semibold italic">"{{ message.message }}"</p>
+          </div>
+          <p class="text-error underline">Cette action est irréversible !</p>
+        </div>
+
+        <!-- BUTTONS ROW -->
+        <div class="mt-6 flex items-center gap-5">
+          <app-dash-button
+            severity="secondary"
+            label="Annuler"
+            (clicked)="onReject()"
+          />
+          <app-dash-button
+            severity="danger"
+            label="Supprimer"
+            (clicked)="onAccept()"
+          />
+        </div>
+      </div>
+    }
+  </ng-template>
+</p-confirmdialog>
+
+<!-- CREATE AND EDIT INFO DIALOG -->
+<app-info-block-form-dialog
+  [(visible)]="dialogVisible"
+  [mode]="dialogMode"
+  [item]="infoBlockAdminService.selectedInfoBlock()"
+  [loadingData]="infoBlockAdminService.loadingOne()"
+  [isSaving]="infoBlockAdminService.saving()"
+  (cancel)="onEditCreateInfoDialogCancel()"
+  (save)="onDialogSubmit($event)"
+  [error]="infoBlockAdminService.errorOne()"
+/>

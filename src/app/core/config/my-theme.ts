@@ -307,6 +307,49 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
+    radiobutton: {
+      colorScheme: {
+        light: {
+          root: {
+            checkedBackground: "{colors.main.700}",
+            checkedBorderColor: "{colors.main.700}",
+            checkedFocusBorderColor: "{colors.main.700}",
+            checkedHoverBackground: "{colors.main.900}",
+            checkedHoverBorderColor: "{colors.main.900}",
+            hoverBorderColor: "{colors.main.700}",
+            focusRing: {
+              color: "{colors.main.700}",
+            },
+          },
+        },
+      },
+    },
+    tooltip: {
+      colorScheme: {
+        light: {
+          root: {
+            gutter: "8px",
+            maxWidth: "18.75rem",
+            background: "#f2f2f2",
+            color: "{colors.global.black}",
+          },
+        },
+      },
+    },
+    datatable: {
+      colorScheme: {
+        light: {
+          headerCell: {
+            hoverBackground: "{colors.global.dashTabHover}",
+            selectedBackground: "{colors.main.50}",
+            selectedColor: "{colors.global.main}",
+            focusRing: {
+              color: "{colors.main.200}",
+            },
+          },
+        },
+      },
+    },
     /* select: {
       colorScheme: {
         light: {
@@ -346,26 +389,6 @@ export const MyPreset = definePreset(Aura, {
           },
           checkmark: {
             color: '{colors.global.main}',
-          },
-        },
-      },
-    },
-    radiobutton: {
-      colorScheme: {
-        light: {
-          root: {
-            background: '{colors.global.white}',
-            checkedBackground: '{colors.global.main}',
-            checkedHoverBackground: '{colors.main.500}',
-            borderColor: '{colors.global.border}',
-            hoverBorderColor: '{colors.global.main}',
-            checkedBorderColor: '{colors.global.main}',
-            checkedHoverBorderColor: '{colors.main.500}',
-            checkedFocusBorderColor: '{colors.global.main}',
-            invalidBorderColor: '{colors.global.error}',
-          },
-          icon: {
-            color: '{colors.global.white}',
           },
         },
       },

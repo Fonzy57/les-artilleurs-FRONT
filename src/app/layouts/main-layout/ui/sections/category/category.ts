@@ -5,11 +5,6 @@ import { NgClass } from "@angular/common";
 // COMPONENTS
 import { HorizontalAccordionComponent } from "../../accordion/accordion";
 
-type infoContent = {
-  text: string;
-  span: string;
-};
-
 type TextContent = {
   id: number;
   title: string;
@@ -24,26 +19,6 @@ type TextContent = {
   templateUrl: "./category.html",
 })
 export class Category {
-  /* TODO CECI VIENDRA DE LA BASE DE DONNEES */
-  infos: infoContent[] = [
-    {
-      text: "Reprise des entraînements pour la saison 2023-2024 dès",
-      span: "le lundi 14 août !",
-    },
-    {
-      text: "Reprise des entraînements pour la saison 2023-2024 dès",
-      span: "le lundi 14 août !",
-    },
-    {
-      text: "Reprise des entraînements pour la saison 2023-2024 dès",
-      span: "le lundi 14 août !",
-    },
-    {
-      text: "AG au clubhouse",
-      span: "le lundi 14 août !",
-    },
-  ];
-
   textContent: TextContent[] = [
     {
       id: 1,

@@ -1,0 +1,119 @@
+<p-dialog
+  [header]="dialogTitle()"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '50rem' }"
+  [visible]="visible()"
+  (visibleChange)="visibleChange.emit($event)"
+  (onHide)="onHide()"
+>
+  @if (loadingData()) {
+    <div class="flex flex-col gap-y-2">
+      <app-input-skeleton [hint]="true" hintPosition="end" hintWidth="25%" />
+      <app-input-skeleton />
+      <div class="mt-6 flex items-center justify-end gap-5">
+        <app-button-skeleton />
+        <app-button-skeleton />
+      </div>
+    </div>
+  } @else {
+    <form
+      [formGroup]="form"
+      (ngSubmit)="handleSubmit()"
+      class="flex flex-col gap-y-2"
+    >
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center gap-x-1">
+          <label for="content" class="w-max text-sm">L'info*</label>
+          <i
+            class="pi pi-info-circle text-md! cursor-pointer"
+            pTooltip="Tu peux utiliser le markdown pour mettre en **gras** ou en _italique_"
+            tooltipPosition="top"
+            placeholder="Right"
+          ></i>
+        </div>
+        <textarea
+          pTextarea
+          id="content"
+          rows="2"
+          cols="30"
+          placeholder="Votre réponse..."
+          formControlName="content"
+          [invalid]="isInvalid('content')"
+          aria-required="true"
+        ></textarea>
+        <div
+          class="flex items-center"
+          [ngClass]="{
+            'justify-between': isInvalid('content'),
+            'justify-end': !isInvalid('content'),
+          }"
+        >
+          @if (isInvalid("content")) {
+            @if (form.controls.content.hasError("requiredAndTrim")) {
+              <p class="text-error text-xs">La réponse est requise.</p>
+            } @else if (form.controls.content.hasError("maxlength")) {
+              <p class="text-error text-xs">
+                La réponse ne peut pas dépasser
+                {{ CONTENT_MAX_LENGTH }} caractères.
+              </p>
+            }
+          }
+          <p
+            class="text-xs"
+            [ngClass]="{
+              'text-error': charCount() > CONTENT_MAX_LENGTH,
+              'text-text': charCount() <= CONTENT_MAX_LENGTH,
+            }"
+          >
+            Nombre de caractères : {{ charCount() }}/{{ CONTENT_MAX_LENGTH }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label for="">La position</label>
+        <div class="flex items-center gap-x-5">
+          @for (option of slotOptions; track option.label) {
+            <div class="flex items-center gap-2">
+              <p-radioButton
+                name="slot"
+                formControlName="slot"
+                [value]="option.value"
+                [inputId]="'slot-' + option.label"
+              />
+              <label
+                class="cursor-pointer text-sm"
+                [for]="'slot-' + option.label"
+              >
+                {{ option.label }}
+              </label>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-end gap-5">
+        <app-dash-button
+          severity="secondary"
+          label="Annuler"
+          [disabled]="loadingData() || isSaving()"
+          (clicked)="handleCancel()"
+        />
+
+        <app-dash-button
+          [label]="submitLabel()"
+          type="submit"
+          [loading]="isSaving()"
+          [disabled]="
+            form.invalid ||
+            !form.dirty ||
+            loadingData() ||
+            isSaving() ||
+            error()
+          "
+        />
+      </div>
+    </form>
+  }
+</p-dialog>

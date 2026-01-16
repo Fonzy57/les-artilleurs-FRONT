@@ -5,7 +5,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { finalize } from "rxjs";
 
 // MODELS
-import { FaqPublic } from "@shared/models/faq.model";
+import { InfoBlockPublic } from "@shared/models/info-block.model";
 
 // CONFIG
 import { artilleursConfig } from "@core/config/global.config";
@@ -13,36 +13,38 @@ import { artilleursConfig } from "@core/config/global.config";
 @Injectable({
   providedIn: "root",
 })
-export class FaqService {
+export class InfoBlockService {
   private readonly http = inject(HttpClient);
   private readonly destroyRef = inject(DestroyRef);
 
-  readonly faqItems = signal<FaqPublic[]>([]);
-  readonly loading = signal(false);
-  readonly error = signal<string | null>(null);
+  readonly infoBlocks = signal<InfoBlockPublic[]>([]);
+  readonly loading = signal<boolean>(false);
+  readonly error = signal<boolean>(false);
 
-  loadFaqItems(): void {
+  loadInfoBlocks(): void {
     this.loading.set(true);
-    this.error.set(null);
+    this.error.set(false);
 
     this.http
-      .get<FaqPublic[]>(`${artilleursConfig.apiUrl}/public/site/faq`)
+      .get<InfoBlockPublic[]>(
+        `${artilleursConfig.apiUrl}/public/site/info-block`,
+      )
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => this.loading.set(false)),
       )
       .subscribe({
         next: (items) => {
-          this.faqItems.set(items);
+          this.infoBlocks.set(items);
         },
         error: (error) => {
-          this.error.set("Erreur lors du chargement de la FAQ");
-          console.error("❌ Erreur FAQ Site:", error);
+          this.error.set(true);
+          console.error("❌ Erreur INFO BLOCKS Site:", error);
         },
       });
   }
 
   refresh(): void {
-    this.loadFaqItems();
+    this.loadInfoBlocks();
   }
 }
