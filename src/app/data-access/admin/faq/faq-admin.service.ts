@@ -10,6 +10,13 @@ import { FaqFormPayload } from "@pages/dashboard/site-management/faq/faq-form-di
 // SERVICES
 import { ToastService } from "@shared/ui/toast/toast.service";
 
+// UTILS
+import {
+  showToastBadRequestError,
+  showToastServerError,
+  showToastUnauthorizedError,
+} from "@shared/utils/toast-generic-error";
+
 // CONFIG
 import { artilleursConfig } from "@core/config/global.config";
 
@@ -115,23 +122,11 @@ export class FaqAdminService {
           this.errorSave.set(true);
           console.error("❌ Erreur FAQ Admin (POST):", error);
           if (error.status === 400) {
-            this.toast.error(
-              "Ajout impossible",
-              "Les données envoyées sont invalides. Vérifie les champs du formulaire.",
-              { sticky: true },
-            );
+            showToastBadRequestError(this.toast);
           } else if (error.status === 401 || error.status === 403) {
-            this.toast.error(
-              "Accès refusé",
-              "Tu n'as pas les droits pour ajouter un élément.",
-              { sticky: true },
-            );
+            showToastUnauthorizedError(this.toast);
           } else {
-            this.toast.error(
-              "Erreur serveur",
-              "Une erreur inattendue s'est produite. Réessaie plus tard.",
-              { sticky: true },
-            );
+            showToastServerError(this.toast);
           }
 
           return throwError(() => error);
@@ -161,11 +156,7 @@ export class FaqAdminService {
           console.error("❌ Erreur FAQ Admin (EDIT):", error);
 
           if (error.status === 400) {
-            this.toast.error(
-              "Modification impossible",
-              "Les données envoyées sont invalides. Vérifie les champs du formulaire.",
-              { sticky: true },
-            );
+            showToastBadRequestError(this.toast, "put");
           } else if (error.status === 404) {
             this.toast.error(
               "Élément introuvable",
@@ -174,12 +165,10 @@ export class FaqAdminService {
             );
 
             this.refresh();
+          } else if (error.status === 401 || error.status === 403) {
+            showToastUnauthorizedError(this.toast, "put");
           } else {
-            this.toast.error(
-              "Erreur serveur",
-              "Une erreur inattendue s'est produite. Réessaie plus tard.",
-              { sticky: true },
-            );
+            showToastServerError(this.toast);
           }
 
           return throwError(() => error);
