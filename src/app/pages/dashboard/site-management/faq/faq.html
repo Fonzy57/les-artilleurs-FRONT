@@ -49,8 +49,18 @@
         <tr>
           <th>Question</th>
           <th>Réponse</th>
-          <th class="whitespace-nowrap">Ajouté le</th>
-          <th class="whitespace-nowrap">Modifié le</th>
+          <th pSortableColumn="createdAt" class="whitespace-nowrap">
+            <div class="flex items-center gap-x-2">
+              Ajouté le
+              <p-sortIcon field="createdAt" />
+            </div>
+          </th>
+          <th pSortableColumn="updatedAt" class="whitespace-nowrap">
+            <div class="flex items-center gap-x-2">
+              Modifié le
+              <p-sortIcon field="updatedAt" />
+            </div>
+          </th>
           <th>Actions</th>
         </tr>
       </ng-template>
