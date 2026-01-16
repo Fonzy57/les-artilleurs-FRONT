@@ -84,6 +84,7 @@ export class FaqFormDialog {
     () => this.loadingData() || this.isSaving() || this.error(),
   );
 
+  // NOTE: "response" (form) maps to "answer" (model/API)
   readonly form = this.formBuilder.nonNullable.group({
     question: ["", [requiredAndTrim, Validators.maxLength(this.QUESTION_MAX)]],
     response: ["", [requiredAndTrim, Validators.maxLength(this.RESPONSE_MAX)]],
