@@ -147,4 +147,5 @@
   [isSaving]="faqService.saving()"
   (cancel)="onDialogCancel()"
   (save)="onDialogSubmit($event)"
+  [error]="faqService.errorOne()"
 />

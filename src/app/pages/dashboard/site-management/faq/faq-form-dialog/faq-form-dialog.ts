@@ -63,6 +63,7 @@ export class FaqFormDialog {
   item = input<FaqAdmin | null>(null);
   loadingData = input<boolean>(false);
   isSaving = input<boolean>(false);
+  error = input<boolean>(false);
 
   // outputs
   visibleChange = output<boolean>();
@@ -78,6 +79,10 @@ export class FaqFormDialog {
   readonly submitLabel = computed(() => {
     return this.mode() === "create" ? "Ajouter" : "Modifier";
   });
+
+  readonly shouldDisableForm = computed(
+    () => this.loadingData() || this.isSaving() || this.error(),
+  );
 
   readonly form = this.formBuilder.nonNullable.group({
     question: ["", [requiredAndTrim, Validators.maxLength(this.QUESTION_MAX)]],
@@ -111,7 +116,7 @@ export class FaqFormDialog {
 
     // Disable form if loading
     effect(() => {
-      if (this.loadingData() || this.isSaving()) {
+      if (this.shouldDisableForm()) {
         this.form.disable({ emitEvent: false });
       } else {
         this.form.enable({ emitEvent: false });
