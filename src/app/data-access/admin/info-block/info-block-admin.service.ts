@@ -1,15 +1,21 @@
 // ANGULAR
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
-import { finalize } from "rxjs";
+import { catchError, finalize, Observable, tap, throwError } from "rxjs";
 
 // MODELS
 import { InfoBlockAdmin } from "@shared/models/info-block.model";
+import { InfoBlockPayload } from "@pages/dashboard/site-management/infos/info-block-form-dialog/info-block-form-dialog";
 
 // SERVICES
 import { ToastService } from "@shared/ui/toast/toast.service";
 
 // UTILS
+import {
+  showToastBadRequestError,
+  showToastServerError,
+  showToastUnauthorizedError,
+} from "@shared/utils/toast-generic-error";
 
 // CONFIG
 import { artilleursConfig } from "@core/config/global.config";
@@ -87,6 +93,86 @@ export class InfoBlockAdminService {
           );
         },
       });
+  }
+
+  addInfoBlock(payload: InfoBlockPayload): Observable<InfoBlockAdmin> {
+    this.saving.set(true);
+    this.errorSave.set(false);
+
+    return this.http
+      .post<InfoBlockAdmin>(
+        `${artilleursConfig.apiUrl}/admin/info-block`,
+        payload,
+      )
+      .pipe(
+        tap(() => {
+          this.toast.success("Ajout d'une info", "L'info a bien été ajoutée !");
+          this.refresh();
+        }),
+        catchError((error) => {
+          this.errorSave.set(true);
+          console.error("❌ Erreur INFO BLOCK Admin (POST):", error);
+
+          /* TODO JE POURRAIS FAIRE UNE FONCTION POUR CE BLOC CAR REPETITION DANS D'AUTRES SERVICES */
+          if (error.status === 400) {
+            showToastBadRequestError(this.toast);
+          } else if (error.status === 401 || error.status === 403) {
+            showToastUnauthorizedError(this.toast);
+          } else {
+            showToastServerError(this.toast);
+          }
+
+          return throwError(() => error);
+        }),
+        finalize(() => this.saving.set(false)),
+      );
+  }
+
+  editInfoBlock(
+    id: number,
+    payload: InfoBlockPayload,
+  ): Observable<InfoBlockAdmin> {
+    this.saving.set(true);
+    this.errorSave.set(false);
+
+    return this.http
+      .put<InfoBlockAdmin>(
+        `${artilleursConfig.apiUrl}/admin/info-block/${id}`,
+        payload,
+      )
+      .pipe(
+        tap((infoUpdated) => {
+          this.selectedInfoBlock.set(infoUpdated);
+          this.toast.success(
+            "Modification de l'info",
+            "L'info a bien été modifiée !",
+          );
+          this.refresh();
+        }),
+        catchError((error) => {
+          this.errorSave.set(true);
+          console.error("❌ Erreur INFO BLOCK Admin (EDIT):", error);
+
+          if (error.status === 400) {
+            showToastBadRequestError(this.toast, "put");
+          } else if (error.status === 404) {
+            this.toast.error(
+              "Info introuvable",
+              "Cette info n'existe plus. La liste va être rechargée.",
+              { sticky: true },
+            );
+
+            this.refresh();
+          } else if (error.status === 401 || error.status === 403) {
+            showToastUnauthorizedError(this.toast, "put");
+          } else {
+            showToastServerError(this.toast);
+          }
+
+          return throwError(() => error);
+        }),
+        finalize(() => this.saving.set(false)),
+      );
   }
 
   clearSelectedInfo(): void {
