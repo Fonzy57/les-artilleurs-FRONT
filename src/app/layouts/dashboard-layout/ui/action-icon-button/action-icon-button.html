@@ -6,5 +6,9 @@
   [attr.aria-label]="ariaLabel() || type()"
   (click)="onClick()"
 >
-  <i [ngClass]="style().iconName" style="font-size: 1rem"></i>
+  <i
+    [ngClass]="style().iconName"
+    style="font-size: 1rem"
+    [style.fontSize]="size()"
+  ></i>
 </button>

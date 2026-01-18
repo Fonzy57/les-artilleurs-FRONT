@@ -39,6 +39,7 @@ export class ActionIconButton {
   type: InputSignal<ActionIconButtonType> = input<ActionIconButtonType>("edit");
   disabled: InputSignal<boolean> = input<boolean>(false);
   ariaLabel = input<string>("");
+  size = input<string>("1rem");
 
   style = computed(() => ACTION_ICON_BUTTON_STYLES[this.type()]);
 
