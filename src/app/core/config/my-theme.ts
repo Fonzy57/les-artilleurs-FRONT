@@ -350,6 +350,15 @@ export const MyPreset = definePreset(Aura, {
         },
       },
     },
+    divider: {
+      colorScheme: {
+        light: {
+          root: {
+            borderColor: "{colors.global.dashTabBorder}",
+          },
+        },
+      },
+    },
     /* select: {
       colorScheme: {
         light: {
