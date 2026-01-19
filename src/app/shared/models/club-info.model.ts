@@ -15,3 +15,12 @@ export interface ClubInfoAdmin extends ClubInfoBase {
 }
 
 export type ClubInfoPublic = ClubInfoBase;
+
+export type ClubInfoUpsertPayload = {
+  clubName: string;
+  stadiumName: string;
+  street: string;
+  city: string;
+  postalCode: string;
+  contactEmail: string;
+};
