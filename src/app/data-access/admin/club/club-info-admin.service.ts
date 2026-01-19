@@ -1,10 +1,26 @@
 // ANGULAR
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
-import { artilleursConfig } from "@core/config/global.config";
-import { ClubInfoAdmin } from "@shared/models/club-info.model";
+import { catchError, finalize, Observable, tap, throwError } from "rxjs";
+
+// SERVICES
 import { ToastService } from "@shared/ui/toast/toast.service";
-import { finalize } from "rxjs";
+
+// CONFIG
+import { artilleursConfig } from "@core/config/global.config";
+
+// MODELS
+import {
+  ClubInfoAdmin,
+  ClubInfoUpsertPayload,
+} from "@shared/models/club-info.model";
+
+// UTILS
+import {
+  showToastBadRequestError,
+  showToastServerError,
+  showToastUnauthorizedError,
+} from "@shared/utils/toast-generic-error";
 
 @Injectable({
   providedIn: "root",
@@ -47,5 +63,37 @@ export class ClubInfoAdminService {
 
   refresh(): void {
     this.loadingClubInfos();
+  }
+
+  upsertClubInfos(payload: ClubInfoUpsertPayload): Observable<ClubInfoAdmin> {
+    this.saving.set(true);
+    this.errorSaving.set(false);
+
+    return this.http
+      .put<ClubInfoAdmin>(`${artilleursConfig.apiUrl}/admin/club-info`, payload)
+      .pipe(
+        tap((updated) => {
+          this.clubInfos.set(updated);
+          this.toast.success(
+            "Modification des infos",
+            "Les infos du club ont bien été modifiées.",
+          );
+        }),
+        catchError((error) => {
+          this.errorSaving.set(true);
+          console.error("❌ Erreur CLUB INFO Admin (EDIT):", error);
+
+          if (error.status === 400) {
+            showToastBadRequestError(this.toast, "put");
+          } else if (error.status === 401 || error.status === 403) {
+            showToastUnauthorizedError(this.toast, "put");
+          } else {
+            showToastServerError(this.toast);
+          }
+
+          return throwError(() => error);
+        }),
+        finalize(() => this.saving.set(false)),
+      );
   }
 }
