@@ -260,7 +260,7 @@ export const MyPreset = definePreset(Aura, {
           tabpanel: {
             background: "{colors.global.white}",
             color: "{colors.global.text}",
-            padding: "16px 18px",
+            padding: "24px 18px",
           },
         },
       },
