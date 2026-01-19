@@ -1,13 +1,23 @@
 <div class="flex items-center justify-center">
   <div class="border-main-300 w-7/12 rounded-lg border p-10 shadow-lg">
     <div class="flex items-center justify-between">
-      <h1 class="text-main text-center text-3xl">Informations du club</h1>
+      <div class="flex flex-col items-start">
+        <h1 class="text-main text-center text-3xl">Informations du club</h1>
+        <p class="text-xs">
+          Dernière modification :
+          {{ infos()?.updatedAt | date: "dd/MM/yy à HH:mm" }}
+        </p>
+      </div>
       <app-action-icon-button
         type="edit"
         ariaLabel="Bouton pour modifier un élément de la FAQ"
         (clicked)="clickEdit()"
         size="1.5rem"
-        [disabled]="isEditing() || clubInfoAdminService.loading()"
+        [disabled]="
+          isEditing() ||
+          clubInfoAdminService.loading() ||
+          clubInfoAdminService.saving()
+        "
       />
     </div>
 
@@ -103,16 +113,15 @@
                 formControlName="postalCode"
                 [invalid]="isInvalid('postalCode')"
                 aria-required="true"
+                inputmode="numeric"
               />
               @if (isInvalid("postalCode")) {
                 @if (clubForm.controls.postalCode.hasError("requiredAndTrim")) {
                   <p class="text-error text-xs">Le code postal est requis.</p>
-                } @else if (
-                  clubForm.controls.postalCode.hasError("maxlength")
-                ) {
+                } @else if (clubForm.controls.postalCode.hasError("pattern")) {
                   <p class="text-error text-xs">
-                    Le code postal ne peut pas dépasser
-                    {{ POSTAL_CODE_LENGTH }} caractères.
+                    Le code postal doit contenir
+                    {{ POSTAL_CODE_LENGTH }} chiffres.
                   </p>
                 }
               }
@@ -183,25 +192,30 @@
           </div>
         </div>
 
-        <div class="mt-12 flex items-center justify-center gap-5">
-          <app-dash-button
-            severity="secondary"
-            label="Annuler"
-            [disabled]="!isEditing() || clubInfoAdminService.loading()"
-            (clicked)="handleCancel()"
-          />
+        @if (isEditing()) {
+          <div class="mt-12 flex items-center justify-center gap-5">
+            <app-dash-button
+              severity="secondary"
+              label="Annuler"
+              [disabled]="
+                clubInfoAdminService.loading() || clubInfoAdminService.saving()
+              "
+              (clicked)="handleCancel()"
+            />
 
-          <app-dash-button
-            label="Modifier"
-            type="submit"
-            [disabled]="
-              !isEditing() ||
-              clubForm.invalid ||
-              !clubForm.dirty ||
-              clubInfoAdminService.loading()
-            "
-          />
-        </div>
+            <app-dash-button
+              label="Modifier"
+              type="submit"
+              [disabled]="
+                clubForm.invalid ||
+                !clubForm.dirty ||
+                clubInfoAdminService.loading() ||
+                clubInfoAdminService.saving()
+              "
+              [loading]="clubInfoAdminService.saving()"
+            />
+          </div>
+        }
       </form>
     }
   </div>

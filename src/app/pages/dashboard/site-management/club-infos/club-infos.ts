@@ -1,6 +1,7 @@
 // ANGULAR
 import { Component, effect, inject, OnInit, signal } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { CommonModule } from "@angular/common";
 
 // PRIME NG
 import { InputTextModule } from "primeng/inputtext";
@@ -16,6 +17,7 @@ import { ClubInfoAdminService } from "app/data-access/admin/club/club-info-admin
 
 // UTILS
 import { requiredAndTrim } from "@shared/validators/trim-required.validator";
+import { sanitizeInput } from "@shared/utils/string-sanitize";
 
 @Component({
   standalone: true,
@@ -27,6 +29,7 @@ import { requiredAndTrim } from "@shared/validators/trim-required.validator";
     ActionIconButton,
     ReactiveFormsModule,
     ClubFormSkeleton,
+    CommonModule,
   ],
   templateUrl: "./club-infos.html",
 })
@@ -55,10 +58,7 @@ export class ClubInfosManagement implements OnInit {
     ],
     street: ["", [requiredAndTrim, Validators.maxLength(this.STREET_LENGTH)]],
     city: ["", [requiredAndTrim, Validators.maxLength(this.CITY_LENGTH)]],
-    postalCode: [
-      "",
-      [requiredAndTrim, Validators.maxLength(this.POSTAL_CODE_LENGTH)],
-    ],
+    postalCode: ["", [requiredAndTrim, Validators.pattern(/^\d{5}$/)]],
     clubName: [
       "",
       [requiredAndTrim, Validators.maxLength(this.CLUB_NAME_LENGTH)],
@@ -96,22 +96,44 @@ export class ClubInfosManagement implements OnInit {
     });
   }
 
-  /* 
-    TODO
-    - BIEN FAIRE LA VERIFICATION DE L'EMAIL COMME INPUT
-  */
   clickEdit(): void {
     this.isEditing.set(true);
-    this.clubForm.enable();
+    this.clubForm.enable({ emitEvent: false });
   }
 
   handleSubmit(): void {
-    /* TODO VOIR QUAND JE RENDS LE FORMULAIRE DISABLE, A MON AVIS QUE S'IL N'Y A PAS D'ERREURS */
-    this.isEditing.set(false);
-    console.log(
-      "J'envoie le formulaire avec comme données : ",
-      this.clubForm.value,
-    );
+    if (this.clubForm.invalid) {
+      this.clubForm.markAllAsTouched();
+      return;
+    }
+
+    if (!this.isEditing()) return;
+
+    const raw = this.clubForm.getRawValue();
+
+    const cleanedForm = {
+      stadiumName: sanitizeInput(raw.stadiumName),
+      street: sanitizeInput(raw.street),
+      city: sanitizeInput(raw.city),
+      postalCode: sanitizeInput(raw.postalCode),
+      clubName: sanitizeInput(raw.clubName),
+      contactEmail: sanitizeInput(raw.contactEmail),
+    };
+
+    const hasEmpty = Object.values(cleanedForm).some((v) => !v);
+    if (hasEmpty) {
+      this.clubForm.patchValue(cleanedForm, { emitEvent: false });
+      this.clubForm.markAllAsTouched();
+      return;
+    }
+
+    this.clubForm.patchValue(cleanedForm, { emitEvent: false });
+
+    this.clubInfoAdminService.upsertClubInfos(cleanedForm).subscribe({
+      next: () => {
+        this.isEditing.set(false);
+      },
+    });
   }
 
   handleCancel() {
