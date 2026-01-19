@@ -7,7 +7,7 @@
         ariaLabel="Bouton pour modifier un élément de la FAQ"
         (clicked)="clickEdit()"
         size="1.5rem"
-        [disabled]="editIsClicked() || clubInfoAdminService.loading()"
+        [disabled]="isEditing() || clubInfoAdminService.loading()"
       />
     </div>
 
@@ -32,7 +32,20 @@
                 [invalid]="isInvalid('stadiumName')"
                 aria-required="true"
               />
-              <!-- TODO AJOUTER PARTOUT LES MESSAGES D'ERREURS QUAND FORMULAIRE FONCTIONNEL -->
+              @if (isInvalid("stadiumName")) {
+                @if (
+                  clubForm.controls.stadiumName.hasError("requiredAndTrim")
+                ) {
+                  <p class="text-error text-xs">Le nom du stade est requis.</p>
+                } @else if (
+                  clubForm.controls.stadiumName.hasError("maxlength")
+                ) {
+                  <p class="text-error text-xs">
+                    Le nom du stade ne peut pas dépasser
+                    {{ STADIUM_NAME_LENGTH }} caractères.
+                  </p>
+                }
+              }
             </div>
             <div class="flex flex-col gap-1">
               <label for="street" class="w-max text-sm">Nom de la rue*</label>
@@ -45,6 +58,16 @@
                 [invalid]="isInvalid('street')"
                 aria-required="true"
               />
+              @if (isInvalid("street")) {
+                @if (clubForm.controls.street.hasError("requiredAndTrim")) {
+                  <p class="text-error text-xs">Le nom de la rue est requis.</p>
+                } @else if (clubForm.controls.street.hasError("maxlength")) {
+                  <p class="text-error text-xs">
+                    Le nom de la rue ne peut pas dépasser
+                    {{ STREET_LENGTH }} caractères.
+                  </p>
+                }
+              }
             </div>
             <div class="flex flex-col gap-1">
               <label for="city" class="w-max text-sm">Ville*</label>
@@ -57,6 +80,18 @@
                 [invalid]="isInvalid('city')"
                 aria-required="true"
               />
+              @if (isInvalid("city")) {
+                @if (clubForm.controls.city.hasError("requiredAndTrim")) {
+                  <p class="text-error text-xs">
+                    Le nom de la ville est requis.
+                  </p>
+                } @else if (clubForm.controls.city.hasError("maxlength")) {
+                  <p class="text-error text-xs">
+                    Le nom de la ville ne peut pas dépasser
+                    {{ CITY_LENGTH }} caractères.
+                  </p>
+                }
+              }
             </div>
             <div class="flex flex-col gap-1">
               <label for="postalCode" class="w-max text-sm">Code postal*</label>
@@ -69,6 +104,18 @@
                 [invalid]="isInvalid('postalCode')"
                 aria-required="true"
               />
+              @if (isInvalid("postalCode")) {
+                @if (clubForm.controls.postalCode.hasError("requiredAndTrim")) {
+                  <p class="text-error text-xs">Le code postal est requis.</p>
+                } @else if (
+                  clubForm.controls.postalCode.hasError("maxlength")
+                ) {
+                  <p class="text-error text-xs">
+                    Le code postal ne peut pas dépasser
+                    {{ POSTAL_CODE_LENGTH }} caractères.
+                  </p>
+                }
+              }
             </div>
           </div>
 
@@ -87,6 +134,16 @@
                 [invalid]="isInvalid('clubName')"
                 aria-required="true"
               />
+              @if (isInvalid("clubName")) {
+                @if (clubForm.controls.clubName.hasError("requiredAndTrim")) {
+                  <p class="text-error text-xs">Le nom du club est requis.</p>
+                } @else if (clubForm.controls.clubName.hasError("maxlength")) {
+                  <p class="text-error text-xs">
+                    Le nom du club ne peut pas dépasser
+                    {{ CLUB_NAME_LENGTH }} caractères.
+                  </p>
+                }
+              }
             </div>
 
             <div class="flex flex-col gap-1">
@@ -102,6 +159,26 @@
                 [invalid]="isInvalid('contactEmail')"
                 aria-required="true"
               />
+              @if (isInvalid("contactEmail")) {
+                @if (
+                  clubForm.controls.contactEmail.hasError("requiredAndTrim")
+                ) {
+                  <p class="text-error text-xs">
+                    L'email de contact est requis.
+                  </p>
+                } @else if (
+                  clubForm.controls.contactEmail.hasError("maxlength")
+                ) {
+                  <p class="text-error text-xs">
+                    L'email de contact ne peut pas dépasser
+                    {{ CONTACT_EMAIL_LENGTH }} caractères.
+                  </p>
+                } @else if (clubForm.controls.contactEmail.hasError("email")) {
+                  <p class="text-error text-xs">
+                    Cette adresse email n'est pas valide.
+                  </p>
+                }
+              }
             </div>
           </div>
         </div>
@@ -110,7 +187,7 @@
           <app-dash-button
             severity="secondary"
             label="Annuler"
-            [disabled]="!editIsClicked() || clubInfoAdminService.loading()"
+            [disabled]="!isEditing() || clubInfoAdminService.loading()"
             (clicked)="handleCancel()"
           />
 
@@ -118,7 +195,7 @@
             label="Modifier"
             type="submit"
             [disabled]="
-              !editIsClicked() ||
+              !isEditing() ||
               clubForm.invalid ||
               !clubForm.dirty ||
               clubInfoAdminService.loading()
