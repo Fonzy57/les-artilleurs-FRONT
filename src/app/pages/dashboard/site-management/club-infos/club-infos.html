@@ -1,1 +1,226 @@
-<p>club-infos works!</p>
+<div class="flex items-center justify-center">
+  <div class="border-main-300 w-7/12 rounded-lg border p-10 shadow-lg">
+    <div class="flex items-center justify-between">
+      <div class="flex flex-col items-start">
+        <h1 class="text-main text-center text-3xl">Informations du club</h1>
+        @if (infos()?.updatedAt) {
+          <p class="text-xs">
+            Dernière modification :
+            {{ infos()!.updatedAt | date: "dd/MM/yy à HH:mm" }}
+          </p>
+        } @else {
+          <p class="text-xs opacity-60">Dernière modification : —</p>
+        }
+      </div>
+      <app-action-icon-button
+        type="edit"
+        ariaLabel="Bouton pour modifier un élément de la FAQ"
+        (clicked)="clickEdit()"
+        size="1.5rem"
+        [disabled]="
+          isEditing() ||
+          clubInfoAdminService.loading() ||
+          clubInfoAdminService.saving()
+        "
+      />
+    </div>
+
+    @if (clubInfoAdminService.loading()) {
+      <app-club-form-skeleton />
+    } @else {
+      <!-- EDIT CLUB INFO FORM -->
+      <form class="mt-5" [formGroup]="clubForm" (ngSubmit)="handleSubmit()">
+        <div class="flex items-stretch gap-x-10">
+          <!-- FIRST COLUMN - STADIUM -->
+          <div class="flex flex-1 flex-col gap-y-3">
+            <div class="flex flex-col gap-1">
+              <label for="stadiumName" class="w-max text-sm"
+                >Nom du stade*</label
+              >
+              <input
+                pInputText
+                id="stadiumName"
+                type="text"
+                placeholder="Mercedes Benz"
+                formControlName="stadiumName"
+                [invalid]="isInvalid('stadiumName')"
+                aria-required="true"
+              />
+              @if (isInvalid("stadiumName")) {
+                @if (
+                  clubForm.controls.stadiumName.hasError("requiredAndTrim")
+                ) {
+                  <p class="text-error text-xs">Le nom du stade est requis.</p>
+                } @else if (
+                  clubForm.controls.stadiumName.hasError("maxlength")
+                ) {
+                  <p class="text-error text-xs">
+                    Le nom du stade ne peut pas dépasser
+                    {{ STADIUM_NAME_LENGTH }} caractères.
+                  </p>
+                }
+              }
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="street" class="w-max text-sm">Nom de la rue*</label>
+              <input
+                pInputText
+                id="street"
+                type="text"
+                placeholder="Rue des Artilleurs"
+                formControlName="street"
+                [invalid]="isInvalid('street')"
+                aria-required="true"
+              />
+              @if (isInvalid("street")) {
+                @if (clubForm.controls.street.hasError("requiredAndTrim")) {
+                  <p class="text-error text-xs">Le nom de la rue est requis.</p>
+                } @else if (clubForm.controls.street.hasError("maxlength")) {
+                  <p class="text-error text-xs">
+                    Le nom de la rue ne peut pas dépasser
+                    {{ STREET_LENGTH }} caractères.
+                  </p>
+                }
+              }
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="city" class="w-max text-sm">Ville*</label>
+              <input
+                pInputText
+                id="city"
+                type="text"
+                placeholder="Metz"
+                formControlName="city"
+                [invalid]="isInvalid('city')"
+                aria-required="true"
+              />
+              @if (isInvalid("city")) {
+                @if (clubForm.controls.city.hasError("requiredAndTrim")) {
+                  <p class="text-error text-xs">
+                    Le nom de la ville est requis.
+                  </p>
+                } @else if (clubForm.controls.city.hasError("maxlength")) {
+                  <p class="text-error text-xs">
+                    Le nom de la ville ne peut pas dépasser
+                    {{ CITY_LENGTH }} caractères.
+                  </p>
+                }
+              }
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="postalCode" class="w-max text-sm">Code postal*</label>
+              <input
+                pInputText
+                id="postalCode"
+                type="text"
+                placeholder="57000"
+                formControlName="postalCode"
+                [invalid]="isInvalid('postalCode')"
+                aria-required="true"
+                inputmode="numeric"
+              />
+              @if (isInvalid("postalCode")) {
+                @if (clubForm.controls.postalCode.hasError("requiredAndTrim")) {
+                  <p class="text-error text-xs">Le code postal est requis.</p>
+                } @else if (clubForm.controls.postalCode.hasError("pattern")) {
+                  <p class="text-error text-xs">
+                    Le code postal doit contenir
+                    {{ POSTAL_CODE_LENGTH }} chiffres.
+                  </p>
+                }
+              }
+            </div>
+          </div>
+
+          <p-divider layout="vertical" class="h-100%" />
+
+          <!-- SECOND COLUMN - CLUB -->
+          <div class="flex flex-1 flex-col gap-y-3">
+            <div class="flex flex-col gap-1">
+              <label for="clubName" class="w-max text-sm">Nom du club*</label>
+              <input
+                pInputText
+                id="clubName"
+                type="text"
+                placeholder="Les artichauts"
+                formControlName="clubName"
+                [invalid]="isInvalid('clubName')"
+                aria-required="true"
+              />
+              @if (isInvalid("clubName")) {
+                @if (clubForm.controls.clubName.hasError("requiredAndTrim")) {
+                  <p class="text-error text-xs">Le nom du club est requis.</p>
+                } @else if (clubForm.controls.clubName.hasError("maxlength")) {
+                  <p class="text-error text-xs">
+                    Le nom du club ne peut pas dépasser
+                    {{ CLUB_NAME_LENGTH }} caractères.
+                  </p>
+                }
+              }
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="contactEmail" class="w-max text-sm"
+                >Email de contact*</label
+              >
+              <input
+                pInputText
+                id="contactEmail"
+                type="email"
+                placeholder="contact@exemple.fr"
+                formControlName="contactEmail"
+                [invalid]="isInvalid('contactEmail')"
+                aria-required="true"
+              />
+              @if (isInvalid("contactEmail")) {
+                @if (
+                  clubForm.controls.contactEmail.hasError("requiredAndTrim")
+                ) {
+                  <p class="text-error text-xs">
+                    L'email de contact est requis.
+                  </p>
+                } @else if (
+                  clubForm.controls.contactEmail.hasError("maxlength")
+                ) {
+                  <p class="text-error text-xs">
+                    L'email de contact ne peut pas dépasser
+                    {{ CONTACT_EMAIL_LENGTH }} caractères.
+                  </p>
+                } @else if (clubForm.controls.contactEmail.hasError("email")) {
+                  <p class="text-error text-xs">
+                    Cette adresse email n'est pas valide.
+                  </p>
+                }
+              }
+            </div>
+          </div>
+        </div>
+
+        @if (isEditing()) {
+          <div class="mt-12 flex items-center justify-center gap-5">
+            <app-dash-button
+              severity="secondary"
+              label="Annuler"
+              [disabled]="
+                clubInfoAdminService.loading() || clubInfoAdminService.saving()
+              "
+              (clicked)="handleCancel()"
+            />
+
+            <app-dash-button
+              label="Modifier"
+              type="submit"
+              [disabled]="
+                clubForm.invalid ||
+                !clubForm.dirty ||
+                clubInfoAdminService.loading() ||
+                clubInfoAdminService.saving()
+              "
+              [loading]="clubInfoAdminService.saving()"
+            />
+          </div>
+        }
+      </form>
+    }
+  </div>
+</div>

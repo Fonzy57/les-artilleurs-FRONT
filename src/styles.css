@@ -172,7 +172,7 @@ body {
 }
 
 /* TAB STYLE */
-@media screen and (min-width: 1440px) {
+/* @media screen and (min-width: 1440px) {
   .p-tabpanels {
     min-height: 400px;
   }
@@ -182,7 +182,7 @@ body {
   .p-tabpanels {
     min-height: 600px;
   }
-}
+} */
 
 /* DIALOG STYLE */
 .p-dialog-title {

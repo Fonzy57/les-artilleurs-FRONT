@@ -50,11 +50,20 @@
       <div
         class="bg-gray-table font-poppins flex rounded-b-lg px-2 py-2 text-sm sm:py-4"
       >
-        <div class="w-1/2 text-center">
-          <p>Stade Yacine CHERRADI</p>
-          <p>Rue de la Grange-Aux-Bois</p>
-          <p>METZ 57000</p>
-        </div>
+        @if (clubInfoService.loading()) {
+          <div class="flex h-15 w-1/2 items-center justify-center">
+            <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+          </div>
+        } @else {
+          <div class="w-1/2 text-center">
+            <p>Stade {{ address().stadiumName }}</p>
+            <p>{{ address().street }}</p>
+            <p>
+              <span class="uppercase">{{ address().city }}</span>
+              {{ address().postalCode }}
+            </p>
+          </div>
+        }
         <div class="w-1/2 text-center">
           <p>METTIS LIGNE B</p>
           <p>Arrêt P+R Parc Expos</p>
