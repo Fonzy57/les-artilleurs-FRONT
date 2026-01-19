@@ -1,5 +1,5 @@
 <div class="flex items-center justify-center">
-  <div class="border-main w-7/12 rounded-lg border p-10 shadow-lg">
+  <div class="border-main-300 w-7/12 rounded-lg border p-10 shadow-lg">
     <div class="flex items-center justify-between">
       <h1 class="text-main text-center text-3xl">Informations du club</h1>
       <app-action-icon-button
@@ -7,97 +7,125 @@
         ariaLabel="Bouton pour modifier un élément de la FAQ"
         (clicked)="clickEdit()"
         size="1.5rem"
+        [disabled]="editIsClicked() || clubInfoAdminService.loading()"
       />
     </div>
-    <!-- EDIT CLUB INFO FORM -->
-    <form class="mt-5">
-      <div class="flex items-stretch gap-x-20">
-        <!-- FIRST COLUMN - STADIUM -->
-        <div class="flex flex-1 flex-col gap-y-3">
-          <div class="flex flex-col gap-1">
-            <label for="stadiumName" class="w-max text-sm">Nom du stade*</label>
-            <input
-              pInputText
-              id="stadiumName"
-              type="text"
-              placeholder="Mercedes Benz"
-              formControlName="stadiumName"
-            />
+
+    @if (clubInfoAdminService.loading()) {
+      <app-club-form-skeleton />
+    } @else {
+      <!-- EDIT CLUB INFO FORM -->
+      <form class="mt-5" [formGroup]="clubForm" (ngSubmit)="handleSubmit()">
+        <div class="flex items-stretch gap-x-10">
+          <!-- FIRST COLUMN - STADIUM -->
+          <div class="flex flex-1 flex-col gap-y-3">
+            <div class="flex flex-col gap-1">
+              <label for="stadiumName" class="w-max text-sm"
+                >Nom du stade*</label
+              >
+              <input
+                pInputText
+                id="stadiumName"
+                type="text"
+                placeholder="Mercedes Benz"
+                formControlName="stadiumName"
+                [invalid]="isInvalid('stadiumName')"
+                aria-required="true"
+              />
+              <!-- TODO AJOUTER PARTOUT LES MESSAGES D'ERREURS QUAND FORMULAIRE FONCTIONNEL -->
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="street" class="w-max text-sm">Nom de la rue*</label>
+              <input
+                pInputText
+                id="street"
+                type="text"
+                placeholder="Rue des Artilleurs"
+                formControlName="street"
+                [invalid]="isInvalid('street')"
+                aria-required="true"
+              />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="city" class="w-max text-sm">Ville*</label>
+              <input
+                pInputText
+                id="city"
+                type="text"
+                placeholder="Metz"
+                formControlName="city"
+                [invalid]="isInvalid('city')"
+                aria-required="true"
+              />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="postalCode" class="w-max text-sm">Code postal*</label>
+              <input
+                pInputText
+                id="postalCode"
+                type="text"
+                placeholder="57000"
+                formControlName="postalCode"
+                [invalid]="isInvalid('postalCode')"
+                aria-required="true"
+              />
+            </div>
           </div>
-          <div class="flex flex-col gap-1">
-            <label for="street" class="w-max text-sm">Nom de la rue*</label>
-            <input
-              pInputText
-              id="street"
-              type="text"
-              placeholder="Rue des Artilleurs"
-              formControlName="street"
-            />
-          </div>
-          <div class="flex flex-col gap-1">
-            <label for="city" class="w-max text-sm">Ville*</label>
-            <input
-              pInputText
-              id="city"
-              type="text"
-              placeholder="Metz"
-              formControlName="city"
-            />
-          </div>
-          <div class="flex flex-col gap-1">
-            <label for="postalCode" class="w-max text-sm">Code postal*</label>
-            <input
-              pInputText
-              id="postalCode"
-              type="text"
-              placeholder="57000"
-              formControlName="postalCode"
-            />
+
+          <p-divider layout="vertical" class="h-100%" />
+
+          <!-- SECOND COLUMN - CLUB -->
+          <div class="flex flex-1 flex-col gap-y-3">
+            <div class="flex flex-col gap-1">
+              <label for="clubName" class="w-max text-sm">Nom du club*</label>
+              <input
+                pInputText
+                id="clubName"
+                type="text"
+                placeholder="Les artichauts"
+                formControlName="clubName"
+                [invalid]="isInvalid('clubName')"
+                aria-required="true"
+              />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="contactEmail" class="w-max text-sm"
+                >Email de contact*</label
+              >
+              <input
+                pInputText
+                id="contactEmail"
+                type="email"
+                placeholder="contact@exemple.fr"
+                formControlName="contactEmail"
+                [invalid]="isInvalid('contactEmail')"
+                aria-required="true"
+              />
+            </div>
           </div>
         </div>
 
-        <p-divider layout="vertical" class="h-100%" />
+        <div class="mt-12 flex items-center justify-center gap-5">
+          <app-dash-button
+            severity="secondary"
+            label="Annuler"
+            [disabled]="!editIsClicked() || clubInfoAdminService.loading()"
+            (clicked)="handleCancel()"
+          />
 
-        <!-- SECOND COLUMN - CLUB -->
-        <div class="flex flex-1 flex-col gap-y-3">
-          <div class="flex flex-col gap-1">
-            <label for="clubName" class="w-max text-sm">Nom du club*</label>
-            <input
-              pInputText
-              id="clubName"
-              type="text"
-              placeholder="Les artichauts"
-              formControlName="clubName"
-            />
-          </div>
-
-          <div class="flex flex-col gap-1">
-            <label for="contactEmail" class="w-max text-sm"
-              >Email de contact*</label
-            >
-            <input
-              pInputText
-              id="contactEmail"
-              type="email"
-              placeholder="contact@exemple.fr"
-              formControlName="contactEmail"
-            />
-          </div>
+          <app-dash-button
+            label="Modifier"
+            type="submit"
+            [disabled]="
+              !editIsClicked() ||
+              clubForm.invalid ||
+              !clubForm.dirty ||
+              clubInfoAdminService.loading()
+            "
+          />
         </div>
-      </div>
-
-      <!-- TODO DISABLE LES BOUTONS TANT QUE LE BOUTON MODIFIER N'A PAS ETE CLIQUE -->
-      <div class="mt-10 flex items-center justify-center gap-5">
-        <app-dash-button severity="secondary" label="Annuler" />
-        <!-- [disabled]="loadingData() || isSaving()"
-          (clicked)="handleCancel()" -->
-
-        <app-dash-button label="Modifier" type="submit" />
-        <!--  [loading]="isSaving()"
-          [disabled]="
-            form.invalid || !form.dirty || loadingData() || isSaving()
-          " -->
-      </div>
-    </form>
+      </form>
+    }
   </div>
 </div>
