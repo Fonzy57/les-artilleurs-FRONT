@@ -42,7 +42,7 @@ export class ClubInfosManagement implements OnInit {
   readonly CLUB_NAME_LENGTH = 100;
   readonly CONTACT_EMAIL_LENGTH = 150;
 
-  editIsClicked = signal<boolean>(false);
+  isEditing = signal<boolean>(false);
 
   ngOnInit(): void {
     this.clubInfoAdminService.loadingClubInfos();
@@ -51,43 +51,17 @@ export class ClubInfosManagement implements OnInit {
   readonly clubForm = this.formBuilder.nonNullable.group({
     stadiumName: [
       "",
-      [
-        requiredAndTrim,
-        Validators.maxLength(this.STADIUM_NAME_LENGTH),
-        Validators.required,
-      ],
+      [requiredAndTrim, Validators.maxLength(this.STADIUM_NAME_LENGTH)],
     ],
-    street: [
-      "",
-      [
-        requiredAndTrim,
-        Validators.maxLength(this.STREET_LENGTH),
-        Validators.required,
-      ],
-    ],
-    city: [
-      "",
-      [
-        requiredAndTrim,
-        Validators.maxLength(this.CITY_LENGTH),
-        Validators.required,
-      ],
-    ],
+    street: ["", [requiredAndTrim, Validators.maxLength(this.STREET_LENGTH)]],
+    city: ["", [requiredAndTrim, Validators.maxLength(this.CITY_LENGTH)]],
     postalCode: [
       "",
-      [
-        requiredAndTrim,
-        Validators.maxLength(this.POSTAL_CODE_LENGTH),
-        Validators.required,
-      ],
+      [requiredAndTrim, Validators.maxLength(this.POSTAL_CODE_LENGTH)],
     ],
     clubName: [
       "",
-      [
-        requiredAndTrim,
-        Validators.maxLength(this.CLUB_NAME_LENGTH),
-        Validators.required,
-      ],
+      [requiredAndTrim, Validators.maxLength(this.CLUB_NAME_LENGTH)],
     ],
     contactEmail: [
       "",
@@ -95,7 +69,6 @@ export class ClubInfosManagement implements OnInit {
         requiredAndTrim,
         Validators.email,
         Validators.maxLength(this.CONTACT_EMAIL_LENGTH),
-        Validators.required,
       ],
     ],
   });
@@ -128,13 +101,13 @@ export class ClubInfosManagement implements OnInit {
     - BIEN FAIRE LA VERIFICATION DE L'EMAIL COMME INPUT
   */
   clickEdit(): void {
-    this.editIsClicked.set(true);
+    this.isEditing.set(true);
     this.clubForm.enable();
   }
 
   handleSubmit(): void {
     /* TODO VOIR QUAND JE RENDS LE FORMULAIRE DISABLE, A MON AVIS QUE S'IL N'Y A PAS D'ERREURS */
-    this.editIsClicked.set(false);
+    this.isEditing.set(false);
     console.log(
       "J'envoie le formulaire avec comme données : ",
       this.clubForm.value,
@@ -160,7 +133,7 @@ export class ClubInfosManagement implements OnInit {
     this.clubForm.markAsPristine();
     this.clubForm.markAsUntouched();
     this.clubForm.disable();
-    this.editIsClicked.set(false);
+    this.isEditing.set(false);
   }
 
   isInvalid(name: string): boolean {
