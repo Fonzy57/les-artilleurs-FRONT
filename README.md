@@ -1,59 +1,208 @@
-# LesArtilleursFRONT
+# 🏈 Les Artilleurs Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3.
+Frontend application for the **Les Artilleurs** American Football club platform.
 
-## Development server
+This repository contains the **client-side** code for:
+- a **public showcase website** (club presentation, information, contact/join details)
+- a **private staff dashboard** used to manage content and (later) club data
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
+## 📌 Project Context
+
+**Les Artilleurs Frontend** is a personal project built for an American football club.
+
+It aims to deliver:
+- a modern, responsive **public website**
+- a secure **role-based dashboard** for the club president and staff
+- a maintainable front architecture aligned with a real production workflow
+
+---
+
+## 🎯 Main Objectives
+
+- Provide a clear and professional **public club website**
+- Offer a private dashboard for staff with:
+  - content management features (news, FAQ, club information)
+  - future club management data (members, players, matches, seasons, etc.)
+- Implement a scalable front architecture:
+  - shared UI components
+  - typed models
+  - clear separation between pages and data access services
+- Prepare a secure authentication flow:
+  - access token + refresh token (in progress)
+  - route guards / interceptors (planned)
+
+---
+
+## 🛠️ Tech Stack
+
+- **Angular 21.0.4**
+- **Tailwind CSS v4.1**
+- **PrimeNG** + **PrimeIcons**
+- PrimeUIX themes (`@primeuix/themes`) with **custom theme adjustments** to match the provided club branding
+- **RxJS**
+- Formatting:
+  - **Prettier**
+  - `prettier-plugin-tailwindcss`
+
+---
+
+## ✨ UI & UX
+
+- Skeleton loaders during data fetches
+- Error handling implemented per feature/data source
+- Reusable UI layer for consistent design across:
+  - the public website
+  - the private dashboard
+
+---
+
+## 📁 Project Structure
+
+The project is organized for clarity and scalability:
+
+```
+src/app
+├── core
+├── data-access
+├── pages
+│   ├── auth
+│   ├── dashboard
+│   └── website
+├── layouts
+│   ├── auth-layout
+│   ├── dashboard-layout
+│   └── main-layout
+└── shared
+    ├── models
+    ├── ui
+    ├── utils
+    └── validators
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Key conventions
+- `pages/` contains route-level features (website, dashboard, auth)
+- `data-access/` contains services responsible for API communication
+- `shared/` contains reusable components, typed models, helpers and validators
+- `layouts/` centralizes layout composition for public pages and dashboard pages
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## ✅ Features Status
 
+### Implemented
+- Public website (subject to design feedback / upcoming layout adjustments)
+- Dashboard content management (CRUD):
+  - News
+  - FAQ
+  - Club information
+- Data loading UX:
+  - skeleton loaders
+  - error handling per data source
+
+### In Progress
+- Authentication integration:
+  - access token + refresh token
+- Route protection:
+  - guards
+  - role-based access (planned)
+
+### Planned
+- Website redesign updates (once final UI mockups are validated)
+- Extended dashboard features for club operations:
+  - member management
+  - player management
+  - match calendar
+  - season management
+  - data-driven dashboard views
+- Docker support for frontend (planned)
+
+---
+
+## 🔐 Authentication (Planned / In Progress)
+
+The frontend will connect to the backend using:
+- **JWT access token**
+- **refresh token** (in progress)
+
+Planned technical approach:
+- `HttpInterceptor` to attach the access token to API requests
+- refresh flow on 401 responses (when applicable)
+- `Route Guards` to protect dashboard routes
+- role-based routing / UI restrictions
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (recommended: modern LTS)
+- npm (project uses `npm@11.1.0`)
+
+### Install dependencies
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+### Run in development
 ```bash
-ng generate --help
+npm run start
 ```
 
-## Building
+Then open:
+- http://localhost:4200
 
-To build the project run:
-
+### Build for production
 ```bash
-ng build
+npm run build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🔀 Branching Strategy
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- **`develop`** → active development branch (most up-to-date)
+- **`main`** → production-ready code only
 
-```bash
-ng test
-```
+Until the project is deployed in production, **`develop` is the reference branch**.
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 🔗 Related Repositories
 
-```bash
-ng e2e
-```
+- **Backend repository**:  
+  👉 [Les Artilleurs - API](https://github.com/Fonzy57/les-artilleurs-API)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 📄 Project Status
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+🚧 **In progress**
+
+This project is actively developed and serves as:
+- a real-world front architecture showcase
+- a technical portfolio piece for recruiters
+- a foundation for a production-ready club platform
+
+---
+
+## ⚠️ License & Usage
+
+This project is provided for **educational and demonstration purposes only**.
+
+- ❌ Commercial use is not allowed
+- ❌ Copying or reusing the code without permission is prohibited
+- ✅ Viewing and learning from the code is allowed
+
+---
+
+## 👤 Author
+
+Developed by **Stéphane**  
+Full Stack Developer  
+
+---
+
+© 2026 Stéphane. All rights reserved.  
+Unauthorized copying, modification, distribution, or use of this project or its source code is strictly prohibited.
