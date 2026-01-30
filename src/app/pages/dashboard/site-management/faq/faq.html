@@ -9,6 +9,7 @@
 </div>
 
 <!-- TABLE OF FAQ ITEMS -->
+<!-- TODO FAIRE UN AFFICHAGE SI JAMAIS IL N'Y A PAS D'ELEMENTS DANS LE TABLEAU length === 0 SANS ERREUR -->
 <div class="mt-5">
   @if (faqService.loadingList()) {
     <app-table-skeleton
