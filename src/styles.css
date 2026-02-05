@@ -167,6 +167,10 @@ body {
 }
 
 /* --- CUSTOM STYLE FOR PRIME NG --- */
+.p-password-toggle-mask-icon:hover {
+  cursor: pointer;
+}
+
 .p-tooltip-text {
   font-size: 14px;
 }
