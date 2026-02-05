@@ -15,7 +15,6 @@
           <!-- EMAIL -->
           <div class="flex flex-col gap-1">
             <label for="email" class="text-sm">Email</label>
-
             <input
               pInputText
               type="email"
@@ -26,10 +25,10 @@
               aria-required="true"
             />
             @if (isInvalid("email")) {
-              @if (loginForm.get("email")?.errors?.["required"]) {
+              @if (loginForm.controls.email.hasError("requiredAndTrim")) {
                 <p class="text-error text-xs">L'email est requis.</p>
               }
-              @if (loginForm.get("email")?.errors?.["email"]) {
+              @if (loginForm.controls.email.hasError("email")) {
                 <p class="text-error text-xs">
                   Veuillez renseigner un email valide.
                 </p>
@@ -40,7 +39,6 @@
           <!-- PASSWORD -->
           <div class="flex flex-col gap-1">
             <label for="pwd" class="text-sm">Mot de passe</label>
-
             <p-password
               formControlName="pwd"
               [invalid]="isInvalid('pwd')"
@@ -49,20 +47,19 @@
               [toggleMask]="true"
               [feedback]="false"
             />
-
             @if (isInvalid("pwd")) {
               <p class="text-error text-xs">Le mot de passe est requis.</p>
             }
           </div>
 
           <!-- TODO AJOUTER UN RECAPTCHA -->
+
           <div>
             <div class="flex gap-x-2">
               <p-checkbox
                 inputId="remember"
                 formControlName="remember"
                 [binary]="true"
-                [invalid]="isInvalid('remember')"
                 aria-required="true"
               />
               <div class="text-sm leading-snug">
@@ -72,7 +69,15 @@
           </div>
 
           <div class="mt-4 flex items-center justify-start gap-x-8">
-            <app-button type="submit"> Se connecter </app-button>
+            <app-dash-button
+              severity="primary"
+              label="Se connecter"
+              type="submit"
+              [disabled]="
+                isSubmitDisabled() || isInvalid('email') || isInvalid('pwd')
+              "
+              [loading]="isSubmitting()"
+            />
           </div>
         </form>
         <!-- TODO FAIRE LE LIEN VERS MOT DE PASSE OUBLIE FONCTIONNEL -->
